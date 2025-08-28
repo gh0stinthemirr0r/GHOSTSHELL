@@ -1,0 +1,199 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* CSS Variables for theming - will be updated by theme system */
+:root {
+  /* Layout */
+  --grid: 8px;
+  --radius: 14px;
+  --radius-sm: 10px;
+  --border: 1px;
+  
+  /* Colors - Default Cyberpunk Neon */
+  --bg-tint: rgba(12,15,28,0.70);
+  --fg: #EAEAEA;
+  --slate: #2B2B2E;
+  --accent-pink: #FF008C;
+  --accent-cyan: #00FFD1;
+  --accent-neon-green: #AFFF00;
+  --border-color: rgba(255,255,255,0.10);
+  
+  /* Effects */
+  --blur: 18px;
+  --noise: 0.08;
+  --glow: 0 0 12px;
+  --glow-strong: 0 0 20px;
+  --glow-strength: 0.6;
+  
+  /* Typography */
+  --font-ui: "JetBrains Mono", "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-display: "Space Grotesk", "JetBrains Mono", ui-sans-serif, system-ui, sans-serif;
+  
+  /* Font sizes */
+  --fs-12: 12px; --fs-13: 13px; --fs-14: 14px; --fs-16: 16px;
+  --fs-18: 18px; --fs-20: 20px; --fs-24: 24px;
+  
+  /* Timing/Easing */
+  --t-fast: 120ms;
+  --t-med: 200ms;
+  --t-slow: 320ms;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  
+  /* Cursors */
+  --cursor-color: var(--accent-neon-green);
+}
+
+/* Global styles */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-ui);
+  color: var(--fg);
+  background: transparent;
+  overflow: hidden;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.05);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-cyan);
+  border-radius: 4px;
+  opacity: 0.6;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  opacity: 1;
+}
+
+/* Frosted glass effect */
+.frosted {
+  backdrop-filter: blur(var(--blur)) saturate(140%);
+  background: var(--bg-tint);
+  border: 1px solid var(--border-color);
+}
+
+/* Neon glow effects */
+.glow {
+  box-shadow: var(--glow) currentColor;
+}
+
+.glow-strong {
+  box-shadow: var(--glow-strong) currentColor;
+}
+
+/* Neon text glow */
+.text-glow {
+  text-shadow: 0 0 8px currentColor;
+}
+
+/* Animation classes */
+.animate-glow {
+  animation: glow-pulse 2s ease-in-out infinite alternate;
+}
+
+/* Transition classes using CSS variables */
+.transition-colors {
+  transition: color var(--t-med) var(--ease), background-color var(--t-med) var(--ease), border-color var(--t-med) var(--ease);
+}
+
+.transition-all {
+  transition: all var(--t-med) var(--ease);
+}
+
+.transition-transform {
+  transition: transform var(--t-med) var(--ease);
+}
+
+.duration-200 {
+  transition-duration: var(--t-med);
+}
+
+.duration-300 {
+  transition-duration: var(--t-slow);
+}
+
+@keyframes glow-pulse {
+  0% { 
+    box-shadow: 0 0 5px currentColor;
+    filter: brightness(1);
+  }
+  100% { 
+    box-shadow: 0 0 15px currentColor;
+    filter: brightness(1.2);
+  }
+}
+
+/* Reduce motion support */
+@media (prefers-reduced-motion: reduce) {
+  .animate-glow {
+    animation: none;
+  }
+  
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* Manual reduce motion class */
+.reduce-motion * {
+  transition-duration: 0ms !important;
+  animation-duration: 0ms !important;
+  animation-iteration-count: 1 !important;
+}
+
+.reduce-motion .animate-glow {
+  animation: none !important;
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  :root {
+    --border-color: rgba(255,255,255,0.3);
+    --fg: #FFFFFF;
+  }
+}
+
+/* Manual high contrast class */
+.high-contrast {
+  --fg: #FFFFFF !important;
+  --border-color: rgba(255,255,255,0.5) !important;
+  --accent-cyan: #00FFFF !important;
+  --accent-pink: #FF00FF !important;
+  --accent-neon-green: #00FF00 !important;
+}
+
+.high-contrast .frosted {
+  background: rgba(0,0,0,0.90) !important;
+  border-color: rgba(255,255,255,0.5) !important;
+}
+
+/* Focus styles */
+*:focus-visible {
+  outline: 2px solid var(--accent-cyan);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Selection styles */
+::selection {
+  background: var(--accent-cyan);
+  color: var(--slate);
+}

@@ -1,0 +1,52 @@
+[package]
+name = "ghost_vault"
+version = "0.1.0"
+edition = "2021"
+description = "Secure vault for GHOSTSHELL secrets and configuration storage"
+
+[dependencies]
+# Workspace dependencies
+ghost_pq = { path = "../ghost_pq" }
+ghost_policy = { path = "../ghost_policy" }
+
+# Serialization
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+# Database
+sqlx = { version = "0.7", features = ["runtime-tokio-rustls", "sqlite", "chrono", "uuid"] }
+
+# Async runtime
+tokio = { workspace = true }
+
+# Time
+chrono = { workspace = true }
+
+# Error handling
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+
+# Cryptography
+rand = "0.8"
+zeroize = { version = "1.6", features = ["derive"] }
+
+# Utilities
+uuid = { version = "1.6", features = ["v4", "serde"] }
+base64 = "0.21"
+hex = "0.4"
+
+# Logging
+tracing = { workspace = true }
+
+# Password hashing for MFA
+argon2 = "0.5"
+
+# TOTP for MFA
+totp-rs = "5.4"
+
+# QR code generation for TOTP setup
+qrcode = "0.14"
+image = "0.24"
+
+[dev-dependencies]
+tempfile = "3.8"

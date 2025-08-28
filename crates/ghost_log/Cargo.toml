@@ -1,0 +1,40 @@
+[package]
+name = "ghost_log"
+version = "0.1.0"
+edition = "2021"
+description = "Tamper-evident audit logging for GHOSTSHELL with hash chaining and digital signatures"
+
+[dependencies]
+# Workspace dependencies
+ghost_pq = { path = "../ghost_pq" }
+
+# Serialization
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+# Database
+sqlx = { version = "0.7", features = ["runtime-tokio-rustls", "sqlite", "chrono", "uuid"] }
+
+# Async runtime
+tokio = { workspace = true }
+
+# Time
+chrono = { workspace = true }
+
+# Error handling
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+
+# Cryptography
+sha3 = "0.10"
+hex = { workspace = true }
+
+# Utilities
+uuid = { version = "1.6", features = ["v4", "serde"] }
+base64 = "0.21"
+
+# Logging
+tracing = { workspace = true }
+
+[dev-dependencies]
+tempfile = "3.8"

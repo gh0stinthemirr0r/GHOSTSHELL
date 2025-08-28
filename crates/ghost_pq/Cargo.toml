@@ -1,0 +1,25 @@
+[package]
+name = "ghost_pq"
+version = "0.1.0"
+edition = "2021"
+description = "Post-quantum cryptography primitives for GHOSTSHELL"
+
+[dependencies]
+# Post-quantum crypto
+oqs = { workspace = true }
+
+# Standard crypto
+sha3 = { workspace = true }
+aes-gcm = { workspace = true }
+chacha20poly1305 = { workspace = true }
+argon2 = { workspace = true }
+
+# Utilities
+zeroize = { workspace = true }
+rand = { workspace = true }
+hex = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+anyhow = { workspace = true }
+thiserror = { workspace = true }

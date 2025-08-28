@@ -1,0 +1,100 @@
+[package]
+name = "ghostshell"
+version = "0.1.0"
+edition = "2021"
+authors = ["GHOSTSHELL Team"]
+description = "Post-Quantum Secure Terminal Environment"
+license = "MIT"
+
+[build-dependencies]
+tauri-build = { version = "1.0", features = [] }
+
+[dependencies]
+# Phase 2 Security Crates
+ghost_pq = { path = "../crates/ghost_pq" }
+ghost_policy = { path = "../crates/ghost_policy" }
+ghost_vault = { path = "../crates/ghost_vault" }
+ghost_log = { path = "../crates/ghost_log" }
+
+# Phase 10 Notification Crates
+ghost_notify = { path = "../crates/ghost_notify" }
+ghost_alert = { path = "../crates/ghost_alert" }
+
+# Phase 11 Theme Crates
+ghost_theme = { path = "../crates/ghost_theme" }
+
+# Phase 12 Compliance Crates
+ghost_align = { path = "../crates/ghost_align" }
+ghost_controls = { path = "../crates/ghost_controls" }
+ghost_evidence = { path = "../crates/ghost_evidence" }
+ghost_trends = { path = "../crates/ghost_trends" }
+
+# Tauri and Serialization
+serde_json = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+tauri = { version = "1.0", features = [
+  "fs-copy-file", 
+  "fs-create-dir", 
+  "fs-read-dir", 
+  "fs-read-file", 
+  "fs-remove-dir", 
+  "fs-remove-file", 
+  "fs-rename-file", 
+  "fs-write-file", 
+  "shell-open", 
+  "window-close", 
+  "window-hide", 
+  "window-maximize", 
+  "window-minimize", 
+  "window-show", 
+  "window-start-dragging", 
+  "window-unmaximize", 
+  "window-unminimize"
+] }
+
+# Core Dependencies
+anyhow = "1.0"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+tracing-appender = "0.2"
+tokio = { version = "1.0", features = ["full"] }
+uuid = { version = "1.0", features = ["v4"] }
+chrono = { version = "0.4", features = ["serde"] }
+async-trait = "0.1"
+regex = "1.0"
+sha3 = "0.10"
+hex = "0.4"
+dirs = "5.0"
+
+# Terminal Backend (Phase 3)
+portable-pty = "0.8"
+futures = "0.3"
+
+# SSH Client with Post-Quantum Support (Phase 3)
+russh = "0.40"
+russh-keys = "0.40"
+
+# Network Topology (Phase 3)
+rand = "0.8"
+
+# Phase 12 Additional Dependencies
+base64 = "0.21"
+zip = "0.6"
+
+# Window effects for acrylic/mica
+window-vibrancy = "0.4"
+
+[target.'cfg(windows)'.dependencies]
+windows = { version = "0.52", features = [
+    "Win32_Foundation",
+    "Win32_Graphics_Dwm",
+    "Win32_UI_WindowsAndMessaging",
+] }
+
+[target.'cfg(target_os = "macos")'.dependencies]
+cocoa = "0.25"
+objc2 = "0.4"
+
+[features]
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]

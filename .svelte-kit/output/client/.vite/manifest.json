@@ -1,0 +1,159 @@
+{
+  ".svelte-kit/generated/client-optimized/app.js": {
+    "dynamicImports": [
+      ".svelte-kit/generated/client-optimized/nodes/0.js",
+      ".svelte-kit/generated/client-optimized/nodes/1.js",
+      ".svelte-kit/generated/client-optimized/nodes/2.js"
+    ],
+    "file": "_app/immutable/entry/app.de277d34.js",
+    "imports": [
+      "_preload-helper.a4192956.js",
+      "_scheduler.2cab2851.js",
+      "_index.23964f24.js"
+    ],
+    "isEntry": true,
+    "src": ".svelte-kit/generated/client-optimized/app.js"
+  },
+  ".svelte-kit/generated/client-optimized/nodes/0.css": {
+    "file": "_app/immutable/assets/0.ac5c5484.css",
+    "src": ".svelte-kit/generated/client-optimized/nodes/0.css"
+  },
+  ".svelte-kit/generated/client-optimized/nodes/0.js": {
+    "css": [
+      "_app/immutable/assets/0.ac5c5484.css"
+    ],
+    "file": "_app/immutable/nodes/0.8a9e30ce.js",
+    "imports": [
+      "_scheduler.2cab2851.js",
+      "_index.23964f24.js",
+      "_settings.138d31ef.js"
+    ],
+    "isDynamicEntry": true,
+    "isEntry": true,
+    "src": ".svelte-kit/generated/client-optimized/nodes/0.js"
+  },
+  ".svelte-kit/generated/client-optimized/nodes/1.js": {
+    "file": "_app/immutable/nodes/1.70f54d4f.js",
+    "imports": [
+      "_scheduler.2cab2851.js",
+      "_index.23964f24.js",
+      "_singletons.8b161670.js"
+    ],
+    "isDynamicEntry": true,
+    "isEntry": true,
+    "src": ".svelte-kit/generated/client-optimized/nodes/1.js"
+  },
+  ".svelte-kit/generated/client-optimized/nodes/2.js": {
+    "file": "_app/immutable/nodes/2.e27cdfdd.js",
+    "imports": [
+      "_2.77d64b31.js"
+    ],
+    "isEntry": true,
+    "src": ".svelte-kit/generated/client-optimized/nodes/2.js"
+  },
+  "2.css": {
+    "file": "_app/immutable/assets/2.9c336935.css",
+    "src": "2.css"
+  },
+  "_2.77d64b31.js": {
+    "css": [
+      "_app/immutable/assets/2.9c336935.css"
+    ],
+    "dynamicImports": [
+      "node_modules/@tauri-apps/api/window.js",
+      "_xterm.7fe5c096.js",
+      "_addon-fit.8c2f918b.js",
+      "_addon-webgl.d4c757b1.js",
+      "_addon-ligatures.619789de.js",
+      "_settings.138d31ef.js"
+    ],
+    "file": "_app/immutable/chunks/2.77d64b31.js",
+    "imports": [
+      "_scheduler.2cab2851.js",
+      "_index.23964f24.js",
+      "_preload-helper.a4192956.js",
+      "_settings.138d31ef.js",
+      "_index.a5826648.js"
+    ],
+    "isDynamicEntry": true
+  },
+  "__commonjsHelpers.d4b30cbb.js": {
+    "file": "_app/immutable/chunks/_commonjsHelpers.d4b30cbb.js"
+  },
+  "_addon-fit.8c2f918b.js": {
+    "file": "_app/immutable/chunks/addon-fit.8c2f918b.js",
+    "imports": [
+      "__commonjsHelpers.d4b30cbb.js"
+    ],
+    "isDynamicEntry": true
+  },
+  "_addon-ligatures.619789de.js": {
+    "file": "_app/immutable/chunks/addon-ligatures.619789de.js",
+    "imports": [
+      "__commonjsHelpers.d4b30cbb.js"
+    ],
+    "isDynamicEntry": true
+  },
+  "_addon-webgl.d4c757b1.js": {
+    "file": "_app/immutable/chunks/addon-webgl.d4c757b1.js",
+    "imports": [
+      "__commonjsHelpers.d4b30cbb.js"
+    ],
+    "isDynamicEntry": true
+  },
+  "_index.23964f24.js": {
+    "file": "_app/immutable/chunks/index.23964f24.js",
+    "imports": [
+      "_scheduler.2cab2851.js"
+    ]
+  },
+  "_index.a5826648.js": {
+    "file": "_app/immutable/chunks/index.a5826648.js",
+    "imports": [
+      "_scheduler.2cab2851.js"
+    ]
+  },
+  "_preload-helper.a4192956.js": {
+    "file": "_app/immutable/chunks/preload-helper.a4192956.js"
+  },
+  "_scheduler.2cab2851.js": {
+    "file": "_app/immutable/chunks/scheduler.2cab2851.js"
+  },
+  "_settings.138d31ef.js": {
+    "file": "_app/immutable/chunks/settings.138d31ef.js",
+    "imports": [
+      "_index.a5826648.js"
+    ],
+    "isDynamicEntry": true
+  },
+  "_singletons.8b161670.js": {
+    "file": "_app/immutable/chunks/singletons.8b161670.js",
+    "imports": [
+      "_index.a5826648.js"
+    ]
+  },
+  "_xterm.7fe5c096.js": {
+    "file": "_app/immutable/chunks/xterm.7fe5c096.js",
+    "imports": [
+      "__commonjsHelpers.d4b30cbb.js"
+    ],
+    "isDynamicEntry": true
+  },
+  "node_modules/@sveltejs/kit/src/runtime/client/start.js": {
+    "file": "_app/immutable/entry/start.225ce2af.js",
+    "imports": [
+      "_scheduler.2cab2851.js",
+      "_singletons.8b161670.js"
+    ],
+    "isEntry": true,
+    "src": "node_modules/@sveltejs/kit/src/runtime/client/start.js"
+  },
+  "node_modules/@tauri-apps/api/window.js": {
+    "file": "_app/immutable/chunks/window.e5dc7bf0.js",
+    "imports": [
+      "_2.77d64b31.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "node_modules/@tauri-apps/api/window.js"
+  }
+}
