@@ -48,6 +48,9 @@ mod reporting;
 mod multi_tenant;
 mod api_gateway;
 mod autonomous_soc;
+mod shell_integration;
+mod pty_shell;
+mod simple_shell;
 
 mod security_automation;
 mod quantum_safe_operations;
@@ -505,6 +508,21 @@ fn main() -> Result<()> {
             info!("AI Engine initialized");
 
             // Initialize Browser Engine (Phase 14)
+            // Setup data directory path (shared by browser and navigation)
+            let current_dir = std::env::current_dir()
+                .map_err(|e| anyhow::anyhow!("Failed to get current directory: {}", e))?;
+            // Go up one level from src-tauri to the project root, then into data
+            let project_root = current_dir.parent()
+                .ok_or_else(|| anyhow::anyhow!("Failed to get project root directory"))?;
+            let data_dir = project_root.join("data");
+            
+            // Ensure data directory exists
+            if let Err(e) = std::fs::create_dir_all(&data_dir) {
+                tracing::warn!("Failed to create data directory {:?}: {}", data_dir, e);
+            } else {
+                debug!("Data directory created/verified: {:?}", data_dir);
+            }
+
             debug!("About to initialize Browser Engine");
             let browser_config = BrowserConfig::default();
             let browser_engine = rt.block_on(async {
@@ -517,25 +535,11 @@ fn main() -> Result<()> {
                 use ghost_pq::signatures::DilithiumVariant;
 
                 // Create browser vault with proper database path
-                // Use absolute path to ensure we're in the right directory
-                let current_dir = std::env::current_dir()
-                    .map_err(|e| anyhow::anyhow!("Failed to get current directory: {}", e))?;
-                // Go up one level from src-tauri to the project root, then into data
-                let project_root = current_dir.parent()
-                    .ok_or_else(|| anyhow::anyhow!("Failed to get project root directory"))?;
-                let data_dir = project_root.join("data");
                 let browser_db_path = data_dir.join("ghostshell_browser.db");
                 
                 debug!("Current directory: {:?}", current_dir);
                 debug!("Data directory: {:?}", data_dir);
                 debug!("Browser DB path: {:?}", browser_db_path);
-                
-                // Ensure data directory exists
-                if let Err(e) = std::fs::create_dir_all(&data_dir) {
-                    tracing::warn!("Failed to create data directory {:?}: {}", data_dir, e);
-                } else {
-                    debug!("Data directory created/verified: {:?}", data_dir);
-                }
                 
                 // Try to create the database file if it doesn't exist and determine database URL
                 let database_url = if !browser_db_path.exists() {
@@ -593,6 +597,44 @@ fn main() -> Result<()> {
             app.manage(browser_engine);
             debug!("Browser engine initialized successfully");
             info!("Browser Engine initialized");
+
+                        // Initialize Navigation Manager (Phase 16) - TEMPORARILY DISABLED
+            debug!("Skipping navigation manager initialization for debugging");
+            info!("Navigation Manager initialization skipped");
+
+            // Initialize Shell Integration
+            debug!("About to initialize shell integration");
+            let shell_state = rt.block_on(async {
+                let integration = shell_integration::TerminalShellIntegration::new().await
+                    .map_err(|e| anyhow::anyhow!("Failed to create shell integration: {}", e))?;
+                
+                Ok::<_, anyhow::Error>(commands::shell::ShellState {
+                    integration: Arc::new(tokio::sync::Mutex::new(integration)),
+                })
+            })?;
+            
+            // Initialize PTY Shell Manager for persistent sessions
+            debug!("Initializing PTY shell manager");
+            let pty_shell_manager = Arc::new(pty_shell::PtyShellManager::new());
+            debug!("PTY shell manager initialized");
+
+            // Initialize Simple Shell Manager as backup
+            debug!("Initializing simple shell manager");
+            let simple_shell_manager = Arc::new(simple_shell::SimpleShellManager::new());
+            debug!("Simple shell manager initialized");
+
+            app.manage(shell_state);
+            app.manage(pty_shell_manager);
+            app.manage(simple_shell_manager);
+            debug!("Shell integration initialized successfully");
+            info!("Shell Integration initialized");
+            
+            // Initialize Settings Manager
+            debug!("Initializing settings manager");
+            let settings_manager = commands::settings::SettingsManager::new(data_dir.clone());
+            app.manage(settings_manager);
+            debug!("Settings manager initialized");
+            info!("Settings Manager initialized");
 
             info!("GHOSTSHELL interface ready - Welcome to the future!");
             info!("Interface features:");
@@ -967,6 +1009,60 @@ fn main() -> Result<()> {
             commands::browse::browse_hide_window,
             commands::browse::browse_navigate_window,
             commands::browse::browse_open_external,
+            
+            // VPN Status Commands
+            commands::vpn_status::check_vpn_status,
+            
+            // Navigation Commands (Phase 16) - TEMPORARILY DISABLED
+            // commands::navigation::nav_get_layout,
+            // commands::navigation::nav_preview_layout,
+            // commands::navigation::nav_save_layout,
+            // commands::navigation::nav_list_workspaces,
+            // commands::navigation::nav_set_workspace,
+            // commands::navigation::nav_export_layout,
+            // commands::navigation::nav_import_layout,
+            // commands::navigation::nav_create_workspace_from_preset,
+            // commands::navigation::nav_get_presets,
+            // commands::navigation::nav_get_module_metadata,
+            // commands::navigation::nav_validate_layout,
+            // commands::navigation::nav_get_workspace_suggestions,
+            // commands::navigation::nav_reorder_modules,
+            // commands::navigation::nav_toggle_module_visibility,
+            // commands::navigation::nav_toggle_module_pin,
+            // commands::navigation::nav_move_module_to_group,
+            
+            // Shell Integration Commands
+            commands::shell::shell_get_available_shells,
+            commands::shell::shell_get_default_shell,
+            commands::shell::shell_create_session,
+            commands::shell::shell_close_session,
+            commands::shell::shell_get_session_info,
+            commands::shell::shell_launch_powershell_script,
+            commands::shell::shell_launch_wsl_distro,
+            commands::shell::shell_execute_command,
+            commands::shell::shell_test_availability,
+            
+            // PTY Shell Commands
+            commands::shell::pty_create_session,
+            commands::shell::pty_write_input,
+            commands::shell::pty_get_output,
+            commands::shell::pty_get_full_output,
+            commands::shell::simple_execute_command,
+            commands::shell::pty_resize_session,
+            commands::shell::pty_close_session,
+            commands::shell::pty_list_sessions,
+            
+            // Font Commands
+            commands::fonts::get_embedded_fonts,
+            commands::fonts::get_fonts_by_category,
+            commands::fonts::get_font_weights,
+            
+            // Settings Commands
+            commands::settings::get_settings,
+            commands::settings::update_settings,
+            commands::settings::set_fonts,
+            commands::settings::set_accessibility,
+            commands::settings::apply_font_settings,
             
             quarantine::quarantine_approve_file,
         ])

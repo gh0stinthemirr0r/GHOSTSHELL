@@ -1,4 +1,3 @@
-pub mod settings;
 pub mod theme;
 pub mod theme_v2;
 pub mod theme_vault;
@@ -7,3 +6,8 @@ pub mod policy;
 pub mod notify;
 pub mod ai;
 pub mod browse;
+pub mod vpn_status;
+pub mod navigation;
+pub mod shell;
+pub mod fonts;
+pub mod settings;

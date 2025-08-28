@@ -2,6 +2,9 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+/* Import embedded fonts */
+@import './lib/styles/fonts.css';
+
 /* CSS Variables for theming - will be updated by theme system */
 :root {
   /* Layout */

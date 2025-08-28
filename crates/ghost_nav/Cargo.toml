@@ -1,0 +1,17 @@
+[package]
+name = "ghost_nav"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+anyhow = "1.0"
+uuid = { version = "1.0", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+tracing = "0.1"
+
+# Internal dependencies
+ghost_policy = { path = "../ghost_policy" }
+ghost_vault = { path = "../ghost_vault" }
+ghost_pq = { path = "../ghost_pq" }

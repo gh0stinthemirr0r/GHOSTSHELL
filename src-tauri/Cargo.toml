@@ -39,6 +39,10 @@ ghost_tls = { path = "../crates/ghost_tls" }
 ghost_autofill = { path = "../crates/ghost_autofill" }
 ghost_download = { path = "../crates/ghost_download" }
 
+# Phase 16 Navigation Crates
+ghost_nav = { path = "../crates/ghost_nav" }
+ghost_prefs = { path = "../crates/ghost_prefs" }
+
 # Tauri and Serialization
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }

@@ -405,6 +405,8 @@ def start_application():
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             universal_newlines=True,
+            encoding='utf-8',
+            errors='replace',
             bufsize=1,
             shell=True
         )

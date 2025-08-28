@@ -19,7 +19,9 @@ members = [
     "crates/ghost_browse",
     "crates/ghost_tls",
     "crates/ghost_autofill",
-    "crates/ghost_download"
+    "crates/ghost_download",
+    "crates/ghost_nav",
+    "crates/ghost_prefs"
 ]
 resolver = "2"
 

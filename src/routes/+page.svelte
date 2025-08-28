@@ -7,16 +7,20 @@
   import ThemeManagerV2 from '$lib/components/ThemeManagerV2.svelte';
   import FontSelector from '$lib/components/FontSelector.svelte';
   import AccessibilitySettings from '$lib/components/AccessibilitySettings.svelte';
+  import NavigationSettings from '$lib/components/NavigationSettings.svelte';
   import { commandPaletteStore } from '$lib/stores/commandPalette';
-  import { onMount } from 'svelte';
-  import { Activity } from 'lucide-svelte';
+  import { notificationsStore, clearAllNotifications, markAllAsRead, getUnreadCount, type Notification } from '$lib/stores/notifications';
+  import { settingsStore } from '$lib/stores/settings';
+  import { onMount, onDestroy } from 'svelte';
+  import { Activity, X } from 'lucide-svelte';
+  import { invoke } from '@tauri-apps/api/tauri';
   
   // Lazy loading for heavy components
   let loadedComponents: Record<string, any> = {};
   
   // Component loading map
   const componentMap: Record<string, () => Promise<any>> = {
-    'terminal': () => import('$lib/components/Terminal.svelte'),
+    'terminal': () => import('$lib/components/TerminalSimple.svelte'),
     'ghostssh': () => import('$lib/components/SshClient.svelte'),
     'ghostbrowse': () => import('$lib/components/BrowserWindow.svelte'),
     'ghostvpn': () => import('$lib/components/VpnClient.svelte'),
@@ -62,6 +66,19 @@
   let sidebarCollapsed = false;
   let showThemeManager = false;
   let showFontSettings = false;
+  let showNotifications = false;
+  let showNavigationSettings = false;
+  let notifications: Notification[] = [];
+  
+  // Font settings state
+  let selectedTerminalFont = 'JetBrains Mono';
+  let selectedUIFont = 'Inter';
+  let fontSize = 14;
+  
+  // Subscribe to notifications
+  const unsubscribeNotifications = notificationsStore.subscribe(value => {
+    notifications = value;
+  });
   
   // Handle keyboard shortcuts
   onMount(() => {
@@ -75,6 +92,10 @@
     
     document.addEventListener('keydown', handleKeydown);
     return () => document.removeEventListener('keydown', handleKeydown);
+  });
+  
+  onDestroy(() => {
+    unsubscribeNotifications();
   });
   
   function handleModuleSelect(event: CustomEvent<string>) {
@@ -103,24 +124,76 @@
         console.log('Unhandled command:', command, args);
     }
   }
+  
+  function handleShowNotifications() {
+    showNotifications = true;
+    // Mark all notifications as read when panel is opened
+    markAllAsRead();
+  }
+  
+  function handleClearAllNotifications() {
+    clearAllNotifications();
+    showNotifications = false;
+  }
 
   function handleTerminalFontChange(event: CustomEvent<string>) {
     const fontFamily = event.detail;
     console.log('Terminal font changed:', fontFamily);
-    
-    // Apply to CSS variables
-    document.documentElement.style.setProperty('--font-mono', `"${fontFamily}", ui-monospace, SFMono-Regular, monospace`);
-    
-    // TODO: Apply to terminal instance if available
+    selectedTerminalFont = fontFamily;
   }
 
   function handleUIFontChange(event: CustomEvent<string>) {
     const fontFamily = event.detail;
     console.log('UI font changed:', fontFamily);
+    selectedUIFont = fontFamily;
+  }
+  
+  async function applyFontSettings() {
+    try {
+      console.log('Applying font settings:', { selectedTerminalFont, selectedUIFont, fontSize });
+      
+      // Call backend to save and apply settings
+      const updatedSettings = await invoke('apply_font_settings', {
+        monoFont: selectedTerminalFont,
+        uiFont: selectedUIFont,
+        fontSize: fontSize
+      });
+      
+      // Update the settings store
+      await settingsStore.setFonts({
+        monoFont: selectedTerminalFont,
+        uiFont: selectedUIFont,
+        fontSize: fontSize
+      });
+      
+      console.log('Font settings applied successfully');
+      showFontSettings = false;
+      
+    } catch (error) {
+      console.error('Failed to apply font settings:', error);
+    }
+  }
+  
+  function getNotificationColor(type: string): string {
+    switch (type) {
+      case 'success': return 'green';
+      case 'warning': return 'yellow';
+      case 'error': return 'red';
+      default: return 'cyan';
+    }
+  }
+  
+  function formatTimestamp(timestamp: Date): string {
+    const now = new Date();
+    const diff = now.getTime() - timestamp.getTime();
+    const minutes = Math.floor(diff / 60000);
+    const hours = Math.floor(diff / 3600000);
+    const days = Math.floor(diff / 86400000);
     
-    // Apply to CSS variables
-    document.documentElement.style.setProperty('--font-ui', `"${fontFamily}", ui-sans-serif, system-ui, sans-serif`);
-    document.documentElement.style.setProperty('--font-display', `"${fontFamily}", ui-sans-serif, system-ui, sans-serif`);
+    if (minutes < 1) return 'Just now';
+    if (minutes < 60) return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+    if (hours < 24) return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+    return `${days} day${days > 1 ? 's' : ''} ago`;
   }
 </script>
 
@@ -158,7 +231,12 @@
   <!-- Main Content Area -->
   <div class="flex-1 flex flex-col">
     <!-- Top Bar -->
-    <TopBar {activeModule} />
+    <TopBar 
+      {activeModule} 
+      on:show-notifications={handleShowNotifications}
+      on:module-select={handleModuleSelect}
+      on:command-execute={handleCommandExecute}
+    />
     
     <!-- Content Area -->
     <div class="flex-1 relative">
@@ -170,6 +248,21 @@
               <h2 class="text-xl font-bold text-white mb-4" style="font-family: var(--font-display);">Settings</h2>
               
               <div class="space-y-6">
+                <!-- Navigation Settings -->
+                <div>
+                  <h3 class="text-lg font-semibold text-white mb-3">Navigation & Visibility</h3>
+                  <div class="space-y-2">
+                    <button
+                      on:click={() => showNavigationSettings = true}
+                      class="w-full text-left px-4 py-3 bg-black/20 border border-gray-700/50 rounded-lg 
+                             hover:border-cyan-500/50 transition-colors"
+                    >
+                      <div class="text-white font-medium">Sidebar Layout</div>
+                      <div class="text-gray-400 text-sm">Customize which modules appear in the sidebar and how they're organized</div>
+                    </button>
+                  </div>
+                </div>
+
                 <!-- Theme Settings -->
                 <div>
                   <h3 class="text-lg font-semibold text-white mb-3">Appearance</h3>
@@ -215,7 +308,7 @@
           </div>
         {:then Component}
           {#if Component}
-            <svelte:component this={Component} />
+            <svelte:component this={Component} on:show-notifications={handleShowNotifications} />
           {:else}
             <!-- Unknown module -->
             <div class="flex items-center justify-center h-full">
@@ -252,6 +345,27 @@
   <ThemeManagerV2 bind:isOpen={showThemeManager} />
 {/if}
 
+{#if showNavigationSettings}
+  <div class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+    <div class="w-full max-w-6xl h-full max-h-[90vh] bg-black/90 backdrop-blur-sm border border-gray-700/50 rounded-xl overflow-hidden">
+      <div class="h-full flex flex-col">
+        <div class="flex items-center justify-between p-4 border-b border-gray-700/50">
+          <h3 class="text-lg font-semibold text-white">Navigation & Visibility Settings</h3>
+          <button
+            on:click={() => showNavigationSettings = false}
+            class="p-2 rounded-lg hover:bg-white/10 transition-colors text-gray-400 hover:text-white"
+          >
+            <X size={20} />
+          </button>
+        </div>
+        <div class="flex-1 overflow-hidden">
+          <NavigationSettings />
+        </div>
+      </div>
+    </div>
+  </div>
+{/if}
+
 {#if showFontSettings}
   <div class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
     <div class="frosted border border-gray-700/50 rounded-xl w-full max-w-md p-6">
@@ -261,20 +375,21 @@
         <FontSelector 
           label="Terminal Font" 
           fontType="mono"
-          selectedFont="JetBrains Mono"
+          selectedFont={selectedTerminalFont}
           on:font-change={handleTerminalFontChange}
         />
         
         <FontSelector 
           label="Interface Font" 
           fontType="ui"
-          selectedFont="Space Grotesk"
+          selectedFont={selectedUIFont}
           on:font-change={handleUIFontChange}
         />
       </div>
       
       <div class="flex space-x-3 mt-6">
         <button
+          on:click={applyFontSettings}
           class="flex-1 px-4 py-2 bg-cyan-500/20 border border-cyan-500/50 rounded-lg 
                  hover:bg-cyan-500/30 transition-colors text-cyan-400"
         >
@@ -286,6 +401,55 @@
                  hover:bg-gray-500/30 transition-colors text-gray-400"
         >
           Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+{/if}
+
+{#if showNotifications}
+  <div class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-start justify-end pt-20 pr-4 z-50">
+    <div class="frosted border border-gray-700/50 rounded-xl w-full max-w-sm p-4">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-semibold text-white" style="font-family: var(--font-display);">Notifications</h3>
+        <button
+          on:click={() => showNotifications = false}
+          class="p-1 rounded hover:bg-white/10 transition-colors text-gray-400 hover:text-white"
+        >
+          <X size={16} />
+        </button>
+      </div>
+      
+      <div class="space-y-3 max-h-96 overflow-y-auto">
+        {#if notifications.length === 0}
+          <div class="text-center py-8">
+            <p class="text-gray-400 text-sm">No notifications</p>
+          </div>
+        {:else}
+          {#each notifications as notification}
+            <div class="p-3 bg-{getNotificationColor(notification.type)}-500/10 border border-{getNotificationColor(notification.type)}-500/30 rounded-lg">
+              <div class="flex items-start space-x-2">
+                <div class="w-2 h-2 bg-{getNotificationColor(notification.type)}-400 rounded-full mt-2 flex-shrink-0"></div>
+                <div class="flex-1">
+                  <p class="text-sm font-medium text-{getNotificationColor(notification.type)}-400">{notification.title}</p>
+                  {#if notification.message}
+                    <p class="text-xs text-gray-300 mt-1">{notification.message}</p>
+                  {/if}
+                  <p class="text-xs text-gray-500 mt-1">{formatTimestamp(notification.timestamp)}</p>
+                </div>
+              </div>
+            </div>
+          {/each}
+        {/if}
+      </div>
+      
+      <div class="mt-4 pt-3 border-t border-gray-700/50">
+        <button
+          class="w-full px-3 py-2 text-sm bg-gray-500/20 border border-gray-500/50 rounded-lg 
+                 hover:bg-gray-500/30 transition-colors text-gray-400"
+          on:click={handleClearAllNotifications}
+        >
+          Clear All
         </button>
       </div>
     </div>

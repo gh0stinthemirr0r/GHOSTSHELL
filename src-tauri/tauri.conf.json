@@ -69,7 +69,7 @@
         "providerShortName": null,
         "signingIdentity": null
       },
-      "resources": [],
+      "resources": ["fonts/*"],
       "shortDescription": "GHOSTSHELL - PQ Secure Terminal",
       "targets": "all",
       "windows": {

@@ -1916,6 +1916,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "ghost_nav"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "chrono",
+ "ghost_policy",
+ "ghost_pq",
+ "ghost_vault",
+ "serde",
+ "serde_json",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
 name = "ghost_notify"
 version = "0.1.0"
 dependencies = [
@@ -1966,6 +1981,24 @@ dependencies = [
  "sha3",
  "thiserror",
  "zeroize",
+]
+
+[[package]]
+name = "ghost_prefs"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "async-trait",
+ "chrono",
+ "ghost_log",
+ "ghost_nav",
+ "ghost_policy",
+ "ghost_vault",
+ "serde",
+ "serde_json",
+ "tokio",
+ "tracing",
+ "uuid",
 ]
 
 [[package]]
@@ -2071,9 +2104,11 @@ dependencies = [
  "ghost_explain",
  "ghost_link",
  "ghost_log",
+ "ghost_nav",
  "ghost_notify",
  "ghost_policy",
  "ghost_pq",
+ "ghost_prefs",
  "ghost_theme",
  "ghost_tls",
  "ghost_trends",
