@@ -18,6 +18,7 @@
   const componentMap: Record<string, () => Promise<any>> = {
     'terminal': () => import('$lib/components/Terminal.svelte'),
     'ghostssh': () => import('$lib/components/SshClient.svelte'),
+    'ghostbrowse': () => import('$lib/components/BrowserWindow.svelte'),
     'ghostvpn': () => import('$lib/components/VpnClient.svelte'),
     'ghostai': () => import('$lib/components/AiAssistant.svelte'),
     'topology': () => import('$lib/components/NetworkTopology.svelte'),

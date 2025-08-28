@@ -5,49 +5,49 @@
       ".svelte-kit/generated/client-optimized/nodes/1.js",
       ".svelte-kit/generated/client-optimized/nodes/2.js"
     ],
-    "file": "_app/immutable/entry/app.a67683f6.js",
+    "file": "_app/immutable/entry/app.24a070c0.js",
     "imports": [
       "_preload-helper.a4192956.js",
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js"
     ],
     "isEntry": true,
     "src": ".svelte-kit/generated/client-optimized/app.js"
   },
   ".svelte-kit/generated/client-optimized/nodes/0.css": {
-    "file": "_app/immutable/assets/0.3e68dfba.css",
+    "file": "_app/immutable/assets/0.bbb1bdf6.css",
     "src": ".svelte-kit/generated/client-optimized/nodes/0.css"
   },
   ".svelte-kit/generated/client-optimized/nodes/0.js": {
     "css": [
-      "_app/immutable/assets/0.3e68dfba.css"
+      "_app/immutable/assets/0.bbb1bdf6.css"
     ],
-    "file": "_app/immutable/nodes/0.b67c3f61.js",
+    "file": "_app/immutable/nodes/0.e9872747.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_theme.9ade0a60.js",
-      "_settings.10dbda86.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_theme.ddae6d24.js",
+      "_settings.a373fedf.js"
     ],
     "isDynamicEntry": true,
     "isEntry": true,
     "src": ".svelte-kit/generated/client-optimized/nodes/0.js"
   },
   ".svelte-kit/generated/client-optimized/nodes/1.js": {
-    "file": "_app/immutable/nodes/1.d1304138.js",
+    "file": "_app/immutable/nodes/1.f991aded.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_singletons.b41e33e9.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_singletons.1f4152e0.js"
     ],
     "isDynamicEntry": true,
     "isEntry": true,
     "src": ".svelte-kit/generated/client-optimized/nodes/1.js"
   },
   ".svelte-kit/generated/client-optimized/nodes/2.js": {
-    "file": "_app/immutable/nodes/2.3364f251.js",
+    "file": "_app/immutable/nodes/2.c01b5fd9.js",
     "imports": [
-      "_2.2a907247.js"
+      "_2.16ed5d35.js"
     ],
     "isEntry": true,
     "src": ".svelte-kit/generated/client-optimized/nodes/2.js"
@@ -56,15 +56,16 @@
     "file": "_app/immutable/assets/2.46b8afcf.css",
     "src": "2.css"
   },
-  "_2.2a907247.js": {
+  "_2.16ed5d35.js": {
     "css": [
       "_app/immutable/assets/2.46b8afcf.css"
     ],
     "dynamicImports": [
       "node_modules/@tauri-apps/api/window.js",
-      "_theme.9ade0a60.js",
+      "_theme.ddae6d24.js",
       "src/lib/components/Terminal.svelte",
       "src/lib/components/SshClient.svelte",
+      "src/lib/components/BrowserWindow.svelte",
       "src/lib/components/VpnClient.svelte",
       "src/lib/components/AiAssistant.svelte",
       "src/lib/components/NetworkTopology.svelte",
@@ -90,13 +91,13 @@
       "src/lib/components/GhostVault.svelte",
       "src/lib/components/SecurityPolicy.svelte"
     ],
-    "file": "_app/immutable/chunks/2.2a907247.js",
+    "file": "_app/immutable/chunks/2.16ed5d35.js",
     "imports": [
       "_preload-helper.a4192956.js",
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_index.8ea75e04.js",
-      "_theme.9ade0a60.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_index.57752d85.js",
+      "_theme.ddae6d24.js"
     ],
     "isDynamicEntry": true
   },
@@ -124,280 +125,304 @@
     ],
     "isDynamicEntry": true
   },
-  "_arrow-right.44351f37.js": {
-    "file": "_app/immutable/chunks/arrow-right.44351f37.js",
+  "_arrow-right.25177c7a.js": {
+    "file": "_app/immutable/chunks/arrow-right.25177c7a.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js"
     ]
   },
-  "_award.f16be681.js": {
-    "file": "_app/immutable/chunks/award.f16be681.js",
+  "_award.3430e123.js": {
+    "file": "_app/immutable/chunks/award.3430e123.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js"
     ]
   },
-  "_calendar.d3912a8c.js": {
-    "file": "_app/immutable/chunks/calendar.d3912a8c.js",
+  "_calendar.3945c283.js": {
+    "file": "_app/immutable/chunks/calendar.3945c283.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js"
     ]
   },
-  "_circle-x.efba64cd.js": {
-    "file": "_app/immutable/chunks/circle-x.efba64cd.js",
+  "_circle-x.89d5d528.js": {
+    "file": "_app/immutable/chunks/circle-x.89d5d528.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js"
     ]
   },
-  "_clock.0a338402.js": {
-    "file": "_app/immutable/chunks/clock.0a338402.js",
+  "_clock.44fd2ee1.js": {
+    "file": "_app/immutable/chunks/clock.44fd2ee1.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js"
     ]
   },
-  "_copy.ee6a5379.js": {
-    "file": "_app/immutable/chunks/copy.ee6a5379.js",
+  "_copy.65a3f3ee.js": {
+    "file": "_app/immutable/chunks/copy.65a3f3ee.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js"
     ]
   },
-  "_download.745acc54.js": {
-    "file": "_app/immutable/chunks/download.745acc54.js",
+  "_download.b268edce.js": {
+    "file": "_app/immutable/chunks/download.b268edce.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js"
     ]
   },
-  "_event.bbd47227.js": {
-    "file": "_app/immutable/chunks/event.bbd47227.js",
+  "_event.af8c9269.js": {
+    "file": "_app/immutable/chunks/event.af8c9269.js",
     "imports": [
-      "_theme.9ade0a60.js"
+      "_theme.ddae6d24.js"
     ]
   },
-  "_hard-drive.9ac7b235.js": {
-    "file": "_app/immutable/chunks/hard-drive.9ac7b235.js",
+  "_hard-drive.4e50b0cd.js": {
+    "file": "_app/immutable/chunks/hard-drive.4e50b0cd.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js"
     ]
   },
-  "_hash.54737047.js": {
-    "file": "_app/immutable/chunks/hash.54737047.js",
+  "_hash.11a5bc26.js": {
+    "file": "_app/immutable/chunks/hash.11a5bc26.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js"
     ]
   },
-  "_index.8ea75e04.js": {
-    "file": "_app/immutable/chunks/index.8ea75e04.js",
+  "_index.57752d85.js": {
+    "file": "_app/immutable/chunks/index.57752d85.js",
     "imports": [
-      "_scheduler.78e7c9ac.js"
+      "_scheduler.4c62dcfe.js"
     ]
   },
-  "_index.93082cef.js": {
-    "file": "_app/immutable/chunks/index.93082cef.js",
+  "_index.da97ccc5.js": {
+    "file": "_app/immutable/chunks/index.da97ccc5.js",
     "imports": [
-      "_scheduler.78e7c9ac.js"
+      "_scheduler.4c62dcfe.js"
     ]
   },
-  "_key.2ba971ae.js": {
-    "file": "_app/immutable/chunks/key.2ba971ae.js",
+  "_key.8be259f2.js": {
+    "file": "_app/immutable/chunks/key.8be259f2.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js"
     ]
   },
-  "_lock-open.a517ae3a.js": {
-    "file": "_app/immutable/chunks/lock-open.a517ae3a.js",
+  "_loader.7f0fc54d.js": {
+    "file": "_app/immutable/chunks/loader.7f0fc54d.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js"
     ]
   },
-  "_lock.d092f3c5.js": {
-    "file": "_app/immutable/chunks/lock.d092f3c5.js",
+  "_lock-open.19223a0b.js": {
+    "file": "_app/immutable/chunks/lock-open.19223a0b.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js"
     ]
   },
-  "_mail.552d61da.js": {
-    "file": "_app/immutable/chunks/mail.552d61da.js",
+  "_lock.2df5ef94.js": {
+    "file": "_app/immutable/chunks/lock.2df5ef94.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js"
     ]
   },
-  "_move.bd92e995.js": {
-    "file": "_app/immutable/chunks/move.bd92e995.js",
+  "_mail.82f31f32.js": {
+    "file": "_app/immutable/chunks/mail.82f31f32.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js"
     ]
   },
-  "_network.8adc472d.js": {
-    "file": "_app/immutable/chunks/network.8adc472d.js",
+  "_move.cba9ee03.js": {
+    "file": "_app/immutable/chunks/move.cba9ee03.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js"
     ]
   },
-  "_pie-chart.9ffc61b6.js": {
-    "file": "_app/immutable/chunks/pie-chart.9ffc61b6.js",
+  "_network.35b9df9e.js": {
+    "file": "_app/immutable/chunks/network.35b9df9e.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js"
     ]
   },
-  "_play.1bc0c599.js": {
-    "file": "_app/immutable/chunks/play.1bc0c599.js",
+  "_pie-chart.cdd76d0a.js": {
+    "file": "_app/immutable/chunks/pie-chart.cdd76d0a.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js"
     ]
   },
-  "_plus.ff2ec606.js": {
-    "file": "_app/immutable/chunks/plus.ff2ec606.js",
+  "_play.f730a662.js": {
+    "file": "_app/immutable/chunks/play.f730a662.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js"
+    ]
+  },
+  "_plus.37b71d4e.js": {
+    "file": "_app/immutable/chunks/plus.37b71d4e.js",
+    "imports": [
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js"
     ]
   },
   "_preload-helper.a4192956.js": {
     "file": "_app/immutable/chunks/preload-helper.a4192956.js"
   },
-  "_refresh-cw.04873e07.js": {
-    "file": "_app/immutable/chunks/refresh-cw.04873e07.js",
+  "_refresh-cw.0726dac9.js": {
+    "file": "_app/immutable/chunks/refresh-cw.0726dac9.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js"
     ]
   },
-  "_scheduler.78e7c9ac.js": {
-    "file": "_app/immutable/chunks/scheduler.78e7c9ac.js"
-  },
-  "_server.610f7e28.js": {
-    "file": "_app/immutable/chunks/server.610f7e28.js",
+  "_rotate-ccw.1b4108f7.js": {
+    "file": "_app/immutable/chunks/rotate-ccw.1b4108f7.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js"
     ]
   },
-  "_settings.10dbda86.js": {
-    "file": "_app/immutable/chunks/settings.10dbda86.js",
+  "_scheduler.4c62dcfe.js": {
+    "file": "_app/immutable/chunks/scheduler.4c62dcfe.js"
+  },
+  "_server.ba3489fc.js": {
+    "file": "_app/immutable/chunks/server.ba3489fc.js",
     "imports": [
-      "_index.8ea75e04.js",
-      "_theme.9ade0a60.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js"
     ]
   },
-  "_shield-x.b0879ba6.js": {
-    "file": "_app/immutable/chunks/shield-x.b0879ba6.js",
+  "_settings.a373fedf.js": {
+    "file": "_app/immutable/chunks/settings.a373fedf.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js"
+      "_index.57752d85.js",
+      "_theme.ddae6d24.js"
     ]
   },
-  "_singletons.b41e33e9.js": {
-    "file": "_app/immutable/chunks/singletons.b41e33e9.js",
+  "_share.705b1f3d.js": {
+    "file": "_app/immutable/chunks/share.705b1f3d.js",
     "imports": [
-      "_index.8ea75e04.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js"
     ]
   },
-  "_smartphone.70f03f62.js": {
-    "file": "_app/immutable/chunks/smartphone.70f03f62.js",
+  "_shield-x.ff10ffed.js": {
+    "file": "_app/immutable/chunks/shield-x.ff10ffed.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js"
     ]
   },
-  "_square-pen.59dae05f.js": {
-    "file": "_app/immutable/chunks/square-pen.59dae05f.js",
+  "_singletons.1f4152e0.js": {
+    "file": "_app/immutable/chunks/singletons.1f4152e0.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js"
+      "_index.57752d85.js"
     ]
   },
-  "_star.b0c3e45e.js": {
-    "file": "_app/immutable/chunks/star.b0c3e45e.js",
+  "_smartphone.c1a66fa1.js": {
+    "file": "_app/immutable/chunks/smartphone.c1a66fa1.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js"
     ]
   },
-  "_target.edc65f37.js": {
-    "file": "_app/immutable/chunks/target.edc65f37.js",
+  "_square-pen.72c773fe.js": {
+    "file": "_app/immutable/chunks/square-pen.72c773fe.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js"
     ]
   },
-  "_theme.9ade0a60.js": {
-    "file": "_app/immutable/chunks/theme.9ade0a60.js",
+  "_star.6e9ddb59.js": {
+    "file": "_app/immutable/chunks/star.6e9ddb59.js",
     "imports": [
-      "_index.8ea75e04.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js"
+    ]
+  },
+  "_target.be2b43f8.js": {
+    "file": "_app/immutable/chunks/target.be2b43f8.js",
+    "imports": [
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js"
+    ]
+  },
+  "_theme.ddae6d24.js": {
+    "file": "_app/immutable/chunks/theme.ddae6d24.js",
+    "imports": [
+      "_index.57752d85.js"
     ],
     "isDynamicEntry": true
   },
-  "_trending-down.cccb84a0.js": {
-    "file": "_app/immutable/chunks/trending-down.cccb84a0.js",
+  "_trending-down.682bd9fe.js": {
+    "file": "_app/immutable/chunks/trending-down.682bd9fe.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js"
     ]
   },
-  "_upload.5b89f96b.js": {
-    "file": "_app/immutable/chunks/upload.5b89f96b.js",
+  "_upload.feb69a61.js": {
+    "file": "_app/immutable/chunks/upload.feb69a61.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js"
     ]
   },
-  "_user.e5c0a012.js": {
-    "file": "_app/immutable/chunks/user.e5c0a012.js",
+  "_user.28b4d3b9.js": {
+    "file": "_app/immutable/chunks/user.28b4d3b9.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js"
     ]
   },
-  "_users.13694db0.js": {
-    "file": "_app/immutable/chunks/users.13694db0.js",
+  "_users.e7f97380.js": {
+    "file": "_app/immutable/chunks/users.e7f97380.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js"
     ]
   },
   "_xterm.7fe5c096.js": {
@@ -408,67 +433,90 @@
     "isDynamicEntry": true
   },
   "node_modules/@sveltejs/kit/src/runtime/client/start.js": {
-    "file": "_app/immutable/entry/start.897afa35.js",
+    "file": "_app/immutable/entry/start.d3ee9da9.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_singletons.b41e33e9.js"
+      "_scheduler.4c62dcfe.js",
+      "_singletons.1f4152e0.js"
     ],
     "isEntry": true,
     "src": "node_modules/@sveltejs/kit/src/runtime/client/start.js"
   },
   "node_modules/@tauri-apps/api/window.js": {
-    "file": "_app/immutable/chunks/window.7ce66d6e.js",
+    "file": "_app/immutable/chunks/window.47275a3f.js",
     "imports": [
-      "_event.bbd47227.js"
+      "_event.af8c9269.js"
     ],
     "isDynamicEntry": true,
     "src": "node_modules/@tauri-apps/api/window.js"
   },
   "src/lib/components/AiAssistant.svelte": {
-    "file": "_app/immutable/chunks/AiAssistant.841a3671.js",
+    "file": "_app/immutable/chunks/AiAssistant.dbdc02ba.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js",
-      "_theme.9ade0a60.js",
-      "_star.b0c3e45e.js",
-      "_network.8adc472d.js",
-      "_plus.ff2ec606.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js",
+      "_theme.ddae6d24.js",
+      "_network.35b9df9e.js",
+      "_plus.37b71d4e.js",
+      "_star.6e9ddb59.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/AiAssistant.svelte"
   },
   "src/lib/components/AutonomousSOC.svelte": {
-    "file": "_app/immutable/chunks/AutonomousSOC.77f55857.js",
+    "file": "_app/immutable/chunks/AutonomousSOC.58af21a2.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js",
-      "_refresh-cw.04873e07.js",
-      "_plus.ff2ec606.js",
-      "_play.1bc0c599.js",
-      "_clock.0a338402.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js",
+      "_refresh-cw.0726dac9.js",
+      "_plus.37b71d4e.js",
+      "_play.f730a662.js",
+      "_clock.44fd2ee1.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/AutonomousSOC.svelte"
   },
   "src/lib/components/BehavioralAnalytics.svelte": {
-    "file": "_app/immutable/chunks/BehavioralAnalytics.f75c5b1a.js",
+    "file": "_app/immutable/chunks/BehavioralAnalytics.37e4772d.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js",
-      "_theme.9ade0a60.js",
-      "_user.e5c0a012.js",
-      "_refresh-cw.04873e07.js",
-      "_users.13694db0.js",
-      "_target.edc65f37.js",
-      "_clock.0a338402.js",
-      "_pie-chart.9ffc61b6.js",
-      "_smartphone.70f03f62.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js",
+      "_theme.ddae6d24.js",
+      "_user.28b4d3b9.js",
+      "_refresh-cw.0726dac9.js",
+      "_users.e7f97380.js",
+      "_target.be2b43f8.js",
+      "_clock.44fd2ee1.js",
+      "_pie-chart.cdd76d0a.js",
+      "_smartphone.c1a66fa1.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/BehavioralAnalytics.svelte"
+  },
+  "src/lib/components/BrowserWindow.css": {
+    "file": "_app/immutable/assets/BrowserWindow.611f8386.css",
+    "src": "src/lib/components/BrowserWindow.css"
+  },
+  "src/lib/components/BrowserWindow.svelte": {
+    "css": [
+      "_app/immutable/assets/BrowserWindow.611f8386.css"
+    ],
+    "file": "_app/immutable/chunks/BrowserWindow.c7931ae1.js",
+    "imports": [
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js",
+      "_theme.ddae6d24.js",
+      "_loader.7f0fc54d.js",
+      "_rotate-ccw.1b4108f7.js",
+      "_star.6e9ddb59.js",
+      "_share.705b1f3d.js",
+      "_download.b268edce.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/lib/components/BrowserWindow.svelte"
   },
   "src/lib/components/ComplianceDashboard.css": {
     "file": "_app/immutable/assets/ExploitEngine.796b4dcd.css",
@@ -478,35 +526,35 @@
     "css": [
       "_app/immutable/assets/ExploitEngine.796b4dcd.css"
     ],
-    "file": "_app/immutable/chunks/ComplianceDashboard.2ab9fc35.js",
+    "file": "_app/immutable/chunks/ComplianceDashboard.ee2c1208.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js",
-      "_theme.9ade0a60.js",
-      "_refresh-cw.04873e07.js",
-      "_download.745acc54.js",
-      "_circle-x.efba64cd.js",
-      "_trending-down.cccb84a0.js",
-      "_calendar.d3912a8c.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js",
+      "_theme.ddae6d24.js",
+      "_refresh-cw.0726dac9.js",
+      "_download.b268edce.js",
+      "_circle-x.89d5d528.js",
+      "_trending-down.682bd9fe.js",
+      "_calendar.3945c283.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/ComplianceDashboard.svelte"
   },
   "src/lib/components/ComplianceManager.svelte": {
-    "file": "_app/immutable/chunks/ComplianceManager.5487b048.js",
+    "file": "_app/immutable/chunks/ComplianceManager.4e779293.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js",
-      "_theme.9ade0a60.js",
-      "_trending-down.cccb84a0.js",
-      "_award.f16be681.js",
-      "_refresh-cw.04873e07.js",
-      "_target.edc65f37.js",
-      "_download.745acc54.js",
-      "_clock.0a338402.js",
-      "_plus.ff2ec606.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js",
+      "_theme.ddae6d24.js",
+      "_trending-down.682bd9fe.js",
+      "_award.3430e123.js",
+      "_refresh-cw.0726dac9.js",
+      "_target.be2b43f8.js",
+      "_download.b268edce.js",
+      "_clock.44fd2ee1.js",
+      "_plus.37b71d4e.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/ComplianceManager.svelte"
@@ -519,57 +567,58 @@
     "css": [
       "_app/immutable/assets/ExploitEngine.796b4dcd.css"
     ],
-    "file": "_app/immutable/chunks/ExploitEngine.ab63101d.js",
+    "file": "_app/immutable/chunks/ExploitEngine.f4737cc5.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js",
-      "_theme.9ade0a60.js",
-      "_event.bbd47227.js",
-      "_lock-open.a517ae3a.js",
-      "_target.edc65f37.js",
-      "_clock.0a338402.js",
-      "_circle-x.efba64cd.js",
-      "_lock.d092f3c5.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js",
+      "_theme.ddae6d24.js",
+      "_event.af8c9269.js",
+      "_lock-open.19223a0b.js",
+      "_target.be2b43f8.js",
+      "_clock.44fd2ee1.js",
+      "_circle-x.89d5d528.js",
+      "_lock.2df5ef94.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/ExploitEngine.svelte"
   },
   "src/lib/components/FileManager.svelte": {
-    "file": "_app/immutable/chunks/FileManager.d80c5e4a.js",
+    "file": "_app/immutable/chunks/FileManager.64b34343.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js",
-      "_theme.9ade0a60.js",
-      "_hard-drive.9ac7b235.js",
-      "_arrow-right.44351f37.js",
-      "_copy.ee6a5379.js",
-      "_move.bd92e995.js",
-      "_star.b0c3e45e.js",
-      "_plus.ff2ec606.js",
-      "_clock.0a338402.js",
-      "_lock.d092f3c5.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js",
+      "_theme.ddae6d24.js",
+      "_hard-drive.4e50b0cd.js",
+      "_arrow-right.25177c7a.js",
+      "_copy.65a3f3ee.js",
+      "_move.cba9ee03.js",
+      "_star.6e9ddb59.js",
+      "_plus.37b71d4e.js",
+      "_clock.44fd2ee1.js",
+      "_lock.2df5ef94.js",
+      "_loader.7f0fc54d.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/FileManager.svelte"
   },
   "src/lib/components/ForensicsKit.svelte": {
-    "file": "_app/immutable/chunks/ForensicsKit.1398dfff.js",
+    "file": "_app/immutable/chunks/ForensicsKit.71395f70.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js",
-      "_theme.9ade0a60.js",
-      "_hash.54737047.js",
-      "_calendar.d3912a8c.js",
-      "_plus.ff2ec606.js",
-      "_clock.0a338402.js",
-      "_circle-x.efba64cd.js",
-      "_network.8adc472d.js",
-      "_hard-drive.9ac7b235.js",
-      "_play.1bc0c599.js",
-      "_lock.d092f3c5.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js",
+      "_theme.ddae6d24.js",
+      "_hash.11a5bc26.js",
+      "_calendar.3945c283.js",
+      "_plus.37b71d4e.js",
+      "_clock.44fd2ee1.js",
+      "_circle-x.89d5d528.js",
+      "_network.35b9df9e.js",
+      "_hard-drive.4e50b0cd.js",
+      "_play.f730a662.js",
+      "_lock.2df5ef94.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/ForensicsKit.svelte"
@@ -582,48 +631,48 @@
     "css": [
       "_app/immutable/assets/GhostVault.2d5c14bb.css"
     ],
-    "file": "_app/immutable/chunks/GhostVault.a175e039.js",
+    "file": "_app/immutable/chunks/GhostVault.60e639a7.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js",
-      "_theme.9ade0a60.js",
-      "_lock.d092f3c5.js",
-      "_copy.ee6a5379.js",
-      "_plus.ff2ec606.js",
-      "_lock-open.a517ae3a.js",
-      "_key.2ba971ae.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js",
+      "_theme.ddae6d24.js",
+      "_lock.2df5ef94.js",
+      "_copy.65a3f3ee.js",
+      "_plus.37b71d4e.js",
+      "_lock-open.19223a0b.js",
+      "_key.8be259f2.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/GhostVault.svelte"
   },
   "src/lib/components/GlobalThreatIntelligence.svelte": {
-    "file": "_app/immutable/chunks/GlobalThreatIntelligence.b38d74c7.js",
+    "file": "_app/immutable/chunks/GlobalThreatIntelligence.10f8a279.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js",
-      "_refresh-cw.04873e07.js",
-      "_target.edc65f37.js",
-      "_play.1bc0c599.js",
-      "_network.8adc472d.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js",
+      "_refresh-cw.0726dac9.js",
+      "_target.be2b43f8.js",
+      "_play.f730a662.js",
+      "_network.35b9df9e.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/GlobalThreatIntelligence.svelte"
   },
   "src/lib/components/IntegrationHub.svelte": {
-    "file": "_app/immutable/chunks/IntegrationHub.e5f2bbf6.js",
+    "file": "_app/immutable/chunks/IntegrationHub.6c675e44.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js",
-      "_theme.9ade0a60.js",
-      "_refresh-cw.04873e07.js",
-      "_key.2ba971ae.js",
-      "_lock.d092f3c5.js",
-      "_plus.ff2ec606.js",
-      "_play.1bc0c599.js",
-      "_square-pen.59dae05f.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js",
+      "_theme.ddae6d24.js",
+      "_refresh-cw.0726dac9.js",
+      "_key.8be259f2.js",
+      "_lock.2df5ef94.js",
+      "_plus.37b71d4e.js",
+      "_play.f730a662.js",
+      "_square-pen.72c773fe.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/IntegrationHub.svelte"
@@ -636,157 +685,159 @@
     "css": [
       "_app/immutable/assets/LayersTool.a3164b8b.css"
     ],
-    "file": "_app/immutable/chunks/LayersTool.4b8c5321.js",
+    "file": "_app/immutable/chunks/LayersTool.3453a1c5.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js",
-      "_theme.9ade0a60.js",
-      "_event.bbd47227.js",
-      "_clock.0a338402.js",
-      "_circle-x.efba64cd.js",
-      "_target.edc65f37.js",
-      "_download.745acc54.js",
-      "_plus.ff2ec606.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js",
+      "_theme.ddae6d24.js",
+      "_event.af8c9269.js",
+      "_clock.44fd2ee1.js",
+      "_circle-x.89d5d528.js",
+      "_target.be2b43f8.js",
+      "_plus.37b71d4e.js",
+      "_download.b268edce.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/LayersTool.svelte"
   },
   "src/lib/components/MultiTenantManager.svelte": {
-    "file": "_app/immutable/chunks/MultiTenantManager.6840cc46.js",
+    "file": "_app/immutable/chunks/MultiTenantManager.69daf985.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js",
-      "_theme.9ade0a60.js",
-      "_refresh-cw.04873e07.js",
-      "_users.13694db0.js",
-      "_clock.0a338402.js",
-      "_plus.ff2ec606.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js",
+      "_theme.ddae6d24.js",
+      "_refresh-cw.0726dac9.js",
+      "_users.e7f97380.js",
+      "_clock.44fd2ee1.js",
+      "_plus.37b71d4e.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/MultiTenantManager.svelte"
   },
   "src/lib/components/NetworkTopology.svelte": {
-    "file": "_app/immutable/chunks/NetworkTopology.e12e853f.js",
+    "file": "_app/immutable/chunks/NetworkTopology.867a4683.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js",
-      "_theme.9ade0a60.js",
-      "_event.bbd47227.js",
-      "_refresh-cw.04873e07.js",
-      "_smartphone.70f03f62.js",
-      "_network.8adc472d.js",
-      "_server.610f7e28.js",
-      "_shield-x.b0879ba6.js",
-      "_play.1bc0c599.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js",
+      "_theme.ddae6d24.js",
+      "_event.af8c9269.js",
+      "_refresh-cw.0726dac9.js",
+      "_smartphone.c1a66fa1.js",
+      "_network.35b9df9e.js",
+      "_server.ba3489fc.js",
+      "_shield-x.ff10ffed.js",
+      "_play.f730a662.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/NetworkTopology.svelte"
   },
   "src/lib/components/OrchestrationDashboard.svelte": {
-    "file": "_app/immutable/chunks/OrchestrationDashboard.89dc0eb4.js",
+    "file": "_app/immutable/chunks/OrchestrationDashboard.7528ae94.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js",
-      "_theme.9ade0a60.js",
-      "_square-pen.59dae05f.js",
-      "_refresh-cw.04873e07.js",
-      "_play.1bc0c599.js",
-      "_mail.552d61da.js",
-      "_plus.ff2ec606.js",
-      "_clock.0a338402.js",
-      "_users.13694db0.js",
-      "_copy.ee6a5379.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js",
+      "_theme.ddae6d24.js",
+      "_square-pen.72c773fe.js",
+      "_refresh-cw.0726dac9.js",
+      "_play.f730a662.js",
+      "_mail.82f31f32.js",
+      "_plus.37b71d4e.js",
+      "_clock.44fd2ee1.js",
+      "_users.e7f97380.js",
+      "_copy.65a3f3ee.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/OrchestrationDashboard.svelte"
   },
   "src/lib/components/PcapStudio.svelte": {
-    "file": "_app/immutable/chunks/PcapStudio.628f60a2.js",
+    "file": "_app/immutable/chunks/PcapStudio.aed3408a.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js",
-      "_theme.9ade0a60.js",
-      "_event.bbd47227.js",
-      "_play.1bc0c599.js",
-      "_clock.0a338402.js",
-      "_circle-x.efba64cd.js",
-      "_download.745acc54.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js",
+      "_theme.ddae6d24.js",
+      "_event.af8c9269.js",
+      "_play.f730a662.js",
+      "_clock.44fd2ee1.js",
+      "_circle-x.89d5d528.js",
+      "_download.b268edce.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/PcapStudio.svelte"
   },
   "src/lib/components/PredictiveSecurity.svelte": {
-    "file": "_app/immutable/chunks/PredictiveSecurity.cb3d920d.js",
+    "file": "_app/immutable/chunks/PredictiveSecurity.d83b4348.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js",
-      "_theme.9ade0a60.js",
-      "_refresh-cw.04873e07.js",
-      "_network.8adc472d.js",
-      "_users.13694db0.js",
-      "_target.edc65f37.js",
-      "_arrow-right.44351f37.js",
-      "_pie-chart.9ffc61b6.js",
-      "_clock.0a338402.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js",
+      "_theme.ddae6d24.js",
+      "_refresh-cw.0726dac9.js",
+      "_network.35b9df9e.js",
+      "_users.e7f97380.js",
+      "_target.be2b43f8.js",
+      "_arrow-right.25177c7a.js",
+      "_pie-chart.cdd76d0a.js",
+      "_clock.44fd2ee1.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/PredictiveSecurity.svelte"
   },
   "src/lib/components/QuantumSafeOperations.svelte": {
-    "file": "_app/immutable/chunks/QuantumSafeOperations.478139b2.js",
+    "file": "_app/immutable/chunks/QuantumSafeOperations.3aea867d.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js",
-      "_refresh-cw.04873e07.js",
-      "_lock.d092f3c5.js",
-      "_key.2ba971ae.js",
-      "_network.8adc472d.js",
-      "_award.f16be681.js",
-      "_plus.ff2ec606.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js",
+      "_refresh-cw.0726dac9.js",
+      "_lock.2df5ef94.js",
+      "_key.8be259f2.js",
+      "_network.35b9df9e.js",
+      "_award.3430e123.js",
+      "_plus.37b71d4e.js",
+      "_rotate-ccw.1b4108f7.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/QuantumSafeOperations.svelte"
   },
   "src/lib/components/ReportingStudio.svelte": {
-    "file": "_app/immutable/chunks/ReportingStudio.7795bd6f.js",
+    "file": "_app/immutable/chunks/ReportingStudio.79944a0e.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js",
-      "_theme.9ade0a60.js",
-      "_refresh-cw.04873e07.js",
-      "_download.745acc54.js",
-      "_plus.ff2ec606.js",
-      "_square-pen.59dae05f.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js",
+      "_theme.ddae6d24.js",
+      "_refresh-cw.0726dac9.js",
+      "_download.b268edce.js",
+      "_plus.37b71d4e.js",
+      "_square-pen.72c773fe.js",
+      "_share.705b1f3d.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/ReportingStudio.svelte"
   },
   "src/lib/components/SecurityAutomationPlatform.svelte": {
-    "file": "_app/immutable/chunks/SecurityAutomationPlatform.0a67fc61.js",
+    "file": "_app/immutable/chunks/SecurityAutomationPlatform.40b8c9b1.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js",
-      "_upload.5b89f96b.js",
-      "_refresh-cw.04873e07.js",
-      "_play.1bc0c599.js",
-      "_copy.ee6a5379.js",
-      "_target.edc65f37.js",
-      "_user.e5c0a012.js",
-      "_network.8adc472d.js",
-      "_mail.552d61da.js",
-      "_clock.0a338402.js",
-      "_plus.ff2ec606.js",
-      "_move.bd92e995.js",
-      "_download.745acc54.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js",
+      "_upload.feb69a61.js",
+      "_refresh-cw.0726dac9.js",
+      "_play.f730a662.js",
+      "_copy.65a3f3ee.js",
+      "_target.be2b43f8.js",
+      "_user.28b4d3b9.js",
+      "_network.35b9df9e.js",
+      "_mail.82f31f32.js",
+      "_clock.44fd2ee1.js",
+      "_plus.37b71d4e.js",
+      "_move.cba9ee03.js",
+      "_download.b268edce.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/SecurityAutomationPlatform.svelte"
@@ -799,15 +850,15 @@
     "css": [
       "_app/immutable/assets/SecurityPolicy.233a80d3.css"
     ],
-    "file": "_app/immutable/chunks/SecurityPolicy.bef0e590.js",
+    "file": "_app/immutable/chunks/SecurityPolicy.bcdb70c3.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js",
-      "_theme.9ade0a60.js",
-      "_download.745acc54.js",
-      "_upload.5b89f96b.js",
-      "_circle-x.efba64cd.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js",
+      "_theme.ddae6d24.js",
+      "_download.b268edce.js",
+      "_upload.feb69a61.js",
+      "_circle-x.89d5d528.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/SecurityPolicy.svelte"
@@ -820,17 +871,17 @@
     "css": [
       "_app/immutable/assets/SshClient.87d5029a.css"
     ],
-    "file": "_app/immutable/chunks/SshClient.7bd6433b.js",
+    "file": "_app/immutable/chunks/SshClient.76988332.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js",
-      "_theme.9ade0a60.js",
-      "_event.bbd47227.js",
-      "_server.610f7e28.js",
-      "_key.2ba971ae.js",
-      "_play.1bc0c599.js",
-      "_plus.ff2ec606.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js",
+      "_theme.ddae6d24.js",
+      "_event.af8c9269.js",
+      "_server.ba3489fc.js",
+      "_key.8be259f2.js",
+      "_play.f730a662.js",
+      "_plus.37b71d4e.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/SshClient.svelte"
@@ -843,18 +894,18 @@
     "css": [
       "_app/immutable/assets/SurveyorTool.5619b337.css"
     ],
-    "file": "_app/immutable/chunks/SurveyorTool.ed6942e4.js",
+    "file": "_app/immutable/chunks/SurveyorTool.f91d2952.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js",
-      "_theme.9ade0a60.js",
-      "_event.bbd47227.js",
-      "_play.1bc0c599.js",
-      "_clock.0a338402.js",
-      "_circle-x.efba64cd.js",
-      "_target.edc65f37.js",
-      "_download.745acc54.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js",
+      "_theme.ddae6d24.js",
+      "_event.af8c9269.js",
+      "_play.f730a662.js",
+      "_clock.44fd2ee1.js",
+      "_circle-x.89d5d528.js",
+      "_target.be2b43f8.js",
+      "_download.b268edce.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/SurveyorTool.svelte"
@@ -873,53 +924,53 @@
       "_addon-webgl.d4c757b1.js",
       "_addon-ligatures.619789de.js"
     ],
-    "file": "_app/immutable/chunks/Terminal.48cd5ad7.js",
+    "file": "_app/immutable/chunks/Terminal.d078a4e9.js",
     "imports": [
       "_preload-helper.a4192956.js",
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js",
-      "_settings.10dbda86.js",
-      "_theme.9ade0a60.js",
-      "_event.bbd47227.js",
-      "_plus.ff2ec606.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js",
+      "_settings.a373fedf.js",
+      "_theme.ddae6d24.js",
+      "_event.af8c9269.js",
+      "_plus.37b71d4e.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/Terminal.svelte"
   },
   "src/lib/components/ThreatIntelligence.svelte": {
-    "file": "_app/immutable/chunks/ThreatIntelligence.19c67e41.js",
+    "file": "_app/immutable/chunks/ThreatIntelligence.af1d8bb5.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js",
-      "_theme.9ade0a60.js",
-      "_users.13694db0.js",
-      "_mail.552d61da.js",
-      "_pie-chart.9ffc61b6.js",
-      "_refresh-cw.04873e07.js",
-      "_target.edc65f37.js",
-      "_hash.54737047.js",
-      "_network.8adc472d.js",
-      "_play.1bc0c599.js",
-      "_clock.0a338402.js",
-      "_circle-x.efba64cd.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js",
+      "_theme.ddae6d24.js",
+      "_users.e7f97380.js",
+      "_mail.82f31f32.js",
+      "_pie-chart.cdd76d0a.js",
+      "_refresh-cw.0726dac9.js",
+      "_target.be2b43f8.js",
+      "_hash.11a5bc26.js",
+      "_network.35b9df9e.js",
+      "_play.f730a662.js",
+      "_clock.44fd2ee1.js",
+      "_circle-x.89d5d528.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/ThreatIntelligence.svelte"
   },
   "src/lib/components/VpnClient.svelte": {
-    "file": "_app/immutable/chunks/VpnClient.94d86537.js",
+    "file": "_app/immutable/chunks/VpnClient.d8f35678.js",
     "imports": [
-      "_scheduler.78e7c9ac.js",
-      "_index.93082cef.js",
-      "_2.2a907247.js",
-      "_theme.9ade0a60.js",
-      "_event.bbd47227.js",
-      "_lock.d092f3c5.js",
-      "_shield-x.b0879ba6.js",
-      "_plus.ff2ec606.js",
-      "_play.1bc0c599.js"
+      "_scheduler.4c62dcfe.js",
+      "_index.da97ccc5.js",
+      "_2.16ed5d35.js",
+      "_theme.ddae6d24.js",
+      "_event.af8c9269.js",
+      "_lock.2df5ef94.js",
+      "_shield-x.ff10ffed.js",
+      "_plus.37b71d4e.js",
+      "_play.f730a662.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/VpnClient.svelte"

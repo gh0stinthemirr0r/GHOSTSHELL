@@ -1,0 +1,33 @@
+[package]
+name = "ghost_tls"
+version = "0.1.0"
+edition = "2021"
+authors = ["GHOSTSHELL Team"]
+description = "Post-quantum TLS/TCP stack for GHOSTSHELL"
+license = "MIT"
+
+[dependencies]
+# Core dependencies
+serde = { workspace = true }
+serde_json = { workspace = true }
+tokio = { workspace = true }
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+uuid = { workspace = true }
+chrono = { workspace = true }
+
+# TLS and networking
+rustls = "0.21"
+webpki-roots = "0.25"
+tokio-rustls = "0.24"
+
+# Post-quantum cryptography
+ghost_pq = { path = "../ghost_pq" }
+ghost_log = { path = "../ghost_log" }
+
+[features]
+default = ["pq-only"]
+pq-only = []
+hybrid = []
+classical-fallback = []

@@ -21,6 +21,9 @@ use ghost_pq::signatures::DilithiumSigner;
 use ghost_theme::ThemeEngine;
 use ghost_ai::{AIEngine, AIConfig};
 
+// Browser system imports
+use ghost_browse::{BrowserEngine, BrowserConfig};
+
 mod commands;
 mod security;
 mod window_effects;
@@ -501,6 +504,96 @@ fn main() -> Result<()> {
             debug!("AI engine initialized successfully");
             info!("AI Engine initialized");
 
+            // Initialize Browser Engine (Phase 14)
+            debug!("About to initialize Browser Engine");
+            let browser_config = BrowserConfig::default();
+            let browser_engine = rt.block_on(async {
+                debug!("Creating BrowserEngine instance");
+
+                // Use shared vault, policy, logger, and signer
+                use ghost_vault::Vault;
+                use ghost_policy::PolicyEvaluator;
+                use ghost_log::LoggerConfig;
+                use ghost_pq::signatures::DilithiumVariant;
+
+                // Create browser vault with proper database path
+                // Use absolute path to ensure we're in the right directory
+                let current_dir = std::env::current_dir()
+                    .map_err(|e| anyhow::anyhow!("Failed to get current directory: {}", e))?;
+                // Go up one level from src-tauri to the project root, then into data
+                let project_root = current_dir.parent()
+                    .ok_or_else(|| anyhow::anyhow!("Failed to get project root directory"))?;
+                let data_dir = project_root.join("data");
+                let browser_db_path = data_dir.join("ghostshell_browser.db");
+                
+                debug!("Current directory: {:?}", current_dir);
+                debug!("Data directory: {:?}", data_dir);
+                debug!("Browser DB path: {:?}", browser_db_path);
+                
+                // Ensure data directory exists
+                if let Err(e) = std::fs::create_dir_all(&data_dir) {
+                    tracing::warn!("Failed to create data directory {:?}: {}", data_dir, e);
+                } else {
+                    debug!("Data directory created/verified: {:?}", data_dir);
+                }
+                
+                // Try to create the database file if it doesn't exist and determine database URL
+                let database_url = if !browser_db_path.exists() {
+                    if let Err(e) = std::fs::File::create(&browser_db_path) {
+                        tracing::warn!("Failed to create browser database file {:?}: {}", browser_db_path, e);
+                        tracing::info!("Falling back to in-memory database for browser vault");
+                        ":memory:".to_string()
+                    } else {
+                        debug!("Browser database file created: {:?}", browser_db_path);
+                        browser_db_path.to_string_lossy().to_string()
+                    }
+                } else {
+                    debug!("Browser database file already exists: {:?}", browser_db_path);
+                    browser_db_path.to_string_lossy().to_string()
+                };
+                
+                let browser_vault_config = ghost_vault::VaultConfig {
+                    database_url,
+                    require_mfa: false, // Browser vault doesn't need MFA for internal operations
+                    auto_lock_timeout_minutes: 60,
+                    max_failed_attempts: 5,
+                    enable_policy_enforcement: true,
+                };
+                
+                let vault_manager = Arc::new(tokio::sync::Mutex::new(Vault::new(browser_vault_config).await
+                    .map_err(|e| anyhow::anyhow!("Failed to create browser vault manager: {}", e))?));
+                let policy_engine = Arc::new(tokio::sync::Mutex::new(PolicyEvaluator::new(ghost_policy::Policy::new(1))));
+                let logger = Arc::new(AuditLogger::in_memory("browser".to_string()).await
+                    .map_err(|e| anyhow::anyhow!("Failed to create browser logger: {}", e))?);
+                let signer = Arc::new(DilithiumSigner::new(DilithiumVariant::Dilithium3)
+                    .map_err(|e| anyhow::anyhow!("Failed to create browser signer: {}", e))?);
+
+                let engine = BrowserEngine::new(
+                    browser_config,
+                    vault_manager,
+                    policy_engine,
+                    logger,
+                    signer,
+                ).await
+                    .map_err(|e| anyhow::anyhow!("Failed to create browser engine: {}", e))?;
+
+                debug!("About to initialize browser engine");
+                let engine_arc = Arc::new(tokio::sync::Mutex::new(engine));
+
+                // Initialize the browser engine
+                {
+                    let engine_guard = engine_arc.lock().await;
+                    engine_guard.initialize().await
+                        .map_err(|e| anyhow::anyhow!("Failed to initialize browser engine: {}", e))?;
+                }
+
+                Ok::<_, anyhow::Error>(engine_arc)
+            })?;
+
+            app.manage(browser_engine);
+            debug!("Browser engine initialized successfully");
+            info!("Browser Engine initialized");
+
             info!("GHOSTSHELL interface ready - Welcome to the future!");
             info!("Interface features:");
             info!("  ✅ Tauri + SvelteKit architecture");
@@ -850,6 +943,27 @@ fn main() -> Result<()> {
             commands::ai::ai_get_stats,
             commands::ai::ai_get_config,
             commands::ai::ai_update_config,
+            
+            // Browser commands (Phase 14)
+            commands::browse::browse_open,
+            commands::browse::browse_close,
+            commands::browse::browse_list_tabs,
+            commands::browse::browse_get_tab,
+            commands::browse::browse_navigate,
+            commands::browse::browse_autofill,
+            commands::browse::browse_update_posture,
+            commands::browse::browse_get_active_tab,
+            commands::browse::browse_set_active_tab,
+            commands::browse::browse_start_download,
+            commands::browse::browse_get_downloads,
+            commands::browse::browse_cancel_download,
+            commands::browse::browse_unseal_download,
+            commands::browse::browse_get_config,
+            commands::browse::browse_update_config,
+            commands::browse::browse_set_mode,
+            commands::browse::browse_get_window_config,
+            commands::browse::browse_show_window,
+            commands::browse::browse_hide_window,
             
             quarantine::quarantine_approve_file,
         ])

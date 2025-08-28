@@ -6,3 +6,4 @@ pub mod vault;
 pub mod policy;
 pub mod notify;
 pub mod ai;
+pub mod browse;

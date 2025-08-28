@@ -1769,12 +1769,72 @@ dependencies = [
 ]
 
 [[package]]
+name = "ghost_autofill"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "chrono",
+ "ghost_log",
+ "ghost_policy",
+ "ghost_pq",
+ "ghost_vault",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tokio",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "ghost_browse"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "chrono",
+ "ghost_autofill",
+ "ghost_download",
+ "ghost_log",
+ "ghost_policy",
+ "ghost_pq",
+ "ghost_tls",
+ "ghost_vault",
+ "serde",
+ "serde_json",
+ "tao",
+ "thiserror",
+ "tokio",
+ "tracing",
+ "uuid",
+ "wry",
+]
+
+[[package]]
 name = "ghost_controls"
 version = "0.1.0"
 dependencies = [
  "ghost_align",
  "serde",
  "serde_json",
+]
+
+[[package]]
+name = "ghost_download"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "chrono",
+ "ghost_log",
+ "ghost_pq",
+ "ghost_vault",
+ "hex",
+ "serde",
+ "serde_json",
+ "sha3",
+ "thiserror",
+ "tokio",
+ "tracing",
+ "uuid",
 ]
 
 [[package]]
@@ -1925,6 +1985,25 @@ dependencies = [
 ]
 
 [[package]]
+name = "ghost_tls"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "chrono",
+ "ghost_log",
+ "ghost_pq",
+ "rustls",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tokio",
+ "tokio-rustls",
+ "tracing",
+ "uuid",
+ "webpki-roots",
+]
+
+[[package]]
 name = "ghost_trends"
 version = "0.1.0"
 dependencies = [
@@ -1979,7 +2058,10 @@ dependencies = [
  "ghost_ai",
  "ghost_alert",
  "ghost_align",
+ "ghost_autofill",
+ "ghost_browse",
  "ghost_controls",
+ "ghost_download",
  "ghost_errmap",
  "ghost_evidence",
  "ghost_explain",
@@ -1989,6 +2071,7 @@ dependencies = [
  "ghost_policy",
  "ghost_pq",
  "ghost_theme",
+ "ghost_tls",
  "ghost_trends",
  "ghost_vault",
  "hex",
@@ -4339,6 +4422,7 @@ version = "0.21.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3f56a14d1f48b391359b22f731fd4bd7e43c97f3c50eee276f3aa09c94784d3e"
 dependencies = [
+ "log",
  "ring",
  "rustls-webpki",
  "sct",
@@ -5658,6 +5742,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bbae76ab933c85776efabc971569dd6119c580d8f5d448769dec1764bf796ef2"
 dependencies = [
  "native-tls",
+ "tokio",
+]
+
+[[package]]
+name = "tokio-rustls"
+version = "0.24.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c28327cf380ac148141087fbfb9de9d7bd4e84ab5d2c28fbc911d753de8a7081"
+dependencies = [
+ "rustls",
  "tokio",
 ]
 

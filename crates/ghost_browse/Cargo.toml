@@ -1,0 +1,35 @@
+[package]
+name = "ghost_browse"
+version = "0.1.0"
+edition = "2021"
+authors = ["GHOSTSHELL Team"]
+description = "Post-quantum secure browser module for GHOSTSHELL"
+license = "MIT"
+
+[dependencies]
+# Core dependencies
+serde = { workspace = true }
+serde_json = { workspace = true }
+tokio = { workspace = true }
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+uuid = { workspace = true }
+chrono = { workspace = true }
+
+# Web view dependencies
+wry = { version = "0.24", optional = true }
+tao = { version = "0.16", optional = true }
+
+# Internal crates
+ghost_tls = { path = "../ghost_tls" }
+ghost_autofill = { path = "../ghost_autofill" }
+ghost_download = { path = "../ghost_download" }
+ghost_vault = { path = "../ghost_vault" }
+ghost_policy = { path = "../ghost_policy" }
+ghost_log = { path = "../ghost_log" }
+ghost_pq = { path = "../ghost_pq" }
+
+[features]
+default = ["webview"]
+webview = ["wry", "tao"]

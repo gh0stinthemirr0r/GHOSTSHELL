@@ -1,0 +1,27 @@
+[package]
+name = "ghost_download"
+version = "0.1.0"
+edition = "2021"
+authors = ["GHOSTSHELL Team"]
+description = "Sealed downloads manager for GHOSTSHELL browser"
+license = "MIT"
+
+[dependencies]
+# Core dependencies
+serde = { workspace = true }
+serde_json = { workspace = true }
+tokio = { workspace = true }
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+uuid = { workspace = true }
+chrono = { workspace = true }
+
+# File handling
+sha3 = "0.10"
+hex = "0.4"
+
+# Internal crates
+ghost_vault = { path = "../ghost_vault" }
+ghost_pq = { path = "../ghost_pq" }
+ghost_log = { path = "../ghost_log" }
