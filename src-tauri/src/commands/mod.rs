@@ -5,3 +5,4 @@ pub mod theme_vault;
 pub mod vault;
 pub mod policy;
 pub mod notify;
+pub mod ai;

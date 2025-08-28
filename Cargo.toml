@@ -11,7 +11,11 @@ members = [
     "crates/ghost_trends",
     "crates/ghost_notify",
     "crates/ghost_alert",
-    "crates/ghost_theme"
+    "crates/ghost_theme",
+    "crates/ghost_ai",
+    "crates/ghost_errmap",
+    "crates/ghost_explain",
+    "crates/ghost_link"
 ]
 resolver = "2"
 
@@ -59,3 +63,6 @@ regex = "1.0"
 colorsys = "0.6"
 palette = "0.7"
 css-color-parser = "0.1"
+
+# Additional dependencies for Phase 13 (AI)
+once_cell = "1.19"

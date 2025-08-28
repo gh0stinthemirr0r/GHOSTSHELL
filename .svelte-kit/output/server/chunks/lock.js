@@ -1,0 +1,1 @@
+import{c as r,v as c}from"./ssr.js";import{I as a}from"./_page.js";const s=r((e,o,d,t)=>{const n=[["rect",{width:"18",height:"11",x:"3",y:"11",rx:"2",ry:"2"}],["path",{d:"M7 11V7a5 5 0 0 1 10 0v4"}]];return`${c(a,"Icon").$$render(e,Object.assign({},{name:"lock"},o,{iconNode:n}),{},{default:()=>`${t.default?t.default({}):""}`})}`}),$=s;export{$ as L};

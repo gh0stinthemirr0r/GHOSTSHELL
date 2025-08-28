@@ -19,6 +19,7 @@ use ghost_pq::signatures::DilithiumSigner;
 
 // Theme system imports
 use ghost_theme::ThemeEngine;
+use ghost_ai::{AIEngine, AIConfig};
 
 mod commands;
 mod security;
@@ -44,20 +45,12 @@ mod reporting;
 mod multi_tenant;
 mod api_gateway;
 mod autonomous_soc;
-mod ai_security_engine;
+
 mod security_automation;
 mod quantum_safe_operations;
 mod global_threat_intelligence;
-mod quantum_ml_engine;
-mod quantum_cryptography;
-mod neural_defense_grid;
-mod quantum_forensics;
-mod ai_security_orchestrator;
-mod digital_consciousness;
-mod reality_defense;
-mod temporal_security;
-mod universal_security;
-mod transcendence_core;
+
+
 mod compliance_dashboard;
 mod remediation_playbooks;
 
@@ -84,20 +77,12 @@ use reporting::ReportingManager;
 use multi_tenant::MultiTenantManager;
 use api_gateway::ApiGatewayManager;
 use autonomous_soc::AutonomousSOCManager;
-use ai_security_engine::AISecurityEngineManager;
+
 use security_automation::SecurityAutomationManager;
 use quantum_safe_operations::QuantumSafeOperationsManager;
 use global_threat_intelligence::GlobalThreatIntelligenceManager;
-use quantum_ml_engine::QuantumMLEngineManager;
-use quantum_cryptography::QuantumCryptographyManager;
-use neural_defense_grid::NeuralDefenseGridManager;
-use quantum_forensics::QuantumForensicsManager;
-use ai_security_orchestrator::AISecurityOrchestratorManager;
-use digital_consciousness::DigitalConsciousnessManager;
-use reality_defense::RealityDefenseManager;
-use temporal_security::TemporalSecurityManager;
-use universal_security::UniversalSecurityManager;
-use transcendence_core::TranscendenceCoreManager;
+
+
 
 // Application state
 #[derive(Debug, Default)]
@@ -379,12 +364,7 @@ fn main() -> Result<()> {
             app.manage(autonomous_soc_manager);
             info!("Autonomous SOC manager initialized");
 
-            // Initialize AI Security Engine Manager (Phase 9)
-            let ai_security_engine_manager = Arc::new(tokio::sync::Mutex::new(AISecurityEngineManager::new()
-                .map_err(|e| anyhow::anyhow!("Failed to initialize AI security engine manager: {}", e))?));
-            // AI Security Engine manager initialization will happen on first use
-            app.manage(ai_security_engine_manager);
-            info!("AI Security Engine manager initialized");
+
 
             // Initialize Security Automation Manager (Phase 9)
             let security_automation_manager = Arc::new(tokio::sync::Mutex::new(SecurityAutomationManager::new()
@@ -407,55 +387,9 @@ fn main() -> Result<()> {
             app.manage(global_threat_intel_manager);
             info!("Global Threat Intelligence manager initialized");
 
-            // Initialize Quantum ML Engine Manager (Phase 10)
-            let quantum_ml_manager = Arc::new(tokio::sync::Mutex::new(QuantumMLEngineManager::new()));
-            app.manage(quantum_ml_manager);
-            info!("Quantum ML Engine manager initialized");
 
-            // Initialize Quantum Cryptography Manager (Phase 10)
-            let quantum_crypto_manager = Arc::new(tokio::sync::Mutex::new(QuantumCryptographyManager::new()));
-            app.manage(quantum_crypto_manager);
-            info!("Quantum Cryptography manager initialized");
 
-            // Initialize Neural Defense Grid Manager (Phase 10)
-            let neural_defense_manager = Arc::new(tokio::sync::Mutex::new(NeuralDefenseGridManager::new()));
-            app.manage(neural_defense_manager);
-            info!("Neural Defense Grid manager initialized");
 
-            // Initialize Quantum Forensics Manager (Phase 10)
-            let quantum_forensics_manager = Arc::new(tokio::sync::Mutex::new(QuantumForensicsManager::new()));
-            app.manage(quantum_forensics_manager);
-            info!("Quantum Forensics manager initialized");
-
-            // Initialize AI Security Orchestrator Manager (Phase 10)
-            let ai_orchestrator_manager = Arc::new(tokio::sync::Mutex::new(AISecurityOrchestratorManager::new()));
-            app.manage(ai_orchestrator_manager);
-            info!("AI Security Orchestrator manager initialized");
-
-            // Initialize Digital Consciousness Manager (Phase 11)
-            let digital_consciousness_manager = Arc::new(tokio::sync::Mutex::new(DigitalConsciousnessManager::new()));
-            app.manage(digital_consciousness_manager);
-            info!("Digital Consciousness manager initialized");
-
-            // Initialize Reality Defense Manager (Phase 11)
-            let reality_defense_manager = Arc::new(tokio::sync::Mutex::new(RealityDefenseManager::new()));
-            app.manage(reality_defense_manager);
-            info!("Reality Defense manager initialized");
-
-            // Initialize Temporal Security Manager (Phase 11)
-            let temporal_security_manager = Arc::new(tokio::sync::Mutex::new(TemporalSecurityManager::new()));
-            app.manage(temporal_security_manager);
-            info!("Temporal Security manager initialized");
-
-            // Initialize Universal Security Manager (Phase 11)
-            let universal_security_manager = Arc::new(tokio::sync::Mutex::new(UniversalSecurityManager::new()));
-            app.manage(universal_security_manager);
-            info!("Universal Security manager initialized");
-
-            // Initialize Transcendence Core Manager (Phase 11)
-            let transcendence_core_manager = Arc::new(tokio::sync::Mutex::new(TranscendenceCoreManager::new()));
-            app.manage(transcendence_core_manager);
-            info!("Transcendence Core manager initialized");
 
             // Initialize Compliance Dashboard Manager (Phase 12)
             let compliance_dashboard_manager = Arc::new(tokio::sync::Mutex::new(compliance_dashboard::ComplianceDashboardManager::new()));
@@ -530,6 +464,42 @@ fn main() -> Result<()> {
             
             app.manage(theme_engine);
             info!("Theme engine v2 initialized");
+
+            // Initialize AI Engine (Phase 13)  
+            debug!("About to initialize AI Engine");
+            let ai_config = AIConfig::default();
+            let ai_engine = rt.block_on(async {
+                debug!("Creating AIEngine instance");
+                
+                // Use the same logger and signer from notification engine
+                use ghost_log::LoggerConfig;
+                use ghost_pq::signatures::DilithiumVariant;
+
+                let config = LoggerConfig::default();
+                let logger = Arc::new(AuditLogger::in_memory("ai".to_string()).await
+                    .map_err(|e| anyhow::anyhow!("Failed to create AI logger: {}", e))?);
+                let signer = Arc::new(DilithiumSigner::new(DilithiumVariant::Dilithium3)
+                    .map_err(|e| anyhow::anyhow!("Failed to create AI signer: {}", e))?);
+                
+                let engine = AIEngine::new(ai_config, logger, signer)
+                    .map_err(|e| anyhow::anyhow!("Failed to create AI engine: {}", e))?;
+                
+                debug!("About to initialize AI engine");
+                let engine_arc = Arc::new(tokio::sync::Mutex::new(engine));
+                
+                // Initialize the AI engine
+                {
+                    let engine_guard = engine_arc.lock().await;
+                    engine_guard.initialize().await
+                        .map_err(|e| anyhow::anyhow!("Failed to initialize AI engine: {}", e))?;
+                }
+                
+                Ok::<_, anyhow::Error>(engine_arc)
+            })?;
+
+            app.manage(ai_engine);
+            debug!("AI engine initialized successfully");
+            info!("AI Engine initialized");
 
             info!("GHOSTSHELL interface ready - Welcome to the future!");
             info!("Interface features:");
@@ -626,8 +596,9 @@ fn main() -> Result<()> {
             ai_assistant::ai_create_assistant,
             ai_assistant::ai_query,
             ai_assistant::ai_learn_from_interaction,
-            ai_assistant::ai_get_stats,
+
             ai_assistant::ai_list_assistants,
+            ai_assistant::ai_assistant_get_stats,
             // File Manager commands (Phase 3)
             file_manager::fm_list_directory,
             file_manager::fm_create_directory,
@@ -784,15 +755,7 @@ fn main() -> Result<()> {
             autonomous_soc::autonomous_soc_get_hunting_sessions,
             autonomous_soc::autonomous_soc_execute_playbook,
             autonomous_soc::autonomous_soc_start_threat_hunt,
-            // AI Security Engine commands (Phase 9)
-            ai_security_engine::ai_security_engine_get_stats,
-            ai_security_engine::ai_security_engine_get_models,
-            ai_security_engine::ai_security_engine_get_model,
-            ai_security_engine::ai_security_engine_get_threat_detections,
-            ai_security_engine::ai_security_engine_get_behavioral_profiles,
-            ai_security_engine::ai_security_engine_get_training_sessions,
-            ai_security_engine::ai_security_engine_start_training,
-            ai_security_engine::ai_security_engine_run_detection,
+
             // Security Automation commands (Phase 9)
             security_automation::security_automation_get_stats,
             security_automation::security_automation_get_workflows,
@@ -821,99 +784,9 @@ fn main() -> Result<()> {
             global_threat_intelligence::global_threat_intel_get_hunting_queries,
             global_threat_intelligence::global_threat_intel_execute_hunt,
             global_threat_intelligence::global_threat_intel_share_indicator,
-            // Quantum ML Engine commands (Phase 10)
-            quantum_ml_engine::quantum_ml_get_stats,
-            quantum_ml_engine::quantum_ml_create_network,
-            quantum_ml_engine::quantum_ml_train_model,
-            quantum_ml_engine::quantum_ml_inference,
-            quantum_ml_engine::quantum_ml_list_networks,
-            quantum_ml_engine::quantum_ml_list_models,
-            quantum_ml_engine::quantum_ml_get_inference_history,
-            // Quantum Cryptography commands (Phase 10)
-            quantum_cryptography::quantum_crypto_get_stats,
-            quantum_cryptography::quantum_crypto_create_qkd_session,
-            quantum_cryptography::quantum_crypto_start_key_generation,
-            quantum_cryptography::quantum_crypto_create_random_generator,
-            quantum_cryptography::quantum_crypto_create_signature,
-            quantum_cryptography::quantum_crypto_create_mpc_protocol,
-            quantum_cryptography::quantum_crypto_list_qkd_sessions,
-            quantum_cryptography::quantum_crypto_list_random_generators,
-            quantum_cryptography::quantum_crypto_list_signatures,
-            quantum_cryptography::quantum_crypto_list_mpc_protocols,
-            // Neural Defense Grid commands (Phase 10)
-            neural_defense_grid::neural_defense_get_stats,
-            neural_defense_grid::neural_defense_create_agent,
-            neural_defense_grid::neural_defense_create_swarm,
-            neural_defense_grid::neural_defense_assign_mission,
-            neural_defense_grid::neural_defense_initiate_response,
-            neural_defense_grid::neural_defense_list_agents,
-            neural_defense_grid::neural_defense_list_swarms,
-            neural_defense_grid::neural_defense_list_missions,
-            neural_defense_grid::neural_defense_list_responses,
-            // Quantum Forensics commands (Phase 10)
-            quantum_forensics::quantum_forensics_get_stats,
-            quantum_forensics::quantum_forensics_create_engine,
-            quantum_forensics::quantum_forensics_create_case,
-            quantum_forensics::quantum_forensics_add_evidence,
-            quantum_forensics::quantum_forensics_perform_analysis,
-            quantum_forensics::quantum_forensics_list_engines,
-            quantum_forensics::quantum_forensics_list_cases,
-            quantum_forensics::quantum_forensics_list_evidence,
-            // AI Security Orchestrator commands (Phase 10)
-            ai_security_orchestrator::ai_orchestrator_get_stats,
-            ai_security_orchestrator::ai_orchestrator_create,
-            ai_security_orchestrator::ai_orchestrator_make_decision,
-            ai_security_orchestrator::ai_orchestrator_list_orchestrators,
-            ai_security_orchestrator::ai_orchestrator_list_decisions,
-            ai_security_orchestrator::ai_orchestrator_list_frameworks,
-            // Digital Consciousness commands (Phase 11)
-            digital_consciousness::consciousness_get_stats,
-            digital_consciousness::consciousness_birth,
-            digital_consciousness::consciousness_record_thought,
-            digital_consciousness::consciousness_evolve,
-            digital_consciousness::consciousness_list,
-            digital_consciousness::consciousness_get_thoughts,
-            digital_consciousness::consciousness_get_evolution_history,
-            // Reality Defense commands (Phase 11)
-            reality_defense::reality_defense_get_stats,
-            reality_defense::reality_defense_create_matrix,
-            reality_defense::reality_defense_perform_scan,
-            reality_defense::reality_defense_manipulate_probability,
-            reality_defense::reality_defense_stabilize_anchor,
-            reality_defense::reality_defense_list_matrices,
-            reality_defense::reality_defense_get_scan_results,
-            reality_defense::reality_defense_get_threats,
-            reality_defense::reality_defense_get_history,
-            // Temporal Security commands (Phase 11)
-            temporal_security::temporal_security_get_stats,
-            temporal_security::temporal_security_create_engine,
-            temporal_security::temporal_security_perform_scan,
-            temporal_security::temporal_security_create_timeline_lock,
-            temporal_security::temporal_security_stabilize_anchor,
-            temporal_security::temporal_security_list_engines,
-            temporal_security::temporal_security_get_predictions,
-            temporal_security::temporal_security_get_threats,
-            temporal_security::temporal_security_get_events,
-            // Universal Security commands (Phase 11)
-            universal_security::universal_security_get_stats,
-            universal_security::universal_security_create_protocol,
-            universal_security::universal_security_perform_scan,
-            universal_security::universal_security_deploy_shield,
-            universal_security::universal_security_stabilize_anchor,
-            universal_security::universal_security_list_protocols,
-            universal_security::universal_security_get_threats,
-            universal_security::universal_security_get_alerts,
-            universal_security::universal_security_get_events,
-            // Transcendence Core commands (Phase 11)
-            transcendence_core::transcendence_core_get_stats,
-            transcendence_core::transcendence_core_create_core,
-            transcendence_core::transcendence_core_achieve_singularity,
-            transcendence_core::transcendence_core_manifest_omnipotence,
-            transcendence_core::transcendence_core_transcend_reality,
-            transcendence_core::transcendence_core_list_cores,
-            transcendence_core::transcendence_core_get_threats,
-            transcendence_core::transcendence_core_get_events,
-            transcendence_core::transcendence_core_get_manifestations,
+
+
+
             // Compliance Dashboard commands (Phase 12)
             compliance_dashboard::compliance_dashboard_get_frameworks,
             compliance_dashboard::compliance_get_framework_controls,
@@ -969,6 +842,15 @@ fn main() -> Result<()> {
             commands::theme_v2::theme_v2_add_alpha,
             commands::theme_v2::theme_v2_clear_cache,
             commands::theme_v2::theme_v2_preview,
+            
+            // AI commands (Phase 13)
+            commands::ai::ai_explain_error,
+            commands::ai::ai_explain_control,
+            commands::ai::ai_generate_report,
+            commands::ai::ai_get_stats,
+            commands::ai::ai_get_config,
+            commands::ai::ai_update_config,
+            
             quarantine::quarantine_approve_file,
         ])
         .run(tauri::generate_context!())

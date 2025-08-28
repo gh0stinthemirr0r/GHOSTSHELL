@@ -2,7 +2,7 @@ use crate::{AlertMeta, AlertFilter, NotificationStats, NotificationResult, Notif
 use std::collections::HashMap;
 use std::sync::Arc;
 use tokio::sync::{RwLock, mpsc};
-use ghost_log::{AuditLogger, LogEntry, Severity, EventType, Actor, ActorType, Resource, Action, Outcome};
+use ghost_log::AuditLogger;
 use ghost_pq::signatures::{DilithiumSigner, DilithiumPrivateKey, DilithiumVariant};
 
 /// Core notification engine

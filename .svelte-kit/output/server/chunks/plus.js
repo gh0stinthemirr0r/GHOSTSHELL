@@ -1,0 +1,1 @@
+import{c as a,v as r}from"./ssr.js";import{I as s}from"./_page.js";const c=a((t,e,d,n)=>{const o=[["path",{d:"M5 12h14"}],["path",{d:"M12 5v14"}]];return`${r(s,"Icon").$$render(t,Object.assign({},{name:"plus"},e,{iconNode:o}),{},{default:()=>`${n.default?n.default({}):""}`})}`}),i=c;export{i as P};

@@ -7,6 +7,72 @@
     "isEntry": true,
     "src": ".svelte-kit/generated/server/internal.js"
   },
+  "__page.js": {
+    "css": [
+      "_app/immutable/assets/_page.46b8afcf.css"
+    ],
+    "dynamicImports": [
+      "src/lib/components/Terminal.svelte",
+      "src/lib/components/SshClient.svelte",
+      "src/lib/components/VpnClient.svelte",
+      "src/lib/components/AiAssistant.svelte",
+      "src/lib/components/NetworkTopology.svelte",
+      "src/lib/components/LayersTool.svelte",
+      "src/lib/components/SurveyorTool.svelte",
+      "src/lib/components/FileManager.svelte",
+      "src/lib/components/PcapStudio.svelte",
+      "src/lib/components/ExploitEngine.svelte",
+      "src/lib/components/ForensicsKit.svelte",
+      "src/lib/components/ThreatIntelligence.svelte",
+      "src/lib/components/BehavioralAnalytics.svelte",
+      "src/lib/components/PredictiveSecurity.svelte",
+      "src/lib/components/OrchestrationDashboard.svelte",
+      "src/lib/components/ComplianceManager.svelte",
+      "src/lib/components/ComplianceDashboard.svelte",
+      "src/lib/components/ReportingStudio.svelte",
+      "src/lib/components/MultiTenantManager.svelte",
+      "src/lib/components/IntegrationHub.svelte",
+      "src/lib/components/AutonomousSOC.svelte",
+      "src/lib/components/SecurityAutomationPlatform.svelte",
+      "src/lib/components/QuantumSafeOperations.svelte",
+      "src/lib/components/GlobalThreatIntelligence.svelte",
+      "src/lib/components/GhostVault.svelte",
+      "src/lib/components/SecurityPolicy.svelte"
+    ],
+    "file": "chunks/_page.js",
+    "imports": [
+      "_ssr.js",
+      "_index.js"
+    ]
+  },
+  "_circle-x.js": {
+    "file": "chunks/circle-x.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js"
+    ]
+  },
+  "_clock.js": {
+    "file": "chunks/clock.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js"
+    ]
+  },
+  "_copy.js": {
+    "file": "chunks/copy.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js"
+    ]
+  },
+  "_download.js": {
+    "file": "chunks/download.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js"
+    ]
+  },
   "_index.js": {
     "file": "chunks/index.js",
     "imports": [
@@ -19,8 +85,89 @@
       "_ssr.js"
     ]
   },
+  "_key.js": {
+    "file": "chunks/key.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js"
+    ]
+  },
+  "_lock.js": {
+    "file": "chunks/lock.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js"
+    ]
+  },
+  "_network.js": {
+    "file": "chunks/network.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js"
+    ]
+  },
+  "_page.css": {
+    "file": "_app/immutable/assets/_page.46b8afcf.css",
+    "src": "_page.css"
+  },
+  "_play.js": {
+    "file": "chunks/play.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js"
+    ]
+  },
+  "_plus.js": {
+    "file": "chunks/plus.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js"
+    ]
+  },
+  "_refresh-cw.js": {
+    "file": "chunks/refresh-cw.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js"
+    ]
+  },
+  "_server.js": {
+    "file": "chunks/server.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js"
+    ]
+  },
+  "_shield-x.js": {
+    "file": "chunks/shield-x.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js"
+    ]
+  },
   "_ssr.js": {
     "file": "chunks/ssr.js"
+  },
+  "_star.js": {
+    "file": "chunks/star.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js"
+    ]
+  },
+  "_target.js": {
+    "file": "chunks/target.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js"
+    ]
+  },
+  "_users.js": {
+    "file": "chunks/users.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js"
+    ]
   },
   "node_modules/@sveltejs/kit/src/runtime/components/error.svelte": {
     "file": "entries/fallbacks/error.svelte.js",
@@ -39,13 +186,375 @@
     "isEntry": true,
     "src": "node_modules/@sveltejs/kit/src/runtime/server/index.js"
   },
+  "src/lib/components/AiAssistant.svelte": {
+    "file": "chunks/AiAssistant.js",
+    "imports": [
+      "_ssr.js",
+      "_star.js",
+      "_network.js",
+      "__page.js",
+      "_plus.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/lib/components/AiAssistant.svelte"
+  },
+  "src/lib/components/AutonomousSOC.svelte": {
+    "file": "chunks/AutonomousSOC.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js",
+      "_refresh-cw.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/lib/components/AutonomousSOC.svelte"
+  },
+  "src/lib/components/BehavioralAnalytics.svelte": {
+    "file": "chunks/BehavioralAnalytics.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js",
+      "_refresh-cw.js",
+      "_users.js",
+      "_target.js",
+      "_clock.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/lib/components/BehavioralAnalytics.svelte"
+  },
+  "src/lib/components/ComplianceDashboard.css": {
+    "file": "_app/immutable/assets/ExploitEngine.796b4dcd.css",
+    "src": "src/lib/components/ComplianceDashboard.css"
+  },
+  "src/lib/components/ComplianceDashboard.svelte": {
+    "css": [
+      "_app/immutable/assets/ExploitEngine.796b4dcd.css"
+    ],
+    "file": "chunks/ComplianceDashboard.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js",
+      "_refresh-cw.js",
+      "_download.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/lib/components/ComplianceDashboard.svelte"
+  },
+  "src/lib/components/ComplianceManager.svelte": {
+    "file": "chunks/ComplianceManager.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js",
+      "_refresh-cw.js",
+      "_target.js",
+      "_download.js",
+      "_clock.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/lib/components/ComplianceManager.svelte"
+  },
+  "src/lib/components/ExploitEngine.css": {
+    "file": "_app/immutable/assets/ExploitEngine.796b4dcd.css",
+    "src": "src/lib/components/ComplianceDashboard.css"
+  },
+  "src/lib/components/ExploitEngine.svelte": {
+    "css": [
+      "_app/immutable/assets/ExploitEngine.796b4dcd.css"
+    ],
+    "file": "chunks/ExploitEngine.js",
+    "imports": [
+      "_ssr.js",
+      "_target.js",
+      "__page.js",
+      "_clock.js",
+      "_circle-x.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/lib/components/ExploitEngine.svelte"
+  },
+  "src/lib/components/FileManager.svelte": {
+    "file": "chunks/FileManager.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js",
+      "_copy.js",
+      "_star.js",
+      "_plus.js",
+      "_lock.js",
+      "_clock.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/lib/components/FileManager.svelte"
+  },
+  "src/lib/components/ForensicsKit.svelte": {
+    "file": "chunks/ForensicsKit.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js",
+      "_plus.js",
+      "_clock.js",
+      "_circle-x.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/lib/components/ForensicsKit.svelte"
+  },
+  "src/lib/components/GhostVault.css": {
+    "file": "_app/immutable/assets/GhostVault.2d5c14bb.css",
+    "src": "src/lib/components/GhostVault.css"
+  },
+  "src/lib/components/GhostVault.svelte": {
+    "css": [
+      "_app/immutable/assets/GhostVault.2d5c14bb.css"
+    ],
+    "file": "chunks/GhostVault.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/lib/components/GhostVault.svelte"
+  },
+  "src/lib/components/GlobalThreatIntelligence.svelte": {
+    "file": "chunks/GlobalThreatIntelligence.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js",
+      "_refresh-cw.js",
+      "_target.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/lib/components/GlobalThreatIntelligence.svelte"
+  },
+  "src/lib/components/IntegrationHub.svelte": {
+    "file": "chunks/IntegrationHub.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js",
+      "_refresh-cw.js",
+      "_key.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/lib/components/IntegrationHub.svelte"
+  },
+  "src/lib/components/LayersTool.css": {
+    "file": "_app/immutable/assets/LayersTool.a3164b8b.css",
+    "src": "src/lib/components/LayersTool.css"
+  },
+  "src/lib/components/LayersTool.svelte": {
+    "css": [
+      "_app/immutable/assets/LayersTool.a3164b8b.css"
+    ],
+    "file": "chunks/LayersTool.js",
+    "imports": [
+      "_ssr.js",
+      "_target.js",
+      "_clock.js",
+      "_circle-x.js",
+      "__page.js",
+      "_plus.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/lib/components/LayersTool.svelte"
+  },
+  "src/lib/components/MultiTenantManager.svelte": {
+    "file": "chunks/MultiTenantManager.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js",
+      "_refresh-cw.js",
+      "_users.js",
+      "_clock.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/lib/components/MultiTenantManager.svelte"
+  },
+  "src/lib/components/NetworkTopology.svelte": {
+    "file": "chunks/NetworkTopology.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js",
+      "_network.js",
+      "_play.js",
+      "_server.js",
+      "_shield-x.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/lib/components/NetworkTopology.svelte"
+  },
+  "src/lib/components/OrchestrationDashboard.svelte": {
+    "file": "chunks/OrchestrationDashboard.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js",
+      "_refresh-cw.js",
+      "_play.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/lib/components/OrchestrationDashboard.svelte"
+  },
+  "src/lib/components/PcapStudio.svelte": {
+    "file": "chunks/PcapStudio.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js",
+      "_play.js",
+      "_clock.js",
+      "_circle-x.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/lib/components/PcapStudio.svelte"
+  },
+  "src/lib/components/PredictiveSecurity.svelte": {
+    "file": "chunks/PredictiveSecurity.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js",
+      "_refresh-cw.js",
+      "_network.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/lib/components/PredictiveSecurity.svelte"
+  },
+  "src/lib/components/QuantumSafeOperations.svelte": {
+    "file": "chunks/QuantumSafeOperations.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js",
+      "_refresh-cw.js",
+      "_lock.js",
+      "_key.js",
+      "_network.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/lib/components/QuantumSafeOperations.svelte"
+  },
+  "src/lib/components/ReportingStudio.svelte": {
+    "file": "chunks/ReportingStudio.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js",
+      "_refresh-cw.js",
+      "_download.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/lib/components/ReportingStudio.svelte"
+  },
+  "src/lib/components/SecurityAutomationPlatform.svelte": {
+    "file": "chunks/SecurityAutomationPlatform.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js",
+      "_refresh-cw.js",
+      "_play.js",
+      "_copy.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/lib/components/SecurityAutomationPlatform.svelte"
+  },
+  "src/lib/components/SecurityPolicy.css": {
+    "file": "_app/immutable/assets/SecurityPolicy.233a80d3.css",
+    "src": "src/lib/components/SecurityPolicy.css"
+  },
+  "src/lib/components/SecurityPolicy.svelte": {
+    "css": [
+      "_app/immutable/assets/SecurityPolicy.233a80d3.css"
+    ],
+    "file": "chunks/SecurityPolicy.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/lib/components/SecurityPolicy.svelte"
+  },
+  "src/lib/components/SshClient.css": {
+    "file": "_app/immutable/assets/SshClient.87d5029a.css",
+    "src": "src/lib/components/SshClient.css"
+  },
+  "src/lib/components/SshClient.svelte": {
+    "css": [
+      "_app/immutable/assets/SshClient.87d5029a.css"
+    ],
+    "file": "chunks/SshClient.js",
+    "imports": [
+      "_ssr.js",
+      "_server.js",
+      "_key.js",
+      "__page.js",
+      "_plus.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/lib/components/SshClient.svelte"
+  },
+  "src/lib/components/SurveyorTool.css": {
+    "file": "_app/immutable/assets/SurveyorTool.5619b337.css",
+    "src": "src/lib/components/SurveyorTool.css"
+  },
+  "src/lib/components/SurveyorTool.svelte": {
+    "css": [
+      "_app/immutable/assets/SurveyorTool.5619b337.css"
+    ],
+    "file": "chunks/SurveyorTool.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js",
+      "_play.js",
+      "_target.js",
+      "_clock.js",
+      "_circle-x.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/lib/components/SurveyorTool.svelte"
+  },
+  "src/lib/components/Terminal.css": {
+    "file": "_app/immutable/assets/Terminal.ce12e8e7.css",
+    "src": "src/lib/components/Terminal.css"
+  },
+  "src/lib/components/Terminal.svelte": {
+    "css": [
+      "_app/immutable/assets/Terminal.ce12e8e7.css"
+    ],
+    "file": "chunks/Terminal.js",
+    "imports": [
+      "_ssr.js",
+      "_index.js",
+      "_plus.js",
+      "__page.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/lib/components/Terminal.svelte"
+  },
+  "src/lib/components/ThreatIntelligence.svelte": {
+    "file": "chunks/ThreatIntelligence.js",
+    "imports": [
+      "_ssr.js",
+      "_users.js",
+      "__page.js",
+      "_refresh-cw.js",
+      "_target.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/lib/components/ThreatIntelligence.svelte"
+  },
+  "src/lib/components/VpnClient.svelte": {
+    "file": "chunks/VpnClient.js",
+    "imports": [
+      "_ssr.js",
+      "_lock.js",
+      "_shield-x.js",
+      "__page.js",
+      "_plus.js",
+      "_play.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/lib/components/VpnClient.svelte"
+  },
   "src/routes/+layout.css": {
-    "file": "_app/immutable/assets/_layout.ac5c5484.css",
+    "file": "_app/immutable/assets/_layout.3e68dfba.css",
     "src": "src/routes/+layout.css"
   },
   "src/routes/+layout.svelte": {
     "css": [
-      "_app/immutable/assets/_layout.ac5c5484.css"
+      "_app/immutable/assets/_layout.3e68dfba.css"
     ],
     "file": "entries/pages/_layout.svelte.js",
     "imports": [
@@ -54,18 +563,11 @@
     "isEntry": true,
     "src": "src/routes/+layout.svelte"
   },
-  "src/routes/+page.css": {
-    "file": "_app/immutable/assets/_page.9c336935.css",
-    "src": "src/routes/+page.css"
-  },
   "src/routes/+page.svelte": {
-    "css": [
-      "_app/immutable/assets/_page.9c336935.css"
-    ],
     "file": "entries/pages/_page.svelte.js",
     "imports": [
       "_ssr.js",
-      "_index.js"
+      "__page.js"
     ],
     "isEntry": true,
     "src": "src/routes/+page.svelte"

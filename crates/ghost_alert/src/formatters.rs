@@ -97,7 +97,7 @@ pub fn source_color(source: &AlertSource) -> &'static str {
 }
 
 /// Format alert message with context
-pub fn format_alert_message(title: &str, message: &str, context: &std::collections::HashMap<String, String>) -> String {
+pub fn format_alert_message(_title: &str, message: &str, context: &std::collections::HashMap<String, String>) -> String {
     let mut formatted = message.to_string();
     
     // Replace context variables in the message

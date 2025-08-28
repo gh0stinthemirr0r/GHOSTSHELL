@@ -756,7 +756,7 @@ pub async fn ai_learn_from_interaction(
 }
 
 #[tauri::command]
-pub async fn ai_get_stats(
+pub async fn ai_assistant_get_stats(
     ai_manager: State<'_, Arc<Mutex<AiAssistantManager>>>,
     assistant_id: String,
 ) -> Result<HashMap<String, serde_json::Value>, String> {

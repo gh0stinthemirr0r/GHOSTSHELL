@@ -1,49 +1,61 @@
 <script lang="ts">
+  // Only import essential components that are always needed
   import Sidebar from '$lib/components/Sidebar.svelte';
   import TopBar from '$lib/components/TopBar.svelte';
-  import Terminal from '$lib/components/Terminal.svelte';
   import CommandPalette from '$lib/components/CommandPalette.svelte';
   import NotificationContainer from '$lib/components/NotificationContainer.svelte';
   import ThemeManagerV2 from '$lib/components/ThemeManagerV2.svelte';
   import FontSelector from '$lib/components/FontSelector.svelte';
   import AccessibilitySettings from '$lib/components/AccessibilitySettings.svelte';
-  import GhostVault from '$lib/components/GhostVault.svelte';
-  import SecurityPolicy from '$lib/components/SecurityPolicy.svelte';
-  // Phase 3 Components
-  import SshClient from '$lib/components/SshClient.svelte';
-  import VpnClient from '$lib/components/VpnClient.svelte';
-  import AiAssistant from '$lib/components/AiAssistant.svelte';
-  import FileManager from '$lib/components/FileManager.svelte';
-  import NetworkTopology from '$lib/components/NetworkTopology.svelte';
-  import LayersTool from '$lib/components/LayersTool.svelte';
-  import SurveyorTool from '$lib/components/SurveyorTool.svelte';
-  import PcapStudio from '$lib/components/PcapStudio.svelte';
-  import ExploitEngine from '$lib/components/ExploitEngine.svelte';
-  import ForensicsKit from '$lib/components/ForensicsKit.svelte';
-  import ThreatIntelligence from '$lib/components/ThreatIntelligence.svelte';
-  import BehavioralAnalytics from '$lib/components/BehavioralAnalytics.svelte';
-  import PredictiveSecurity from '$lib/components/PredictiveSecurity.svelte';
-  import OrchestrationDashboard from '$lib/components/OrchestrationDashboard.svelte';
-  import ComplianceManager from '$lib/components/ComplianceManager.svelte';
-  import ReportingStudio from '$lib/components/ReportingStudio.svelte';
-  import MultiTenantManager from '$lib/components/MultiTenantManager.svelte';
-  import IntegrationHub from '$lib/components/IntegrationHub.svelte';
-  import AutonomousSOC from '$lib/components/AutonomousSOC.svelte';
-  import AISecurityEngine from '$lib/components/AISecurityEngine.svelte';
-  import SecurityAutomationPlatform from '$lib/components/SecurityAutomationPlatform.svelte';
-  import QuantumSafeOperations from '$lib/components/QuantumSafeOperations.svelte';
-  import GlobalThreatIntelligence from '$lib/components/GlobalThreatIntelligence.svelte';
-  import QuantumMLEngine from '$lib/components/QuantumMLEngine.svelte';
-  import QuantumCryptography from '$lib/components/QuantumCryptography.svelte';
-  import DigitalConsciousness from '$lib/components/DigitalConsciousness.svelte';
-  import RealityDefenseMatrix from '$lib/components/RealityDefenseMatrix.svelte';
-  import TemporalSecurityEngine from '$lib/components/TemporalSecurityEngine.svelte';
-  import UniversalSecurityProtocol from '$lib/components/UniversalSecurityProtocol.svelte';
-  import TranscendenceCore from '$lib/components/TranscendenceCore.svelte';
-  import ComplianceDashboard from '$lib/components/ComplianceDashboard.svelte';
   import { commandPaletteStore } from '$lib/stores/commandPalette';
   import { onMount } from 'svelte';
   import { Activity } from 'lucide-svelte';
+  
+  // Lazy loading for heavy components
+  let loadedComponents: Record<string, any> = {};
+  
+  // Component loading map
+  const componentMap: Record<string, () => Promise<any>> = {
+    'terminal': () => import('$lib/components/Terminal.svelte'),
+    'ghostssh': () => import('$lib/components/SshClient.svelte'),
+    'ghostvpn': () => import('$lib/components/VpnClient.svelte'),
+    'ghostai': () => import('$lib/components/AiAssistant.svelte'),
+    'topology': () => import('$lib/components/NetworkTopology.svelte'),
+    'layers': () => import('$lib/components/LayersTool.svelte'),
+    'surveyor': () => import('$lib/components/SurveyorTool.svelte'),
+    'filemanager': () => import('$lib/components/FileManager.svelte'),
+    'pcap': () => import('$lib/components/PcapStudio.svelte'),
+    'exploit': () => import('$lib/components/ExploitEngine.svelte'),
+    'forensics': () => import('$lib/components/ForensicsKit.svelte'),
+    'threat-intel': () => import('$lib/components/ThreatIntelligence.svelte'),
+    'behavioral-analytics': () => import('$lib/components/BehavioralAnalytics.svelte'),
+    'predictive-security': () => import('$lib/components/PredictiveSecurity.svelte'),
+    'orchestration': () => import('$lib/components/OrchestrationDashboard.svelte'),
+    'compliance': () => import('$lib/components/ComplianceManager.svelte'),
+    'compliance-dashboard': () => import('$lib/components/ComplianceDashboard.svelte'),
+    'reporting': () => import('$lib/components/ReportingStudio.svelte'),
+    'multi-tenant': () => import('$lib/components/MultiTenantManager.svelte'),
+    'integration-hub': () => import('$lib/components/IntegrationHub.svelte'),
+    'autonomous-soc': () => import('$lib/components/AutonomousSOC.svelte'),
+    'security-automation': () => import('$lib/components/SecurityAutomationPlatform.svelte'),
+    'quantum-safe-ops': () => import('$lib/components/QuantumSafeOperations.svelte'),
+    'global-threat-intel': () => import('$lib/components/GlobalThreatIntelligence.svelte'),
+    'ghostvault': () => import('$lib/components/GhostVault.svelte'),
+    'security': () => import('$lib/components/SecurityPolicy.svelte')
+  };
+  
+  // Function to load component dynamically
+  async function loadComponent(moduleName: string) {
+    if (!loadedComponents[moduleName] && componentMap[moduleName]) {
+      try {
+        const module = await componentMap[moduleName]();
+        loadedComponents[moduleName] = module.default;
+      } catch (error) {
+        console.error(`Failed to load component for ${moduleName}:`, error);
+      }
+    }
+    return loadedComponents[moduleName];
+  }
   
   let activeModule = 'terminal';
   let sidebarCollapsed = false;
@@ -149,90 +161,7 @@
     
     <!-- Content Area -->
     <div class="flex-1 relative">
-              {#if activeModule === 'terminal'}
-          <Terminal />
-        {:else if activeModule === 'ghostssh'}
-          <SshClient />
-        {:else if activeModule === 'ghostvpn'}
-          <VpnClient />
-        {:else if activeModule === 'ghostai'}
-          <AiAssistant />
-        {:else if activeModule === 'topology'}
-          <NetworkTopology />
-        {:else if activeModule === 'layers'}
-          <LayersTool />
-        {:else if activeModule === 'surveyor'}
-          <SurveyorTool />
-        {:else if activeModule === 'filemanager'}
-          <FileManager />
-        {:else if activeModule === 'pcap'}
-          <PcapStudio />
-        {:else if activeModule === 'exploit'}
-          <ExploitEngine />
-        {:else if activeModule === 'forensics'}
-          <ForensicsKit />
-        {:else if activeModule === 'threat-intel'}
-          <ThreatIntelligence />
-        {:else if activeModule === 'behavioral-analytics'}
-          <BehavioralAnalytics />
-          {:else if activeModule === 'predictive-security'}
-    <PredictiveSecurity />
-          {:else if activeModule === 'orchestration'}
-          <OrchestrationDashboard />
-        {:else if activeModule === 'compliance'}
-          <ComplianceManager />
-        {:else if activeModule === 'compliance-dashboard'}
-          <ComplianceDashboard />
-        {:else if activeModule === 'reporting'}
-          <ReportingStudio />
-        {:else if activeModule === 'multi-tenant'}
-          <MultiTenantManager />
-        {:else if activeModule === 'integration-hub'}
-          <IntegrationHub />
-        {:else if activeModule === 'autonomous-soc'}
-          <AutonomousSOC />
-        {:else if activeModule === 'ai-security-engine'}
-          <AISecurityEngine />
-        {:else if activeModule === 'security-automation'}
-          <SecurityAutomationPlatform />
-        {:else if activeModule === 'quantum-safe-ops'}
-          <QuantumSafeOperations />
-            {:else if activeModule === 'global-threat-intel'}
-      <GlobalThreatIntelligence />
-    {:else if activeModule === 'quantum-ml-engine'}
-      <QuantumMLEngine />
-    {:else if activeModule === 'quantum-cryptography'}
-      <QuantumCryptography />
-    {:else if activeModule === 'neural-defense-grid'}
-      <div class="p-6 text-center">
-        <h2 class="text-2xl font-bold text-white mb-4">Neural Defense Grid</h2>
-        <p class="text-gray-400">AI-powered autonomous protection swarm coming soon...</p>
-      </div>
-    {:else if activeModule === 'quantum-forensics'}
-      <div class="p-6 text-center">
-        <h2 class="text-2xl font-bold text-white mb-4">Quantum Forensics Engine</h2>
-        <p class="text-gray-400">Quantum-enhanced investigation tools coming soon...</p>
-      </div>
-    {:else if activeModule === 'ai-orchestrator'}
-      <div class="p-6 text-center">
-        <h2 class="text-2xl font-bold text-white mb-4">AI Security Orchestrator</h2>
-        <p class="text-gray-400">Autonomous decision making system coming soon...</p>
-      </div>
-    {:else if activeModule === 'digital-consciousness'}
-      <DigitalConsciousness />
-    {:else if activeModule === 'reality-defense'}
-      <RealityDefenseMatrix />
-    {:else if activeModule === 'temporal-security'}
-      <TemporalSecurityEngine />
-    {:else if activeModule === 'universal-security'}
-      <UniversalSecurityProtocol />
-    {:else if activeModule === 'transcendence-core'}
-      <TranscendenceCore />
-  {:else if activeModule === 'ghostvault'}
-          <GhostVault />
-        {:else if activeModule === 'security'}
-          <SecurityPolicy />
-      {:else if activeModule === 'settings'}
+      {#if activeModule === 'settings'}
         <!-- Settings Panel -->
         <div class="h-full overflow-y-auto settings-scroll">
           <div class="p-6 space-y-6 min-h-full">
@@ -275,12 +204,39 @@
           </div>
         </div>
       {:else}
-        <!-- Other modules placeholder -->
-        <div class="flex items-center justify-center h-full">
-          <div class="frosted rounded-lg p-8 text-center">
-            <p class="text-gray-400">Module coming in future phases</p>
+        <!-- Dynamic Components -->
+        {#await loadComponent(activeModule)}
+          <div class="flex items-center justify-center h-full">
+            <div class="text-center">
+              <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400 mx-auto mb-4"></div>
+              <p class="text-gray-400">Loading {activeModule}...</p>
+            </div>
           </div>
-        </div>
+        {:then Component}
+          {#if Component}
+            <svelte:component this={Component} />
+          {:else}
+            <!-- Unknown module -->
+            <div class="flex items-center justify-center h-full">
+              <div class="frosted rounded-lg p-8 text-center">
+                <p class="text-gray-400">Module "{activeModule}" not found</p>
+              </div>
+            </div>
+          {/if}
+        {:catch error}
+          <!-- Error loading component -->
+          <div class="flex items-center justify-center h-full">
+            <div class="frosted rounded-lg p-8 text-center">
+              <p class="text-red-400">Error loading component: {error.message}</p>
+              <button 
+                on:click={() => location.reload()} 
+                class="mt-4 px-4 py-2 bg-red-500/20 border border-red-500/50 rounded-lg hover:bg-red-500/30 transition-colors text-red-400"
+              >
+                Reload
+              </button>
+            </div>
+          </div>
+        {/await}
       {/if}
     </div>
   </div>

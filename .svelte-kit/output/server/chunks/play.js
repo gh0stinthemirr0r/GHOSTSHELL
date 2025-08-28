@@ -1,0 +1,1 @@
+import{c as a,v as r}from"./ssr.js";import{I as c}from"./_page.js";const s=a((o,e,i,n)=>{const t=[["polygon",{points:"6 3 20 12 6 21 6 3"}]];return`${r(c,"Icon").$$render(o,Object.assign({},{name:"play"},e,{iconNode:t}),{},{default:()=>`${n.default?n.default({}):""}`})}`}),l=s;export{l as P};

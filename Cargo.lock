@@ -1722,6 +1722,27 @@ dependencies = [
 ]
 
 [[package]]
+name = "ghost_ai"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "ghost_errmap",
+ "ghost_explain",
+ "ghost_link",
+ "ghost_log",
+ "ghost_policy",
+ "ghost_pq",
+ "hex",
+ "regex",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tokio",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
 name = "ghost_alert"
 version = "0.1.0"
 dependencies = [
@@ -1757,6 +1778,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "ghost_errmap"
+version = "0.1.0"
+dependencies = [
+ "once_cell",
+ "regex",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tracing",
+]
+
+[[package]]
 name = "ghost_evidence"
 version = "0.1.0"
 dependencies = [
@@ -1772,6 +1805,30 @@ dependencies = [
  "tokio",
  "uuid",
  "zip",
+]
+
+[[package]]
+name = "ghost_explain"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "ghost_align",
+ "ghost_controls",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tracing",
+]
+
+[[package]]
+name = "ghost_link"
+version = "0.1.0"
+dependencies = [
+ "ghost_policy",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tracing",
 ]
 
 [[package]]
@@ -1919,10 +1976,14 @@ dependencies = [
  "cocoa 0.25.0",
  "dirs",
  "futures",
+ "ghost_ai",
  "ghost_alert",
  "ghost_align",
  "ghost_controls",
+ "ghost_errmap",
  "ghost_evidence",
+ "ghost_explain",
+ "ghost_link",
  "ghost_log",
  "ghost_notify",
  "ghost_policy",

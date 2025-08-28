@@ -22,6 +22,10 @@ ghost_alert = { path = "../crates/ghost_alert" }
 
 # Phase 11 Theme Crates
 ghost_theme = { path = "../crates/ghost_theme" }
+ghost_ai = { path = "../crates/ghost_ai" }
+ghost_errmap = { path = "../crates/ghost_errmap" }
+ghost_explain = { path = "../crates/ghost_explain" }
+ghost_link = { path = "../crates/ghost_link" }
 
 # Phase 12 Compliance Crates
 ghost_align = { path = "../crates/ghost_align" }

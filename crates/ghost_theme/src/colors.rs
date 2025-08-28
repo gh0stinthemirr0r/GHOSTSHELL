@@ -184,12 +184,12 @@ impl ColorUtils {
         Ok((r, g, b))
     }
 
-    fn parse_rgb(rgb: &str) -> ThemeResult<(u8, u8, u8)> {
+    fn parse_rgb(_rgb: &str) -> ThemeResult<(u8, u8, u8)> {
         // Simple RGB parsing - in a real implementation, use a proper CSS parser
         Err(ThemeError::ColorError("RGB parsing not implemented".to_string()))
     }
 
-    fn parse_hsl(hsl: &str) -> ThemeResult<(u8, u8, u8)> {
+    fn parse_hsl(_hsl: &str) -> ThemeResult<(u8, u8, u8)> {
         // Simple HSL parsing - in a real implementation, use a proper CSS parser
         Err(ThemeError::ColorError("HSL parsing not implemented".to_string()))
     }
