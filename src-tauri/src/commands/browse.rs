@@ -214,24 +214,87 @@ pub async fn browse_get_window_config(
     Ok(BrowserWindowConfig::default())
 }
 
+/// Create browser window
+#[tauri::command]
+pub async fn browse_create_window(
+    browser_engine: State<'_, Arc<Mutex<BrowserEngine>>>,
+    config: BrowserWindowConfig,
+) -> Result<String, String> {
+    let engine = browser_engine.lock().await;
+    
+    engine.create_browser_window(config).await
+        .map_err(|e| e.to_string())
+}
+
 /// Show browser window
 #[tauri::command]
 pub async fn browse_show_window(
     browser_engine: State<'_, Arc<Mutex<BrowserEngine>>>,
+    window_id: String,
 ) -> Result<(), String> {
-    let _engine = browser_engine.lock().await;
+    let engine = browser_engine.lock().await;
     
-    // TODO: Implement window showing
-    Ok(())
+    engine.show_browser_window(&window_id).await
+        .map_err(|e| e.to_string())
 }
 
 /// Hide browser window
 #[tauri::command]
 pub async fn browse_hide_window(
     browser_engine: State<'_, Arc<Mutex<BrowserEngine>>>,
+    window_id: String,
 ) -> Result<(), String> {
-    let _engine = browser_engine.lock().await;
+    let engine = browser_engine.lock().await;
     
-    // TODO: Implement window hiding
-    Ok(())
+    engine.hide_browser_window(&window_id).await
+        .map_err(|e| e.to_string())
+}
+
+/// Navigate browser window
+#[tauri::command]
+pub async fn browse_navigate_window(
+    browser_engine: State<'_, Arc<Mutex<BrowserEngine>>>,
+    window_id: String,
+    url: String,
+) -> Result<(), String> {
+    let engine = browser_engine.lock().await;
+    
+    engine.navigate_browser_window(&window_id, &url).await
+        .map_err(|e| e.to_string())
+}
+
+/// Open URL in external browser
+#[tauri::command]
+pub async fn browse_open_external(
+    url: String,
+) -> Result<(), String> {
+    use std::process::Command;
+    
+    // Validate URL first
+    url::Url::parse(&url)
+        .map_err(|e| format!("Invalid URL: {}", e))?;
+    
+    // Open in system default browser using platform-specific command
+    #[cfg(target_os = "windows")]
+    let result = Command::new("cmd")
+        .args(&["/C", "start", "", &url])
+        .spawn();
+    
+    #[cfg(target_os = "macos")]
+    let result = Command::new("open")
+        .arg(&url)
+        .spawn();
+    
+    #[cfg(target_os = "linux")]
+    let result = Command::new("xdg-open")
+        .arg(&url)
+        .spawn();
+    
+    match result {
+        Ok(_) => {
+            tracing::info!("Opened URL in external browser: {}", url);
+            Ok(())
+        }
+        Err(e) => Err(format!("Failed to open URL: {}", e))
+    }
 }

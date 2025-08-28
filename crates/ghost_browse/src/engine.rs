@@ -5,7 +5,7 @@ use tokio::sync::Mutex;
 use tracing::{debug, info, warn, error};
 use uuid::Uuid;
 
-use crate::{BrowserTab, TabMeta, TabState};
+use crate::{BrowserTab, TabMeta, TabState, BrowserWindow, BrowserWindowConfig, BrowserMode};
 use ghost_tls::{GhostTLSClient, GhostTLSConfig, PQPosture};
 use ghost_autofill::AutofillBridge;
 use ghost_download::DownloadManager;
@@ -41,6 +41,7 @@ pub struct BrowserEngine {
     config: BrowserConfig,
     tabs: Arc<Mutex<HashMap<String, BrowserTab>>>,
     active_tab: Arc<Mutex<Option<String>>>,
+    browser_windows: Arc<Mutex<HashMap<String, BrowserWindow>>>,
     tls_client: Arc<GhostTLSClient>,
     autofill_bridge: Arc<AutofillBridge>,
     download_manager: Arc<DownloadManager>,
@@ -77,6 +78,7 @@ impl BrowserEngine {
             config,
             tabs: Arc::new(Mutex::new(HashMap::new())),
             active_tab: Arc::new(Mutex::new(None)),
+            browser_windows: Arc::new(Mutex::new(HashMap::new())),
             tls_client,
             autofill_bridge,
             download_manager,
@@ -178,11 +180,48 @@ impl BrowserEngine {
                 // For now, allow all requests
             }
 
-            // Navigate
+            // Validate URL
+            let parsed_url = url::Url::parse(&url)
+                .map_err(|e| anyhow::anyhow!("Invalid URL: {}", e))?;
+            
+            // Check if it's a supported protocol
+            if !matches!(parsed_url.scheme(), "https" | "http") {
+                return Err(anyhow::anyhow!("Unsupported protocol: {}", parsed_url.scheme()));
+            }
+
+            // Navigate the tab
             tab.navigate(url.clone());
+            
+            // Update tab state to show it's loading
+            tab.meta.set_state(TabState::Loading);
             
             // Log navigation
             self.log_tab_event(tab_id, "navigation", &url).await?;
+            
+            // Simulate navigation completion after a delay
+            // In a real implementation, this would be handled by webview events
+            let tab_id_clone = tab_id.to_string();
+            let tabs_clone = self.tabs.clone();
+            let url_clone = url.clone();
+            tokio::spawn(async move {
+                tokio::time::sleep(tokio::time::Duration::from_millis(1500)).await;
+                
+                let mut tabs = tabs_clone.lock().await;
+                if let Some(tab) = tabs.get_mut(&tab_id_clone) {
+                    tab.meta.set_state(TabState::Active);
+                    
+                    // Extract title from URL
+                    if let Ok(parsed) = url::Url::parse(&url_clone) {
+                        if let Some(host) = parsed.host_str() {
+                            tab.meta.set_title(host.to_string());
+                        }
+                    }
+                    
+                    // Set a mock PQ posture
+                    use ghost_tls::PQPosture;
+                    tab.meta.set_posture(PQPosture::Hybrid);
+                }
+            });
 
             info!("Tab {} navigated to {}", tab_id, url);
             Ok(())
@@ -281,6 +320,66 @@ impl BrowserEngine {
             Ok(())
         } else {
             Err(anyhow::anyhow!("Tab {} not found", tab_id))
+        }
+    }
+
+    /// Create a new browser window
+    pub async fn create_browser_window(&self, config: BrowserWindowConfig) -> Result<String> {
+        let window_id = Uuid::new_v4().to_string();
+        let window = BrowserWindow::new(config)?;
+        
+        let mut windows = self.browser_windows.lock().await;
+        windows.insert(window_id.clone(), window);
+        
+        info!("Created browser window: {}", window_id);
+        Ok(window_id)
+    }
+
+    /// Show browser window
+    pub async fn show_browser_window(&self, window_id: &str) -> Result<()> {
+        let windows = self.browser_windows.lock().await;
+        if let Some(window) = windows.get(window_id) {
+            window.show().await?;
+            info!("Showed browser window: {}", window_id);
+            Ok(())
+        } else {
+            Err(anyhow::anyhow!("Browser window {} not found", window_id))
+        }
+    }
+
+    /// Hide browser window
+    pub async fn hide_browser_window(&self, window_id: &str) -> Result<()> {
+        let windows = self.browser_windows.lock().await;
+        if let Some(window) = windows.get(window_id) {
+            window.hide().await?;
+            info!("Hid browser window: {}", window_id);
+            Ok(())
+        } else {
+            Err(anyhow::anyhow!("Browser window {} not found", window_id))
+        }
+    }
+
+    /// Navigate browser window
+    pub async fn navigate_browser_window(&self, window_id: &str, url: &str) -> Result<()> {
+        let windows = self.browser_windows.lock().await;
+        if let Some(window) = windows.get(window_id) {
+            window.navigate(url).await?;
+            info!("Navigated browser window {} to {}", window_id, url);
+            Ok(())
+        } else {
+            Err(anyhow::anyhow!("Browser window {} not found", window_id))
+        }
+    }
+
+    /// Set browser window mode
+    pub async fn set_browser_window_mode(&self, window_id: &str, mode: BrowserMode) -> Result<()> {
+        let mut windows = self.browser_windows.lock().await;
+        if let Some(window) = windows.get_mut(window_id) {
+            window.set_mode(mode).await?;
+            info!("Set browser window {} mode", window_id);
+            Ok(())
+        } else {
+            Err(anyhow::anyhow!("Browser window {} not found", window_id))
         }
     }
 

@@ -962,8 +962,11 @@ fn main() -> Result<()> {
             commands::browse::browse_update_config,
             commands::browse::browse_set_mode,
             commands::browse::browse_get_window_config,
+            commands::browse::browse_create_window,
             commands::browse::browse_show_window,
             commands::browse::browse_hide_window,
+            commands::browse::browse_navigate_window,
+            commands::browse::browse_open_external,
             
             quarantine::quarantine_approve_file,
         ])

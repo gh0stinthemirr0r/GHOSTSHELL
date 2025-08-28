@@ -223,12 +223,12 @@
     "src": "src/lib/components/BehavioralAnalytics.svelte"
   },
   "src/lib/components/BrowserWindow.css": {
-    "file": "_app/immutable/assets/BrowserWindow.611f8386.css",
+    "file": "_app/immutable/assets/BrowserWindow.11626ede.css",
     "src": "src/lib/components/BrowserWindow.css"
   },
   "src/lib/components/BrowserWindow.svelte": {
     "css": [
-      "_app/immutable/assets/BrowserWindow.611f8386.css"
+      "_app/immutable/assets/BrowserWindow.11626ede.css"
     ],
     "file": "chunks/BrowserWindow.js",
     "imports": [

@@ -16,6 +16,7 @@ thiserror = { workspace = true }
 tracing = { workspace = true }
 uuid = { workspace = true }
 chrono = { workspace = true }
+url = "2.4"
 
 # Web view dependencies
 wry = { version = "0.24", optional = true }

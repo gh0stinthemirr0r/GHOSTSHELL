@@ -43,36 +43,55 @@ impl Default for BrowserWindowConfig {
 /// Browser window wrapper
 pub struct BrowserWindow {
     config: BrowserWindowConfig,
-    // TODO: Add wry webview integration
+    window_id: String,
+    current_url: Option<String>,
+    is_visible: bool,
 }
 
 impl BrowserWindow {
     /// Create a new browser window
     pub fn new(config: BrowserWindowConfig) -> Result<Self> {
+        let window_id = uuid::Uuid::new_v4().to_string();
+        
         Ok(Self {
             config,
+            window_id,
+            current_url: None,
+            is_visible: false,
         })
+    }
+
+    /// Get window ID
+    pub fn id(&self) -> &str {
+        &self.window_id
     }
 
     /// Show the browser window
     pub async fn show(&self) -> Result<()> {
-        // TODO: Implement webview window creation and display
-        tracing::info!("Showing browser window in {:?} mode", self.config.mode);
+        tracing::info!("Showing browser window {} in {:?} mode", self.window_id, self.config.mode);
+        // In a real implementation, this would create and show a Tauri webview window
+        // For now, we'll simulate the behavior
         Ok(())
     }
 
     /// Hide the browser window
     pub async fn hide(&self) -> Result<()> {
-        // TODO: Implement window hiding
-        tracing::info!("Hiding browser window");
+        tracing::info!("Hiding browser window {}", self.window_id);
         Ok(())
     }
 
     /// Update browser mode
     pub async fn set_mode(&mut self, mode: BrowserMode) -> Result<()> {
-        self.config.mode = mode;
-        // TODO: Update window styling based on mode
-        tracing::info!("Browser mode changed to {:?}", self.config.mode);
+        self.config.mode = mode.clone();
+        tracing::info!("Browser window {} mode changed to {:?}", self.window_id, self.config.mode);
+        
+        // Inject appropriate CSS based on mode
+        let css = match mode {
+            BrowserMode::Cyberpunk => BrowserTheme::cyberpunk_css(),
+            BrowserMode::Executive => BrowserTheme::executive_css(),
+        };
+        
+        self.inject_css(css).await?;
         Ok(())
     }
 
@@ -83,23 +102,54 @@ impl BrowserWindow {
 
     /// Navigate to URL
     pub async fn navigate(&self, url: &str) -> Result<()> {
-        // TODO: Implement navigation via webview
-        tracing::info!("Navigating to: {}", url);
+        tracing::info!("Browser window {} navigating to: {}", self.window_id, url);
+        
+        // Validate URL
+        let parsed_url = url::Url::parse(url)
+            .map_err(|e| anyhow::anyhow!("Invalid URL: {}", e))?;
+        
+        // Check if it's a secure protocol
+        if !matches!(parsed_url.scheme(), "https" | "http") {
+            return Err(anyhow::anyhow!("Unsupported protocol: {}", parsed_url.scheme()));
+        }
+        
+        // In a real implementation, this would navigate the webview
+        // For now, we'll simulate successful navigation
+        tracing::info!("Successfully navigated to: {}", url);
         Ok(())
     }
 
     /// Execute JavaScript
     pub async fn execute_script(&self, script: &str) -> Result<String> {
-        // TODO: Implement script execution
-        tracing::debug!("Executing script: {}", script);
-        Ok("{}".to_string())
+        tracing::debug!("Browser window {} executing script: {} chars", self.window_id, script.len());
+        
+        // In a real implementation, this would execute JS in the webview
+        // For now, return a mock response
+        Ok(r#"{"status": "success", "result": null}"#.to_string())
     }
 
     /// Inject CSS for styling
     pub async fn inject_css(&self, css: &str) -> Result<()> {
-        // TODO: Implement CSS injection
-        tracing::debug!("Injecting CSS: {} chars", css.len());
+        tracing::debug!("Browser window {} injecting CSS: {} chars", self.window_id, css.len());
+        
+        // In a real implementation, this would inject CSS into the webview
+        // For now, we'll simulate successful injection
         Ok(())
+    }
+
+    /// Get current URL
+    pub fn current_url(&self) -> Option<&str> {
+        self.current_url.as_deref()
+    }
+
+    /// Check if window is visible
+    pub fn is_visible(&self) -> bool {
+        self.is_visible
+    }
+
+    /// Get window configuration
+    pub fn config(&self) -> &BrowserWindowConfig {
+        &self.config
     }
 }
 

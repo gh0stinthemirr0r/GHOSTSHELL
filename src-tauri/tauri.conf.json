@@ -25,7 +25,9 @@
         "minimize": true,
         "unmaximize": true,
         "unminimize": true,
-        "startDragging": true
+        "startDragging": true,
+        "create": true,
+        "setTitle": true
       },
       "fs": {
         "all": false,
@@ -37,6 +39,10 @@
         "removeDir": true,
         "removeFile": true,
         "renameFile": true
+      },
+      "http": {
+        "all": true,
+        "request": true
       }
     },
     "bundle": {
@@ -73,7 +79,7 @@
       }
     },
     "security": {
-      "csp": "default-src 'self'; img-src 'self' asset: https://asset.localhost; style-src 'self' 'unsafe-inline'; font-src 'self' asset: https://asset.localhost"
+      "csp": "default-src 'self' https: http: data: blob:; img-src 'self' asset: https: http: data: blob:; style-src 'self' 'unsafe-inline' https: http:; font-src 'self' asset: https: http: data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https: http:; connect-src 'self' https: http: ws: wss:; frame-src 'self' https: http:; media-src 'self' https: http: data: blob:"
     },
     "updater": {
       "active": false
