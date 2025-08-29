@@ -25,11 +25,16 @@ use ghost_ai::{AIEngine, AIConfig};
 use ghost_browse::{BrowserEngine, BrowserConfig};
 
 mod commands;
+mod console_manager;
+mod windows_api_shell;
+mod windows_api_network;
+mod windows_api_browser;
 mod security;
 mod window_effects;
 mod clipboard;
 mod quarantine;
 mod terminal;
+mod embedded_nushell;
 mod ssh;
 mod vpn;
 mod ai_assistant;
@@ -49,7 +54,7 @@ mod multi_tenant;
 mod api_gateway;
 mod autonomous_soc;
 mod shell_integration;
-mod pty_shell;
+// mod pty_shell; // Removed - using simple_shell instead
 mod simple_shell;
 
 mod security_automation;
@@ -246,8 +251,17 @@ fn main() -> Result<()> {
             info!("Terminal manager initialized");
 
             // Initialize SSH Manager (Phase 3)
-            let ssh_manager = Arc::new(Mutex::new(SshManager::new()
-                .map_err(|e| anyhow::anyhow!("Failed to initialize SSH manager: {}", e))?));
+            debug!("About to initialize SSH manager");
+            let ssh_manager = match SshManager::new() {
+                Ok(manager) => {
+                    debug!("SSH manager created successfully");
+                    Arc::new(Mutex::new(manager))
+                },
+                Err(e) => {
+                    error!("Failed to initialize SSH manager: {}", e);
+                    return Err(anyhow::anyhow!("Failed to initialize SSH manager: {}", e).into());
+                }
+            };
             app.manage(ssh_manager);
             info!("SSH manager initialized");
 
@@ -602,32 +616,21 @@ fn main() -> Result<()> {
             debug!("Skipping navigation manager initialization for debugging");
             info!("Navigation Manager initialization skipped");
 
-            // Initialize Shell Integration
-            debug!("About to initialize shell integration");
-            let shell_state = rt.block_on(async {
-                let integration = shell_integration::TerminalShellIntegration::new().await
-                    .map_err(|e| anyhow::anyhow!("Failed to create shell integration: {}", e))?;
-                
-                Ok::<_, anyhow::Error>(commands::shell::ShellState {
-                    integration: Arc::new(tokio::sync::Mutex::new(integration)),
-                })
-            })?;
-            
-            // Initialize PTY Shell Manager for persistent sessions
-            debug!("Initializing PTY shell manager");
-            let pty_shell_manager = Arc::new(pty_shell::PtyShellManager::new());
-            debug!("PTY shell manager initialized");
-
-            // Initialize Simple Shell Manager as backup
+            // Initialize Simple Shell Manager (only system we use now)
             debug!("Initializing simple shell manager");
             let simple_shell_manager = Arc::new(simple_shell::SimpleShellManager::new());
             debug!("Simple shell manager initialized");
 
-            app.manage(shell_state);
-            app.manage(pty_shell_manager);
             app.manage(simple_shell_manager);
             debug!("Shell integration initialized successfully");
             info!("Shell Integration initialized");
+
+            // Initialize Embedded Nushell Manager
+            debug!("Initializing embedded Nushell manager");
+            let nushell_manager = embedded_nushell::EmbeddedNushellManager::new();
+            app.manage(nushell_manager);
+            debug!("Embedded Nushell manager initialized");
+            info!("Embedded Nushell initialized");
             
             // Initialize Settings Manager
             debug!("Initializing settings manager");
@@ -675,26 +678,26 @@ fn main() -> Result<()> {
             settings::set_accessibility,
             settings::set_fonts,
             // Vault commands (Phase 2)
-            vault::vault_initialize,
-            vault::vault_unlock,
-            vault::vault_lock,
-            vault::vault_is_unlocked,
-            vault::vault_setup_mfa,
-            vault::vault_verify_mfa,
-            vault::vault_store_secret,
-            vault::vault_list_secrets,
-            vault::vault_get_secret,
-            vault::vault_delete_secret,
-            vault::vault_get_stats,
+            commands::vault::vault_initialize,
+            commands::vault::vault_unlock,
+            commands::vault::vault_lock,
+            commands::vault::vault_is_unlocked,
+            commands::vault::vault_setup_mfa,
+            commands::vault::vault_verify_mfa,
+            commands::vault::vault_store_secret,
+            commands::vault::vault_list_secrets,
+            commands::vault::vault_get_secret,
+            commands::vault::vault_delete_secret,
+            commands::vault::vault_get_stats,
             // Policy commands (Phase 2)
-            policy::policy_load,
-            policy::policy_get_stats,
-            policy::policy_dry_run,
-            policy::policy_set_user,
-            policy::policy_update_context,
-            policy::policy_test_access,
-            policy::policy_get_defaults,
-            policy::policy_validate,
+            commands::policy::policy_load,
+            commands::policy::policy_get_stats,
+            commands::policy::policy_dry_run,
+            commands::policy::policy_set_user,
+            commands::policy::policy_update_context,
+            commands::policy::policy_test_access,
+            commands::policy::policy_get_defaults,
+            commands::policy::policy_validate,
             // Clipboard commands (Phase 2)
             clipboard::clipboard_copy,
             clipboard::clipboard_paste,
@@ -1031,26 +1034,17 @@ fn main() -> Result<()> {
             // commands::navigation::nav_toggle_module_pin,
             // commands::navigation::nav_move_module_to_group,
             
-            // Shell Integration Commands
-            commands::shell::shell_get_available_shells,
-            commands::shell::shell_get_default_shell,
-            commands::shell::shell_create_session,
-            commands::shell::shell_close_session,
-            commands::shell::shell_get_session_info,
-            commands::shell::shell_launch_powershell_script,
-            commands::shell::shell_launch_wsl_distro,
-            commands::shell::shell_execute_command,
-            commands::shell::shell_test_availability,
+            // Shell Integration Commands (old PTY-based system removed - commands removed to prevent console windows)
             
-            // PTY Shell Commands
-            commands::shell::pty_create_session,
-            commands::shell::pty_write_input,
-            commands::shell::pty_get_output,
-            commands::shell::pty_get_full_output,
+            // Simple Shell Commands (PTY commands removed)
             commands::shell::simple_execute_command,
-            commands::shell::pty_resize_session,
-            commands::shell::pty_close_session,
-            commands::shell::pty_list_sessions,
+            // Embedded Nushell Commands
+            commands::nushell::nushell_create_session,
+            commands::nushell::nushell_execute_command,
+            commands::nushell::nushell_close_session,
+            commands::nushell::nushell_list_sessions,
+            commands::nushell::nushell_session_exists,
+            commands::nushell::nushell_get_info,
             
             // Font Commands
             commands::fonts::get_embedded_fonts,

@@ -1,0 +1,1 @@
+import{c as e,v as o}from"./ssr.js";import{P as t}from"./PlaceholderModule.js";import{j as r}from"./_page.js";const m=e((a,s,i,n)=>`${o(t,"PlaceholderModule").$$render(a,{moduleName:"GhostDash",description:"Advanced analytics dashboard with real-time metrics, threat visualization, and security insights.",icon:r},{},{})}`);export{m as default};

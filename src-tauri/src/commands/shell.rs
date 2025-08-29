@@ -1,5 +1,5 @@
 use crate::shell_integration::{TerminalShellIntegration, ShellType};
-use crate::pty_shell::PtyShellManager;
+// use crate::pty_shell::PtyShellManager; // Removed - using simple_shell instead
 use crate::simple_shell::SimpleShellManager;
 use anyhow::Result;
 use serde::{Deserialize, Serialize};
@@ -188,34 +188,22 @@ pub async fn shell_execute_command(
         ShellType::Custom(exe) => (exe, vec![command]),
     };
 
-    let mut cmd = Command::new(&executable);
-    cmd.args(&args);
-
-    if let Some(dir) = working_directory {
-        cmd.current_dir(dir);
-    }
-
-    cmd.stdout(Stdio::piped())
-       .stderr(Stdio::piped());
-
     debug!("Executing command: {} with args: {:?}", executable, args);
     
-    let output = cmd.output().map_err(|e| {
+    let console_manager = crate::console_manager::ConsoleManager::new();
+    let (stdout, stderr, exit_code) = console_manager.execute_hidden_command(&executable, &args.iter().map(|s| s.as_str()).collect::<Vec<_>>(), working_directory.as_deref()).await.map_err(|e| {
         error!("Failed to execute command '{}': {}", executable, e);
         e.to_string()
     })?;
 
-    let stdout = String::from_utf8_lossy(&output.stdout);
-    let stderr = String::from_utf8_lossy(&output.stderr);
-
-    debug!("Command output - stdout: '{}', stderr: '{}', exit_code: {:?}", 
-           stdout, stderr, output.status.code());
+    debug!("Command output - stdout: '{}', stderr: '{}', exit_code: {}", 
+           stdout, stderr, exit_code);
 
     Ok(CommandResult {
-        stdout: stdout.to_string(),
-        stderr: stderr.to_string(),
-        exit_code: output.status.code().unwrap_or(-1),
-        success: output.status.success(),
+        stdout,
+        stderr,
+        exit_code,
+        success: exit_code == 0,
     })
 }
 
@@ -236,8 +224,15 @@ pub async fn shell_test_availability(
         ShellType::Custom(ref exe) => exe,
     };
 
-    match Command::new(executable).arg("--version").output() {
-        Ok(output) => Ok(output.status.success()),
+    let windows_discovery = crate::windows_api_shell::WindowsShellDiscovery::new();
+    
+    // First try to find the executable
+    match windows_discovery.find_executable(executable).await {
+        Ok(exe_path) => {
+            // Then test if it's available
+            let available = windows_discovery.test_shell_availability(&exe_path).await;
+            Ok(available)
+        }
         Err(_) => Ok(false),
     }
 }
@@ -253,125 +248,8 @@ pub struct CommandResult {
 
 // PTY-based persistent shell commands
 
-/// Create a persistent PTY shell session
-#[tauri::command]
-pub async fn pty_create_session(
-    session_id: String,
-    shell_type: String,
-    pty_manager: State<'_, Arc<PtyShellManager>>,
-) -> Result<String, String> {
-    // Convert string to ShellType
-    let shell_type_enum = match shell_type.as_str() {
-        "PowerShellCore" => ShellType::PowerShellCore,
-        "PowerShell" => ShellType::PowerShell,
-        "WindowsPowerShell" => ShellType::PowerShell,
-        "Cmd" => ShellType::Cmd,
-        "GitBash" => ShellType::GitBash,
-        "WSL" => ShellType::WSL,
-        distro if distro.starts_with("WSL:") => {
-            let distro_name = distro.strip_prefix("WSL:").unwrap_or("Ubuntu").to_string();
-            ShellType::WSLDistro(distro_name)
-        },
-        // Handle serialized enum variants (from serde)
-        s if s.contains("PowerShellCore") => ShellType::PowerShellCore,
-        s if s.contains("PowerShell") => ShellType::PowerShell,
-        s if s.contains("Cmd") => ShellType::Cmd,
-        s if s.contains("GitBash") => ShellType::GitBash,
-        s if s.contains("WSL") => ShellType::WSL,
-        _ => {
-            error!("Unknown shell type: {}", shell_type);
-            return Err(format!("Unknown shell type: {}", shell_type));
-        }
-    };
-
-    debug!("Creating PTY session: {} with shell type: {:?}", session_id, shell_type_enum);
-    
-    pty_manager.create_session(session_id.clone(), shell_type_enum).await
-        .map_err(|e| {
-            error!("Failed to create PTY session {}: {}", session_id, e);
-            e.to_string()
-        })?;
-    
-    Ok(session_id)
-}
-
-/// Write input to a PTY shell session
-#[tauri::command]
-pub async fn pty_write_input(
-    session_id: String,
-    input: String,
-    pty_manager: State<'_, Arc<PtyShellManager>>,
-) -> Result<(), String> {
-    debug!("Writing input to PTY session {}: '{}'", session_id, input);
-    
-    pty_manager.write_to_session(&session_id, &input).await
-        .map_err(|e| {
-            error!("Failed to write to PTY session {}: {}", session_id, e);
-            e.to_string()
-        })
-}
-
-/// Get output from a PTY shell session
-#[tauri::command]
-pub async fn pty_get_output(
-    session_id: String,
-    pty_manager: State<'_, Arc<PtyShellManager>>,
-) -> Result<Option<String>, String> {
-    let output = pty_manager.get_output(&session_id).await;
-    debug!("Getting output for session {}: {:?}", session_id, output.as_ref().map(|s| format!("{}...", &s[..s.len().min(100)])));
-    Ok(output)
-}
-
-/// Get full output from a PTY shell session (for debugging)
-#[tauri::command]
-pub async fn pty_get_full_output(
-    session_id: String,
-    pty_manager: State<'_, Arc<PtyShellManager>>,
-) -> Result<Option<String>, String> {
-    let output = pty_manager.get_full_output(&session_id).await;
-    debug!("Getting full output for session {}: {} chars", session_id, output.as_ref().map(|s| s.len()).unwrap_or(0));
-    Ok(output)
-}
-
-/// Resize a PTY shell session (simplified - no-op for now)
-#[tauri::command]
-pub async fn pty_resize_session(
-    session_id: String,
-    rows: u16,
-    cols: u16,
-    _pty_manager: State<'_, Arc<PtyShellManager>>,
-) -> Result<(), String> {
-    debug!("Resize request for PTY session {} to {}x{} (not implemented in simplified version)", session_id, cols, rows);
-    // For now, we'll just acknowledge the resize request but not actually resize
-    // This can be implemented later if needed
-    Ok(())
-}
-
-/// Close a PTY shell session
-#[tauri::command]
-pub async fn pty_close_session(
-    session_id: String,
-    pty_manager: State<'_, Arc<PtyShellManager>>,
-) -> Result<(), String> {
-    debug!("Closing PTY session: {}", session_id);
-    
-    pty_manager.close_session(&session_id).await
-        .map_err(|e| {
-            error!("Failed to close PTY session {}: {}", session_id, e);
-            e.to_string()
-        })
-}
-
-/// List all active PTY shell sessions
-#[tauri::command]
-pub async fn pty_list_sessions(
-    pty_manager: State<'_, Arc<PtyShellManager>>,
-) -> Result<Vec<String>, String> {
-    let sessions = pty_manager.list_sessions().await;
-    Ok(sessions)
-}
-
 // Simple Shell Commands - Direct execution without persistent sessions
+// (PTY commands removed to eliminate console window popups)
 
 /// Execute a command directly (no persistent session)
 #[tauri::command]

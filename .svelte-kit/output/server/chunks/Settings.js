@@ -1,0 +1,1 @@
+import{c as o,v as s}from"./ssr.js";import{P as t}from"./PlaceholderModule.js";import{S as r}from"./_page.js";const m=o((e,i,n,a)=>`${s(t,"PlaceholderModule").$$render(e,{moduleName:"Settings",description:"Comprehensive system configuration, user preferences, security policies, and application settings.",icon:r},{},{})}`);export{m as default};

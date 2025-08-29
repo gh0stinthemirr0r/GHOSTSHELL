@@ -7,20 +7,27 @@
     "isEntry": true,
     "src": ".svelte-kit/generated/server/internal.js"
   },
+  "_PlaceholderModule.js": {
+    "file": "chunks/PlaceholderModule.js",
+    "imports": [
+      "_ssr.js"
+    ]
+  },
   "__page.js": {
     "css": [
-      "_app/immutable/assets/_page.46b8afcf.css"
+      "_app/immutable/assets/_page.c82cbf88.css"
     ],
     "dynamicImports": [
-      "src/lib/components/Terminal.svelte",
+      "src/lib/components/TerminalSimple.svelte",
       "src/lib/components/SshClient.svelte",
       "src/lib/components/BrowserWindow.svelte",
+      "src/lib/components/GhostVault.svelte",
+      "src/lib/components/SecurityPolicy.svelte",
+      "src/lib/components/NetworkTopology.svelte",
       "src/lib/components/VpnClient.svelte",
       "src/lib/components/AiAssistant.svelte",
-      "src/lib/components/NetworkTopology.svelte",
       "src/lib/components/LayersTool.svelte",
       "src/lib/components/SurveyorTool.svelte",
-      "src/lib/components/FileManager.svelte",
       "src/lib/components/PcapStudio.svelte",
       "src/lib/components/ExploitEngine.svelte",
       "src/lib/components/ForensicsKit.svelte",
@@ -37,8 +44,12 @@
       "src/lib/components/SecurityAutomationPlatform.svelte",
       "src/lib/components/QuantumSafeOperations.svelte",
       "src/lib/components/GlobalThreatIntelligence.svelte",
-      "src/lib/components/GhostVault.svelte",
-      "src/lib/components/SecurityPolicy.svelte"
+      "src/lib/components/GhostDash.svelte",
+      "src/lib/components/GhostLog.svelte",
+      "src/lib/components/GhostReport.svelte",
+      "src/lib/components/GhostScript.svelte",
+      "src/lib/components/FileManager.svelte",
+      "src/lib/components/Settings.svelte"
     ],
     "file": "chunks/_page.js",
     "imports": [
@@ -108,7 +119,7 @@
     ]
   },
   "_page.css": {
-    "file": "_app/immutable/assets/_page.46b8afcf.css",
+    "file": "_app/immutable/assets/_page.c82cbf88.css",
     "src": "_page.css"
   },
   "_play.js": {
@@ -170,6 +181,10 @@
       "__page.js"
     ]
   },
+  "cyberpunk-theme.css": {
+    "file": "_app/immutable/assets/cyberpunk-theme.96d6ac04.css",
+    "src": "cyberpunk-theme.css"
+  },
   "node_modules/@sveltejs/kit/src/runtime/components/error.svelte": {
     "file": "entries/fallbacks/error.svelte.js",
     "imports": [
@@ -187,19 +202,122 @@
     "isEntry": true,
     "src": "node_modules/@sveltejs/kit/src/runtime/server/index.js"
   },
+  "src-tauri/fonts/DejaVuSansMNerdFont-Bold.ttf": {
+    "file": "_app/immutable/assets/DejaVuSansMNerdFont-Bold.10e70a9f.ttf",
+    "src": "src-tauri/fonts/DejaVuSansMNerdFont-Bold.ttf"
+  },
+  "src-tauri/fonts/DejaVuSansMNerdFont-BoldOblique.ttf": {
+    "file": "_app/immutable/assets/DejaVuSansMNerdFont-BoldOblique.8938fbfd.ttf",
+    "src": "src-tauri/fonts/DejaVuSansMNerdFont-BoldOblique.ttf"
+  },
+  "src-tauri/fonts/DejaVuSansMNerdFont-Oblique.ttf": {
+    "file": "_app/immutable/assets/DejaVuSansMNerdFont-Oblique.a29de5a3.ttf",
+    "src": "src-tauri/fonts/DejaVuSansMNerdFont-Oblique.ttf"
+  },
+  "src-tauri/fonts/DejaVuSansMNerdFont-Regular.ttf": {
+    "file": "_app/immutable/assets/DejaVuSansMNerdFont-Regular.02beb805.ttf",
+    "src": "src-tauri/fonts/DejaVuSansMNerdFont-Regular.ttf"
+  },
+  "src-tauri/fonts/EnvyCodeRNerdFont-Bold.ttf": {
+    "file": "_app/immutable/assets/EnvyCodeRNerdFont-Bold.4cc2c92c.ttf",
+    "src": "src-tauri/fonts/EnvyCodeRNerdFont-Bold.ttf"
+  },
+  "src-tauri/fonts/EnvyCodeRNerdFont-Italic.ttf": {
+    "file": "_app/immutable/assets/EnvyCodeRNerdFont-Italic.4ab9a16a.ttf",
+    "src": "src-tauri/fonts/EnvyCodeRNerdFont-Italic.ttf"
+  },
+  "src-tauri/fonts/EnvyCodeRNerdFont-Regular.ttf": {
+    "file": "_app/immutable/assets/EnvyCodeRNerdFont-Regular.75d34e6e.ttf",
+    "src": "src-tauri/fonts/EnvyCodeRNerdFont-Regular.ttf"
+  },
+  "src-tauri/fonts/FiraCodeNerdFont-Bold.ttf": {
+    "file": "_app/immutable/assets/FiraCodeNerdFont-Bold.594a51c8.ttf",
+    "src": "src-tauri/fonts/FiraCodeNerdFont-Bold.ttf"
+  },
+  "src-tauri/fonts/FiraCodeNerdFont-Light.ttf": {
+    "file": "_app/immutable/assets/FiraCodeNerdFont-Light.9b4dfa71.ttf",
+    "src": "src-tauri/fonts/FiraCodeNerdFont-Light.ttf"
+  },
+  "src-tauri/fonts/FiraCodeNerdFont-Medium.ttf": {
+    "file": "_app/immutable/assets/FiraCodeNerdFont-Medium.1c8bd9c2.ttf",
+    "src": "src-tauri/fonts/FiraCodeNerdFont-Medium.ttf"
+  },
+  "src-tauri/fonts/FiraCodeNerdFont-Regular.ttf": {
+    "file": "_app/immutable/assets/FiraCodeNerdFont-Regular.29b61965.ttf",
+    "src": "src-tauri/fonts/FiraCodeNerdFont-Regular.ttf"
+  },
+  "src-tauri/fonts/FiraMonoNerdFont-Bold.otf": {
+    "file": "_app/immutable/assets/FiraMonoNerdFont-Bold.8c31794d.otf",
+    "src": "src-tauri/fonts/FiraMonoNerdFont-Bold.otf"
+  },
+  "src-tauri/fonts/FiraMonoNerdFont-Medium.otf": {
+    "file": "_app/immutable/assets/FiraMonoNerdFont-Medium.4f99b210.otf",
+    "src": "src-tauri/fonts/FiraMonoNerdFont-Medium.otf"
+  },
+  "src-tauri/fonts/FiraMonoNerdFont-Regular.otf": {
+    "file": "_app/immutable/assets/FiraMonoNerdFont-Regular.73955887.otf",
+    "src": "src-tauri/fonts/FiraMonoNerdFont-Regular.otf"
+  },
+  "src-tauri/fonts/HasklugNerdFont-Bold.otf": {
+    "file": "_app/immutable/assets/HasklugNerdFont-Bold.4a8ae461.otf",
+    "src": "src-tauri/fonts/HasklugNerdFont-Bold.otf"
+  },
+  "src-tauri/fonts/HasklugNerdFont-Italic.otf": {
+    "file": "_app/immutable/assets/HasklugNerdFont-Italic.e3e96e9f.otf",
+    "src": "src-tauri/fonts/HasklugNerdFont-Italic.otf"
+  },
+  "src-tauri/fonts/HasklugNerdFont-Light.otf": {
+    "file": "_app/immutable/assets/HasklugNerdFont-Light.e149d9d8.otf",
+    "src": "src-tauri/fonts/HasklugNerdFont-Light.otf"
+  },
+  "src-tauri/fonts/HasklugNerdFont-Regular.otf": {
+    "file": "_app/immutable/assets/HasklugNerdFont-Regular.159c3c06.otf",
+    "src": "src-tauri/fonts/HasklugNerdFont-Regular.otf"
+  },
+  "src-tauri/fonts/JetBrainsMonoNerdFont-Bold.ttf": {
+    "file": "_app/immutable/assets/JetBrainsMonoNerdFont-Bold.e82e27a7.ttf",
+    "src": "src-tauri/fonts/JetBrainsMonoNerdFont-Bold.ttf"
+  },
+  "src-tauri/fonts/JetBrainsMonoNerdFont-BoldItalic.ttf": {
+    "file": "_app/immutable/assets/JetBrainsMonoNerdFont-BoldItalic.961222be.ttf",
+    "src": "src-tauri/fonts/JetBrainsMonoNerdFont-BoldItalic.ttf"
+  },
+  "src-tauri/fonts/JetBrainsMonoNerdFont-Italic.ttf": {
+    "file": "_app/immutable/assets/JetBrainsMonoNerdFont-Italic.981133a2.ttf",
+    "src": "src-tauri/fonts/JetBrainsMonoNerdFont-Italic.ttf"
+  },
+  "src-tauri/fonts/JetBrainsMonoNerdFont-Regular.ttf": {
+    "file": "_app/immutable/assets/JetBrainsMonoNerdFont-Regular.0ec29a68.ttf",
+    "src": "src-tauri/fonts/JetBrainsMonoNerdFont-Regular.ttf"
+  },
+  "src-tauri/fonts/MesloLGLNerdFont-Bold.ttf": {
+    "file": "_app/immutable/assets/MesloLGLNerdFont-Bold.0aa95657.ttf",
+    "src": "src-tauri/fonts/MesloLGLNerdFont-Bold.ttf"
+  },
+  "src-tauri/fonts/MesloLGLNerdFont-Italic.ttf": {
+    "file": "_app/immutable/assets/MesloLGLNerdFont-Italic.db6a6e72.ttf",
+    "src": "src-tauri/fonts/MesloLGLNerdFont-Italic.ttf"
+  },
+  "src-tauri/fonts/MesloLGLNerdFont-Regular.ttf": {
+    "file": "_app/immutable/assets/MesloLGLNerdFont-Regular.5343e2b5.ttf",
+    "src": "src-tauri/fonts/MesloLGLNerdFont-Regular.ttf"
+  },
   "src/lib/components/AiAssistant.svelte": {
     "file": "chunks/AiAssistant.js",
     "imports": [
       "_ssr.js",
-      "_network.js",
       "__page.js",
       "_plus.js",
-      "_star.js"
+      "_star.js",
+      "_network.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/AiAssistant.svelte"
   },
   "src/lib/components/AutonomousSOC.svelte": {
+    "css": [
+      "_app/immutable/assets/cyberpunk-theme.96d6ac04.css"
+    ],
     "file": "chunks/AutonomousSOC.js",
     "imports": [
       "_ssr.js",
@@ -210,6 +328,9 @@
     "src": "src/lib/components/AutonomousSOC.svelte"
   },
   "src/lib/components/BehavioralAnalytics.svelte": {
+    "css": [
+      "_app/immutable/assets/cyberpunk-theme.96d6ac04.css"
+    ],
     "file": "chunks/BehavioralAnalytics.js",
     "imports": [
       "_ssr.js",
@@ -228,7 +349,8 @@
   },
   "src/lib/components/BrowserWindow.svelte": {
     "css": [
-      "_app/immutable/assets/BrowserWindow.11626ede.css"
+      "_app/immutable/assets/BrowserWindow.11626ede.css",
+      "_app/immutable/assets/cyberpunk-theme.96d6ac04.css"
     ],
     "file": "chunks/BrowserWindow.js",
     "imports": [
@@ -246,7 +368,8 @@
   },
   "src/lib/components/ComplianceDashboard.svelte": {
     "css": [
-      "_app/immutable/assets/ExploitEngine.796b4dcd.css"
+      "_app/immutable/assets/ExploitEngine.796b4dcd.css",
+      "_app/immutable/assets/cyberpunk-theme.96d6ac04.css"
     ],
     "file": "chunks/ComplianceDashboard.js",
     "imports": [
@@ -259,6 +382,9 @@
     "src": "src/lib/components/ComplianceDashboard.svelte"
   },
   "src/lib/components/ComplianceManager.svelte": {
+    "css": [
+      "_app/immutable/assets/cyberpunk-theme.96d6ac04.css"
+    ],
     "file": "chunks/ComplianceManager.js",
     "imports": [
       "_ssr.js",
@@ -295,9 +421,9 @@
     "imports": [
       "_ssr.js",
       "__page.js",
-      "_copy.js",
       "_star.js",
       "_plus.js",
+      "_copy.js",
       "_lock.js",
       "_clock.js"
     ],
@@ -316,13 +442,54 @@
     "isDynamicEntry": true,
     "src": "src/lib/components/ForensicsKit.svelte"
   },
+  "src/lib/components/GhostDash.svelte": {
+    "file": "chunks/GhostDash.js",
+    "imports": [
+      "_ssr.js",
+      "_PlaceholderModule.js",
+      "__page.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/lib/components/GhostDash.svelte"
+  },
+  "src/lib/components/GhostLog.svelte": {
+    "file": "chunks/GhostLog.js",
+    "imports": [
+      "_ssr.js",
+      "_PlaceholderModule.js",
+      "__page.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/lib/components/GhostLog.svelte"
+  },
+  "src/lib/components/GhostReport.svelte": {
+    "file": "chunks/GhostReport.js",
+    "imports": [
+      "_ssr.js",
+      "_PlaceholderModule.js",
+      "__page.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/lib/components/GhostReport.svelte"
+  },
+  "src/lib/components/GhostScript.svelte": {
+    "file": "chunks/GhostScript.js",
+    "imports": [
+      "_ssr.js",
+      "_PlaceholderModule.js",
+      "__page.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/lib/components/GhostScript.svelte"
+  },
   "src/lib/components/GhostVault.css": {
     "file": "_app/immutable/assets/GhostVault.2d5c14bb.css",
     "src": "src/lib/components/GhostVault.css"
   },
   "src/lib/components/GhostVault.svelte": {
     "css": [
-      "_app/immutable/assets/GhostVault.2d5c14bb.css"
+      "_app/immutable/assets/GhostVault.2d5c14bb.css",
+      "_app/immutable/assets/cyberpunk-theme.96d6ac04.css"
     ],
     "file": "chunks/GhostVault.js",
     "imports": [
@@ -333,6 +500,9 @@
     "src": "src/lib/components/GhostVault.svelte"
   },
   "src/lib/components/GlobalThreatIntelligence.svelte": {
+    "css": [
+      "_app/immutable/assets/cyberpunk-theme.96d6ac04.css"
+    ],
     "file": "chunks/GlobalThreatIntelligence.js",
     "imports": [
       "_ssr.js",
@@ -344,6 +514,9 @@
     "src": "src/lib/components/GlobalThreatIntelligence.svelte"
   },
   "src/lib/components/IntegrationHub.svelte": {
+    "css": [
+      "_app/immutable/assets/cyberpunk-theme.96d6ac04.css"
+    ],
     "file": "chunks/IntegrationHub.js",
     "imports": [
       "_ssr.js",
@@ -367,14 +540,17 @@
       "_ssr.js",
       "_target.js",
       "_clock.js",
-      "_circle-x.js",
       "__page.js",
-      "_plus.js"
+      "_plus.js",
+      "_circle-x.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/LayersTool.svelte"
   },
   "src/lib/components/MultiTenantManager.svelte": {
+    "css": [
+      "_app/immutable/assets/cyberpunk-theme.96d6ac04.css"
+    ],
     "file": "chunks/MultiTenantManager.js",
     "imports": [
       "_ssr.js",
@@ -390,16 +566,19 @@
     "file": "chunks/NetworkTopology.js",
     "imports": [
       "_ssr.js",
-      "__page.js",
       "_network.js",
+      "__page.js",
+      "_shield-x.js",
       "_play.js",
-      "_server.js",
-      "_shield-x.js"
+      "_server.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/NetworkTopology.svelte"
   },
   "src/lib/components/OrchestrationDashboard.svelte": {
+    "css": [
+      "_app/immutable/assets/cyberpunk-theme.96d6ac04.css"
+    ],
     "file": "chunks/OrchestrationDashboard.js",
     "imports": [
       "_ssr.js",
@@ -423,6 +602,9 @@
     "src": "src/lib/components/PcapStudio.svelte"
   },
   "src/lib/components/PredictiveSecurity.svelte": {
+    "css": [
+      "_app/immutable/assets/cyberpunk-theme.96d6ac04.css"
+    ],
     "file": "chunks/PredictiveSecurity.js",
     "imports": [
       "_ssr.js",
@@ -434,6 +616,9 @@
     "src": "src/lib/components/PredictiveSecurity.svelte"
   },
   "src/lib/components/QuantumSafeOperations.svelte": {
+    "css": [
+      "_app/immutable/assets/cyberpunk-theme.96d6ac04.css"
+    ],
     "file": "chunks/QuantumSafeOperations.js",
     "imports": [
       "_ssr.js",
@@ -447,6 +632,9 @@
     "src": "src/lib/components/QuantumSafeOperations.svelte"
   },
   "src/lib/components/ReportingStudio.svelte": {
+    "css": [
+      "_app/immutable/assets/cyberpunk-theme.96d6ac04.css"
+    ],
     "file": "chunks/ReportingStudio.js",
     "imports": [
       "_ssr.js",
@@ -458,6 +646,9 @@
     "src": "src/lib/components/ReportingStudio.svelte"
   },
   "src/lib/components/SecurityAutomationPlatform.svelte": {
+    "css": [
+      "_app/immutable/assets/cyberpunk-theme.96d6ac04.css"
+    ],
     "file": "chunks/SecurityAutomationPlatform.js",
     "imports": [
       "_ssr.js",
@@ -475,7 +666,8 @@
   },
   "src/lib/components/SecurityPolicy.svelte": {
     "css": [
-      "_app/immutable/assets/SecurityPolicy.233a80d3.css"
+      "_app/immutable/assets/SecurityPolicy.233a80d3.css",
+      "_app/immutable/assets/cyberpunk-theme.96d6ac04.css"
     ],
     "file": "chunks/SecurityPolicy.js",
     "imports": [
@@ -484,6 +676,16 @@
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/SecurityPolicy.svelte"
+  },
+  "src/lib/components/Settings.svelte": {
+    "file": "chunks/Settings.js",
+    "imports": [
+      "_ssr.js",
+      "_PlaceholderModule.js",
+      "__page.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/lib/components/Settings.svelte"
   },
   "src/lib/components/SshClient.css": {
     "file": "_app/immutable/assets/SshClient.87d5029a.css",
@@ -524,25 +726,27 @@
     "isDynamicEntry": true,
     "src": "src/lib/components/SurveyorTool.svelte"
   },
-  "src/lib/components/Terminal.css": {
-    "file": "_app/immutable/assets/Terminal.ce12e8e7.css",
-    "src": "src/lib/components/Terminal.css"
+  "src/lib/components/TerminalSimple.css": {
+    "file": "_app/immutable/assets/TerminalSimple.ff9b5460.css",
+    "src": "src/lib/components/TerminalSimple.css"
   },
-  "src/lib/components/Terminal.svelte": {
+  "src/lib/components/TerminalSimple.svelte": {
     "css": [
-      "_app/immutable/assets/Terminal.ce12e8e7.css"
+      "_app/immutable/assets/TerminalSimple.ff9b5460.css"
     ],
-    "file": "chunks/Terminal.js",
+    "file": "chunks/TerminalSimple.js",
     "imports": [
       "_ssr.js",
-      "_index.js",
       "_plus.js",
       "__page.js"
     ],
     "isDynamicEntry": true,
-    "src": "src/lib/components/Terminal.svelte"
+    "src": "src/lib/components/TerminalSimple.svelte"
   },
   "src/lib/components/ThreatIntelligence.svelte": {
+    "css": [
+      "_app/immutable/assets/cyberpunk-theme.96d6ac04.css"
+    ],
     "file": "chunks/ThreatIntelligence.js",
     "imports": [
       "_ssr.js",
@@ -558,22 +762,49 @@
     "file": "chunks/VpnClient.js",
     "imports": [
       "_ssr.js",
-      "_lock.js",
-      "_shield-x.js",
       "__page.js",
       "_plus.js",
+      "_lock.js",
+      "_shield-x.js",
       "_play.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/VpnClient.svelte"
   },
   "src/routes/+layout.css": {
-    "file": "_app/immutable/assets/_layout.bbb1bdf6.css",
+    "file": "_app/immutable/assets/_layout.1e5b95f8.css",
     "src": "src/routes/+layout.css"
   },
   "src/routes/+layout.svelte": {
+    "assets": [
+      "_app/immutable/assets/JetBrainsMonoNerdFont-Regular.0ec29a68.ttf",
+      "_app/immutable/assets/JetBrainsMonoNerdFont-Bold.e82e27a7.ttf",
+      "_app/immutable/assets/JetBrainsMonoNerdFont-Italic.981133a2.ttf",
+      "_app/immutable/assets/JetBrainsMonoNerdFont-BoldItalic.961222be.ttf",
+      "_app/immutable/assets/FiraCodeNerdFont-Regular.29b61965.ttf",
+      "_app/immutable/assets/FiraCodeNerdFont-Bold.594a51c8.ttf",
+      "_app/immutable/assets/FiraCodeNerdFont-Medium.1c8bd9c2.ttf",
+      "_app/immutable/assets/FiraCodeNerdFont-Light.9b4dfa71.ttf",
+      "_app/immutable/assets/DejaVuSansMNerdFont-Regular.02beb805.ttf",
+      "_app/immutable/assets/DejaVuSansMNerdFont-Bold.10e70a9f.ttf",
+      "_app/immutable/assets/DejaVuSansMNerdFont-Oblique.a29de5a3.ttf",
+      "_app/immutable/assets/DejaVuSansMNerdFont-BoldOblique.8938fbfd.ttf",
+      "_app/immutable/assets/EnvyCodeRNerdFont-Regular.75d34e6e.ttf",
+      "_app/immutable/assets/EnvyCodeRNerdFont-Bold.4cc2c92c.ttf",
+      "_app/immutable/assets/EnvyCodeRNerdFont-Italic.4ab9a16a.ttf",
+      "_app/immutable/assets/HasklugNerdFont-Regular.159c3c06.otf",
+      "_app/immutable/assets/HasklugNerdFont-Bold.4a8ae461.otf",
+      "_app/immutable/assets/HasklugNerdFont-Italic.e3e96e9f.otf",
+      "_app/immutable/assets/HasklugNerdFont-Light.e149d9d8.otf",
+      "_app/immutable/assets/MesloLGLNerdFont-Regular.5343e2b5.ttf",
+      "_app/immutable/assets/MesloLGLNerdFont-Bold.0aa95657.ttf",
+      "_app/immutable/assets/MesloLGLNerdFont-Italic.db6a6e72.ttf",
+      "_app/immutable/assets/FiraMonoNerdFont-Regular.73955887.otf",
+      "_app/immutable/assets/FiraMonoNerdFont-Bold.8c31794d.otf",
+      "_app/immutable/assets/FiraMonoNerdFont-Medium.4f99b210.otf"
+    ],
     "css": [
-      "_app/immutable/assets/_layout.bbb1bdf6.css"
+      "_app/immutable/assets/_layout.1e5b95f8.css"
     ],
     "file": "entries/pages/_layout.svelte.js",
     "imports": [

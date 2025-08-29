@@ -1,0 +1,1 @@
+import{c as e,v as t}from"./ssr.js";import{P as r}from"./PlaceholderModule.js";import{e as a}from"./_page.js";const m=e((o,i,s,n)=>`${t(r,"PlaceholderModule").$$render(o,{moduleName:"GhostLog",description:"Centralized logging system with advanced filtering, correlation, and real-time log analysis.",icon:a},{},{})}`);export{m as default};

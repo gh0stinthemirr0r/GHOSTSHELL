@@ -7,6 +7,10 @@ use tauri::{State, Window};
 use tokio::sync::{mpsc, RwLock, Mutex};
 use tracing::{info, warn, error, debug};
 use uuid::Uuid;
+use crate::console_manager::ConsoleManager;
+
+#[cfg(windows)]
+use std::os::windows::process::CommandExt;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct TerminalSession {
@@ -64,7 +68,7 @@ impl TerminalManager {
         let title = title.unwrap_or_else(|| format!("Shell {}", session_count + 1));
         
         // Determine shell and working directory
-        let shell = self.get_default_shell();
+        let shell = self.get_default_shell().await;
         let cwd = cwd.unwrap_or_else(|| {
             std::env::current_dir()
                 .unwrap_or_else(|_| std::path::PathBuf::from("/"))
@@ -272,17 +276,11 @@ impl TerminalManager {
             .collect()
     }
 
-    fn get_default_shell(&self) -> String {
+    async fn get_default_shell(&self) -> String {
         #[cfg(windows)]
         {
-            // Try PowerShell Core first, then Windows PowerShell, then cmd
-            if std::process::Command::new("pwsh").arg("--version").output().is_ok() {
-                "pwsh".to_string()
-            } else if std::process::Command::new("powershell").arg("-Command").arg("$PSVersionTable.PSVersion").output().is_ok() {
-                "powershell".to_string()
-            } else {
-                "cmd".to_string()
-            }
+            // Use static default to prevent console windows during startup
+            "pwsh".to_string() // Default to PowerShell Core, fallback handled in simple_shell
         }
         
         #[cfg(unix)]

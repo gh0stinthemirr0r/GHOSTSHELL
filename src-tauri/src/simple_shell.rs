@@ -6,6 +6,10 @@ use std::sync::Arc;
 use tokio::sync::{Mutex, RwLock};
 use tracing::{debug, error, info, warn};
 use crate::shell_integration::ShellType;
+use crate::console_manager::ConsoleManager;
+
+#[cfg(windows)]
+use std::os::windows::process::CommandExt;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct CommandResult {
@@ -21,6 +25,7 @@ pub struct SimpleShellSession {
     pub shell_type: ShellType,
     pub working_directory: String,
     pub environment: HashMap<String, String>,
+    pub console_manager: Arc<ConsoleManager>,
 }
 
 impl SimpleShellSession {
@@ -30,11 +35,15 @@ impl SimpleShellSession {
             .to_string_lossy()
             .to_string();
 
+        let mut console_manager = ConsoleManager::new();
+        let _ = console_manager.initialize(); // Initialize console suppression
+
         Self {
             session_id,
             shell_type,
             working_directory,
             environment: std::env::vars().collect(),
+            console_manager: Arc::new(console_manager),
         }
     }
 
@@ -147,51 +156,72 @@ impl SimpleShellSession {
             _ => "powershell.exe",
         };
 
-        let output = Command::new(executable)
-            .arg("-NoProfile")
-            .arg("-NoLogo")
-            .arg("-Command")
-            .arg(command)
-            .current_dir(&self.working_directory)
-            .envs(&self.environment)
-            .stdout(Stdio::piped())
-            .stderr(Stdio::piped())
-            .output()?;
+        let args = vec!["-NoProfile", "-NoLogo", "-Command", command];
+        
+        let (stdout, stderr, exit_code) = self.console_manager
+            .execute_hidden_command(executable, &args, Some(&self.working_directory))
+            .await?;
 
         Ok(CommandResult {
-            stdout: String::from_utf8_lossy(&output.stdout).to_string(),
-            stderr: String::from_utf8_lossy(&output.stderr).to_string(),
-            exit_code: output.status.code().unwrap_or(-1),
-            success: output.status.success(),
+            stdout,
+            stderr,
+            exit_code,
+            success: exit_code == 0,
         })
     }
 
     async fn execute_cmd_command(&self, command: &str) -> Result<CommandResult> {
-        let output = Command::new("cmd.exe")
-            .arg("/C")
-            .arg(command)
-            .current_dir(&self.working_directory)
-            .envs(&self.environment)
-            .stdout(Stdio::piped())
-            .stderr(Stdio::piped())
-            .output()?;
+        let args = vec!["/C", command];
+        
+        let (stdout, stderr, exit_code) = self.console_manager
+            .execute_hidden_command("cmd.exe", &args, Some(&self.working_directory))
+            .await?;
 
         Ok(CommandResult {
-            stdout: String::from_utf8_lossy(&output.stdout).to_string(),
-            stderr: String::from_utf8_lossy(&output.stderr).to_string(),
-            exit_code: output.status.code().unwrap_or(-1),
-            success: output.status.success(),
+            stdout,
+            stderr,
+            exit_code,
+            success: exit_code == 0,
         })
     }
 
     async fn execute_wsl_command(&self, command: &str) -> Result<CommandResult> {
-        let mut cmd = Command::new("wsl.exe");
+        // First test if WSL is available and working
+        let test_result = self.console_manager
+            .execute_hidden_command("wsl.exe", &["--status"], None)
+            .await;
+            
+        if let Err(_) = test_result {
+            return Ok(CommandResult {
+                stdout: String::new(),
+                stderr: "WSL is not available or not properly configured. Please check your WSL installation.".to_string(),
+                exit_code: 1,
+                success: false,
+            });
+        }
+        
+        let mut args = Vec::new();
         
         // For WSL, we need to handle it differently
         match &self.shell_type {
             ShellType::WSLDistro(distro) => {
                 // Specific WSL distribution
-                cmd.arg("-d").arg(distro);
+                args.push("-d");
+                args.push(distro);
+                
+                // Test if the specific distribution exists
+                let distro_test = self.console_manager
+                    .execute_hidden_command("wsl.exe", &["-d", distro, "--", "echo", "test"], None)
+                    .await;
+                    
+                if let Err(_) = distro_test {
+                    return Ok(CommandResult {
+                        stdout: String::new(),
+                        stderr: format!("WSL distribution '{}' is not available or not properly configured.", distro),
+                        exit_code: 1,
+                        success: false,
+                    });
+                }
             }
             ShellType::WSL => {
                 // Default WSL distribution - no extra args needed
@@ -199,19 +229,24 @@ impl SimpleShellSession {
             _ => {}
         }
 
-        // Execute the command directly in WSL
-        let output = cmd
-            .arg(command)
-            .current_dir(&self.working_directory)
-            .stdout(Stdio::piped())
-            .stderr(Stdio::piped())
-            .output()?;
+        // Change to the correct directory in WSL first
+        let wsl_home_cmd = if args.is_empty() {
+            vec!["--", "cd", "~", "&&", command]
+        } else {
+            let mut cmd = args.clone();
+            cmd.extend_from_slice(&["--", "cd", "~", "&&", command]);
+            cmd
+        };
+        
+        let (stdout, stderr, exit_code) = self.console_manager
+            .execute_hidden_command("wsl.exe", &wsl_home_cmd, None)
+            .await?;
 
         Ok(CommandResult {
-            stdout: String::from_utf8_lossy(&output.stdout).to_string(),
-            stderr: String::from_utf8_lossy(&output.stderr).to_string(),
-            exit_code: output.status.code().unwrap_or(-1),
-            success: output.status.success(),
+            stdout,
+            stderr,
+            exit_code,
+            success: exit_code == 0,
         })
     }
 
@@ -233,19 +268,17 @@ impl SimpleShellSession {
 
         let bash_exe = bash_exe.ok_or_else(|| anyhow::anyhow!("Git Bash not found"))?;
 
-        let output = Command::new(bash_exe)
-            .arg("-c")
-            .arg(command)
-            .current_dir(&self.working_directory)
-            .stdout(Stdio::piped())
-            .stderr(Stdio::piped())
-            .output()?;
+        let args = vec!["-c", command];
+        
+        let (stdout, stderr, exit_code) = self.console_manager
+            .execute_hidden_command(bash_exe, &args, Some(&self.working_directory))
+            .await?;
 
         Ok(CommandResult {
-            stdout: String::from_utf8_lossy(&output.stdout).to_string(),
-            stderr: String::from_utf8_lossy(&output.stderr).to_string(),
-            exit_code: output.status.code().unwrap_or(-1),
-            success: output.status.success(),
+            stdout,
+            stderr,
+            exit_code,
+            success: exit_code == 0,
         })
     }
 }

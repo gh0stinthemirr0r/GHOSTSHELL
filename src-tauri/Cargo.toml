@@ -84,7 +84,11 @@ hex = "0.4"
 dirs = "5.0"
 url = "2.4"
 
-# Terminal Backend (Phase 3)
+# Terminal Backend (Phase 3) - Embedded Nushell (stable version)
+nu-engine = "0.105.1"
+nu-parser = "0.105.1"
+nu-protocol = "0.105.1"
+nu-command = "0.105.1"
 portable-pty = "0.8"
 futures = "0.3"
 
@@ -107,11 +111,29 @@ windows = { version = "0.52", features = [
     "Win32_Foundation",
     "Win32_Graphics_Dwm",
     "Win32_UI_WindowsAndMessaging",
+    "Win32_System_Console",
+    "Win32_System_Threading",
+    "Win32_UI_Shell",
+    "Win32_System_Registry",
+    "Win32_System_Environment",
+    "Win32_Storage_FileSystem",
+    "Win32_NetworkManagement_IpHelper",
+    "Win32_NetworkManagement_Ndis",
+    "Win32_Networking_WinSock",
+    "Win32_System_Wmi",
+    "Win32_System_Pipes",
+    "Win32_System_IO",
+    "Win32_Security",
 ] }
 
 [target.'cfg(target_os = "macos")'.dependencies]
 cocoa = "0.25"
 objc2 = "0.4"
+
+# Prevent console window from appearing on Windows
+[[bin]]
+name = "ghostshell"
+path = "src/main.rs"
 
 [features]
 default = ["custom-protocol"]

@@ -1,0 +1,1 @@
+import{c as t,v as e}from"./ssr.js";import{P as r}from"./PlaceholderModule.js";import{n as i}from"./_page.js";const p=t((o,n,a,s)=>`${e(r,"PlaceholderModule").$$render(o,{moduleName:"GhostScript",description:"Integrated scripting environment with automation capabilities, custom workflows, and API integration.",icon:i},{},{})}`);export{p as default};

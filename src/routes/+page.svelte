@@ -20,33 +20,53 @@
   
   // Component loading map
   const componentMap: Record<string, () => Promise<any>> = {
+    // Sessions
     'terminal': () => import('$lib/components/TerminalSimple.svelte'),
     'ghostssh': () => import('$lib/components/SshClient.svelte'),
     'ghostbrowse': () => import('$lib/components/BrowserWindow.svelte'),
+    
+    // Core Modules
+    'ghostvault': () => import('$lib/components/GhostVault.svelte'),
+    'security': () => import('$lib/components/SecurityPolicy.svelte'),
+    'topology': () => import('$lib/components/NetworkTopology.svelte'),
     'ghostvpn': () => import('$lib/components/VpnClient.svelte'),
     'ghostai': () => import('$lib/components/AiAssistant.svelte'),
-    'topology': () => import('$lib/components/NetworkTopology.svelte'),
+    
+    // Tools
     'layers': () => import('$lib/components/LayersTool.svelte'),
     'surveyor': () => import('$lib/components/SurveyorTool.svelte'),
-    'filemanager': () => import('$lib/components/FileManager.svelte'),
     'pcap': () => import('$lib/components/PcapStudio.svelte'),
     'exploit': () => import('$lib/components/ExploitEngine.svelte'),
     'forensics': () => import('$lib/components/ForensicsKit.svelte'),
+    
+    // Intelligence & Analytics
     'threat-intel': () => import('$lib/components/ThreatIntelligence.svelte'),
     'behavioral-analytics': () => import('$lib/components/BehavioralAnalytics.svelte'),
     'predictive-security': () => import('$lib/components/PredictiveSecurity.svelte'),
+    
+    // Enterprise Integration & Orchestration
     'orchestration': () => import('$lib/components/OrchestrationDashboard.svelte'),
     'compliance': () => import('$lib/components/ComplianceManager.svelte'),
     'compliance-dashboard': () => import('$lib/components/ComplianceDashboard.svelte'),
     'reporting': () => import('$lib/components/ReportingStudio.svelte'),
     'multi-tenant': () => import('$lib/components/MultiTenantManager.svelte'),
     'integration-hub': () => import('$lib/components/IntegrationHub.svelte'),
+    
+    // Advanced Security Operations & Automation
     'autonomous-soc': () => import('$lib/components/AutonomousSOC.svelte'),
     'security-automation': () => import('$lib/components/SecurityAutomationPlatform.svelte'),
     'quantum-safe-ops': () => import('$lib/components/QuantumSafeOperations.svelte'),
     'global-threat-intel': () => import('$lib/components/GlobalThreatIntelligence.svelte'),
-    'ghostvault': () => import('$lib/components/GhostVault.svelte'),
-    'security': () => import('$lib/components/SecurityPolicy.svelte')
+    
+    // Analytics
+    'ghostdash': () => import('$lib/components/GhostDash.svelte'),
+    'ghostlog': () => import('$lib/components/GhostLog.svelte'),
+    'ghostreport': () => import('$lib/components/GhostReport.svelte'),
+    'ghostscript': () => import('$lib/components/GhostScript.svelte'),
+    
+    // System
+    'filemanager': () => import('$lib/components/FileManager.svelte'),
+    'settings': () => import('$lib/components/Settings.svelte')
   };
   
   // Function to load component dynamically

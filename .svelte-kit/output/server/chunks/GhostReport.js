@@ -1,0 +1,1 @@
+import{c as o,v as t}from"./ssr.js";import{P as r}from"./PlaceholderModule.js";import{F as a}from"./_page.js";const d=o((e,s,i,l)=>`${t(r,"PlaceholderModule").$$render(e,{moduleName:"GhostReport",description:"Automated report generation with customizable templates, scheduling, and multi-format export.",icon:a},{},{})}`);export{d as default};

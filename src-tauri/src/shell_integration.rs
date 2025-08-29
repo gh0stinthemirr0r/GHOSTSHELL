@@ -3,6 +3,8 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::process::{Command, Stdio};
 use tracing::{info, warn, error, debug};
+use crate::console_manager::ConsoleManager;
+use crate::windows_api_shell::WindowsShellDiscovery;
 
 /// Shell types available in the system
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
@@ -55,6 +57,7 @@ pub struct ShellConfig {
 pub struct ShellManager {
     available_shells: Vec<ShellConfig>,
     default_shell: Option<ShellType>,
+    windows_discovery: WindowsShellDiscovery,
 }
 
 impl ShellManager {
@@ -62,6 +65,7 @@ impl ShellManager {
         Self {
             available_shells: Vec::new(),
             default_shell: None,
+            windows_discovery: WindowsShellDiscovery::new(),
         }
     }
 
@@ -138,21 +142,15 @@ impl ShellManager {
         Ok(shells)
     }
 
-    /// Discover WSL distributions
+    /// Discover WSL distributions using Windows API
     async fn discover_wsl_distributions(&self) -> Result<Vec<ShellConfig>> {
         let mut shells = Vec::new();
 
         // Check if WSL is available
         if let Ok(wsl_path) = self.find_executable("wsl").await {
-            // Get list of WSL distributions
-            match Command::new(&wsl_path)
-                .args(&["-l", "-v"])
-                .output()
-            {
-                Ok(output) => {
-                    let output_str = String::from_utf8_lossy(&output.stdout);
-                    let distributions = self.parse_wsl_distributions(&output_str);
-                    
+            // Get WSL distributions from Windows Registry
+            match self.windows_discovery.discover_wsl_distributions().await {
+                Ok(distributions) => {
                     for distro in distributions {
                         if distro == "docker-desktop" || distro == "docker-desktop-data" {
                             continue; // Skip Docker WSL instances
@@ -177,7 +175,7 @@ impl ShellManager {
                     }
                 }
                 Err(e) => {
-                    warn!("Failed to list WSL distributions: {}", e);
+                    warn!("Failed to discover WSL distributions from registry: {}", e);
                 }
             }
         }
@@ -224,57 +222,9 @@ impl ShellManager {
         Ok(shells)
     }
 
-    /// Find executable in PATH
+    /// Find executable using Windows API
     async fn find_executable(&self, name: &str) -> Result<String> {
-        #[cfg(target_os = "windows")]
-        let exe_name = format!("{}.exe", name);
-        #[cfg(not(target_os = "windows"))]
-        let exe_name = name.to_string();
-
-        match Command::new("where")
-            .arg(&exe_name)
-            .output()
-        {
-            Ok(output) => {
-                if output.status.success() {
-                    let path = String::from_utf8_lossy(&output.stdout)
-                        .lines()
-                        .next()
-                        .unwrap_or("")
-                        .trim()
-                        .to_string();
-                    
-                    if !path.is_empty() {
-                        return Ok(path);
-                    }
-                }
-            }
-            Err(_) => {}
-        }
-
-        // Fallback: try which on Unix-like systems
-        #[cfg(not(target_os = "windows"))]
-        {
-            match Command::new("which")
-                .arg(name)
-                .output()
-            {
-                Ok(output) => {
-                    if output.status.success() {
-                        let path = String::from_utf8_lossy(&output.stdout)
-                            .trim()
-                            .to_string();
-                        
-                        if !path.is_empty() {
-                            return Ok(path);
-                        }
-                    }
-                }
-                Err(_) => {}
-            }
-        }
-
-        Err(anyhow::anyhow!("Executable '{}' not found", name))
+        self.windows_discovery.find_executable(name).await
     }
 
     /// Parse WSL distribution list output
@@ -333,10 +283,17 @@ impl ShellManager {
             cmd.env(key, value);
         }
 
-        // Configure for PTY usage
+        // Configure for PTY usage with console suppression
         cmd.stdin(Stdio::piped())
            .stdout(Stdio::piped())
            .stderr(Stdio::piped());
+
+        // Hide console window on Windows
+        #[cfg(windows)]
+        {
+            use std::os::windows::process::CommandExt;
+            cmd.creation_flags(0x08000000); // CREATE_NO_WINDOW
+        }
 
         debug!("Launching shell: {} with args: {:?}", config.executable_path, config.args);
 
@@ -349,16 +306,10 @@ impl ShellManager {
         })
     }
 
-    /// Test shell availability
+    /// Test shell availability using Windows API
     pub async fn test_shell(&self, shell_type: &ShellType) -> bool {
         if let Some(config) = self.get_shell_config(shell_type) {
-            match Command::new(&config.executable_path)
-                .arg("--version")
-                .output()
-            {
-                Ok(output) => output.status.success(),
-                Err(_) => false,
-            }
+            self.windows_discovery.test_shell_availability(&config.executable_path).await
         } else {
             false
         }

@@ -9,5 +9,6 @@ pub mod browse;
 pub mod vpn_status;
 pub mod navigation;
 pub mod shell;
+pub mod nushell;
 pub mod fonts;
 pub mod settings;
