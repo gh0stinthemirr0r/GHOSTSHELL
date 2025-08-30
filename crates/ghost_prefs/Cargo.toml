@@ -16,5 +16,5 @@ async-trait = "0.1"
 # Internal dependencies
 ghost_nav = { path = "../ghost_nav" }
 ghost_vault = { path = "../ghost_vault" }
-ghost_policy = { path = "../ghost_policy" }
+
 ghost_log = { path = "../ghost_log" }

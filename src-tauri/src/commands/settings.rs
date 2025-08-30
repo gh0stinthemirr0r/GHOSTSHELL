@@ -1,6 +1,6 @@
 use anyhow::Result;
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
+// use std::collections::HashMap; // Not used directly
 use std::fs;
 use std::path::PathBuf;
 use tauri::State;

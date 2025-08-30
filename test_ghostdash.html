@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GhostDash Test</title>
+    <style>
+        body {
+            font-family: monospace;
+            background: #0A0F1E;
+            color: #EAEAEA;
+            padding: 20px;
+        }
+        .test-result {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #333;
+            border-radius: 5px;
+        }
+        .success { border-color: #AFFF00; color: #AFFF00; }
+        .error { border-color: #FF008C; color: #FF008C; }
+        .info { border-color: #00FFD1; color: #00FFD1; }
+    </style>
+</head>
+<body>
+    <h1>GhostDash Backend Test</h1>
+    <div id="results"></div>
+    
+    <script>
+        // Test if we're running in Tauri
+        if (window.__TAURI__) {
+            const { invoke } = window.__TAURI__.tauri;
+            
+            async function testGhostDash() {
+                const results = document.getElementById('results');
+                
+                function addResult(message, type = 'info') {
+                    const div = document.createElement('div');
+                    div.className = `test-result ${type}`;
+                    div.textContent = message;
+                    results.appendChild(div);
+                }
+                
+                addResult('Testing GhostDash backend...', 'info');
+                
+                try {
+                    // Test initialization
+                    addResult('1. Testing ghostdash_initialize...', 'info');
+                    await invoke('ghostdash_initialize');
+                    addResult('✓ ghostdash_initialize succeeded', 'success');
+                    
+                    // Test start monitoring
+                    addResult('2. Testing ghostdash_start_monitoring...', 'info');
+                    await invoke('ghostdash_start_monitoring');
+                    addResult('✓ ghostdash_start_monitoring succeeded', 'success');
+                    
+                    // Test get state
+                    addResult('3. Testing ghostdash_get_state...', 'info');
+                    const state = await invoke('ghostdash_get_state');
+                    addResult(`✓ ghostdash_get_state succeeded: ${JSON.stringify(state, null, 2)}`, 'success');
+                    
+                    // Test get analytics
+                    addResult('4. Testing ghostdash_get_analytics...', 'info');
+                    const analytics = await invoke('ghostdash_get_analytics');
+                    addResult(`✓ ghostdash_get_analytics succeeded: ${JSON.stringify(analytics, null, 2)}`, 'success');
+                    
+                } catch (error) {
+                    addResult(`✗ Error: ${error}`, 'error');
+                }
+            }
+            
+            testGhostDash();
+        } else {
+            document.getElementById('results').innerHTML = '<div class="test-result error">Not running in Tauri environment</div>';
+        }
+    </script>
+</body>
+</html>

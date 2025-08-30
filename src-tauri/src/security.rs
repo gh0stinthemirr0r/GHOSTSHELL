@@ -2,9 +2,7 @@
 // Phase 1: Basic security hardening
 // Phase 2: Policy Engine integration
 
-pub mod pep;
-
-pub use pep::{PolicyEnforcementPoint, PepState, PepDecision, PolicyStats, DryRunResult, initialize_pep};
+// Policy Enforcement Point removed for single-user mode
 
 pub fn get_csp() -> &'static str {
     "default-src 'self'; \

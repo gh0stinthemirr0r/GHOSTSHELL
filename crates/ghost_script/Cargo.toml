@@ -1,0 +1,36 @@
+[package]
+name = "ghost_script"
+version = "0.1.0"
+edition = "2021"
+description = "GhostShell script management and execution engine"
+
+[dependencies]
+tokio = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+uuid = { workspace = true }
+hex = { workspace = true }
+tracing = { workspace = true }
+sha3 = { workspace = true }
+base64 = { workspace = true }
+tempfile = "3.8"
+regex = "1.10"
+
+# GhostShell crates
+ghost_pq = { path = "../ghost_pq" }
+ghost_vault = { path = "../ghost_vault" }
+
+ghost_log = { path = "../ghost_log" }
+
+# Process execution (removed tokio-process as it's deprecated)
+
+# Database
+rusqlite = { workspace = true }
+r2d2 = "0.8"
+r2d2_sqlite = "0.23"
+
+[features]
+default = []

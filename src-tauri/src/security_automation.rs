@@ -6,7 +6,7 @@ use std::sync::Arc;
 use tokio::sync::RwLock;
 use uuid::Uuid;
 
-use crate::security::PepState;
+// Policy enforcement removed for single-user mode
 use ghost_pq::{DilithiumPrivateKey, DilithiumPublicKey, DilithiumVariant};
 
 // Core data structures for Security Automation Platform

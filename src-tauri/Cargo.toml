@@ -12,9 +12,12 @@ tauri-build = { version = "1.0", features = [] }
 [dependencies]
 # Phase 2 Security Crates
 ghost_pq = { path = "../crates/ghost_pq" }
-ghost_policy = { path = "../crates/ghost_policy" }
+
 ghost_vault = { path = "../crates/ghost_vault" }
 ghost_log = { path = "../crates/ghost_log" }
+ghost_dash = { path = "../crates/ghost_dash" }
+ghost_report = { path = "../crates/ghost_report" }
+ghost_script = { path = "../crates/ghost_script" }
 
 # Phase 10 Notification Crates
 ghost_notify = { path = "../crates/ghost_notify" }
@@ -80,9 +83,17 @@ chrono = { version = "0.4", features = ["serde"] }
 async-trait = "0.1"
 regex = "1.0"
 sha3 = "0.10"
-hex = "0.4"
 dirs = "5.0"
 url = "2.4"
+if-addrs = "0.10"
+
+# PCAP capture and analysis dependencies (BruteShark-inspired) - Pure Rust
+pcap-file = "2.0"  # Pure Rust PCAP file reading/writing
+etherparse = "0.15"
+lazy_static = "1.4"
+base64 = "0.21"    # For HTTP Basic Auth decoding
+hex = "0.4"        # For file signature parsing and existing usage
+md5 = "0.7"        # For file hash calculation
 
 # Terminal Backend (Phase 3) - Embedded Nushell (stable version)
 nu-engine = "0.105.1"
@@ -100,7 +111,6 @@ russh-keys = "0.40"
 rand = "0.8"
 
 # Phase 12 Additional Dependencies
-base64 = "0.21"
 zip = "0.6"
 
 # Window effects for acrylic/mica

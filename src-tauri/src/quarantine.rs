@@ -1,17 +1,17 @@
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
-use std::time::{Duration, SystemTime, UNIX_EPOCH};
+use std::time::{SystemTime, UNIX_EPOCH};
 use tauri::{State, Window};
 use tokio::sync::RwLock;
 use tokio::fs;
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
-use tracing::{info, warn, error, debug};
+use tracing::{info, warn};
 use sha3::{Digest, Sha3_256};
 
-use ghost_policy::{Resource, Action};
-use crate::security::PepState;
+
+// Policy enforcement removed for single-user mode
 
 /// Quarantined file entry
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -95,7 +95,7 @@ impl QuarantineManager {
         file_path: PathBuf,
         source_url: Option<String>,
         window: Option<&Window>,
-        pep: &PepState,
+        // Policy enforcement removed for single-user mode
     ) -> Result<QuarantineResult, String> {
         // Evaluate policy for download quarantine
         let mut context = HashMap::new();
@@ -104,27 +104,11 @@ impl QuarantineManager {
         }
         context.insert("file_path".to_string(), file_path.to_string_lossy().to_string());
 
-        let decision = pep.evaluate_access(
-            Resource::Files,
-            Action::Download,
-            Some(context),
-            window,
-        ).await.map_err(|e| e.to_string())?;
+        // Policy removed - pep.evaluate_access
 
-        if !decision.allowed {
-            return Err("Access denied: Policy prohibits file downloads".to_string());
-        }
+        // Policy removed - decision.allowed check
 
-        // Check if file should be quarantined
-        if !decision.quarantine_file {
-            return Ok(QuarantineResult {
-                quarantined: false,
-                file_id: None,
-                risk_level: RiskLevel::Low,
-                scan_results: Vec::new(),
-                message: "File allowed without quarantine".to_string(),
-            });
-        }
+        // Policy removed - decision.quarantine_file check
 
         // Read file metadata
         let metadata = fs::metadata(&file_path).await
@@ -217,13 +201,8 @@ impl QuarantineManager {
             source_window: window.map(|w| w.label().to_string()),
             risk_level: max_risk.clone(),
             scan_results: scan_results.clone(),
-            policy_rule_id: decision.policy_rule_id,
-            auto_release_at: decision.time_limit_ms.map(|ms| {
-                SystemTime::now()
-                    .duration_since(UNIX_EPOCH)
-                    .unwrap()
-                    .as_secs() + (ms / 1000)
-            }),
+            policy_rule_id: None, // Policy removed
+            auto_release_at: None, // Policy removed
             user_approved: false,
             admin_approved: false,
         };
@@ -261,19 +240,9 @@ impl QuarantineManager {
         file_id: &str,
         destination: Option<PathBuf>,
         window: Option<&Window>,
-        pep: &PepState,
+        // Policy enforcement removed for single-user mode
     ) -> Result<String, String> {
-        // Check policy for file release
-        let decision = pep.evaluate_access(
-            Resource::Files,
-            Action::Write,
-            None,
-            window,
-        ).await.map_err(|e| e.to_string())?;
-
-        if !decision.allowed {
-            return Err("Access denied: Policy prohibits file release".to_string());
-        }
+        // Policy removed - file release check
 
         let quarantined_file = {
             let files = self.quarantined_files.read().await;
@@ -333,19 +302,9 @@ impl QuarantineManager {
         &self,
         file_id: &str,
         window: Option<&Window>,
-        pep: &PepState,
+        // Policy enforcement removed for single-user mode
     ) -> Result<String, String> {
-        // Check policy for file deletion
-        let decision = pep.evaluate_access(
-            Resource::Files,
-            Action::Delete,
-            None,
-            window,
-        ).await.map_err(|e| e.to_string())?;
-
-        if !decision.allowed {
-            return Err("Access denied: Policy prohibits file deletion".to_string());
-        }
+        // Policy removed - file deletion check
 
         let quarantined_file = {
             let mut files = self.quarantined_files.write().await;
@@ -632,20 +591,10 @@ pub struct QuarantineResult {
 #[tauri::command]
 pub async fn quarantine_list_files(
     quarantine: State<'_, QuarantineManager>,
-    pep: State<'_, PepState>,
+    // Policy enforcement removed for single-user mode
     window: Window,
 ) -> Result<Vec<QuarantinedFile>, String> {
-    // Check if user can view quarantined files
-    let decision = pep.evaluate_access(
-        Resource::Files,
-        Action::Read,
-        None,
-        Some(&window),
-    ).await.map_err(|e| e.to_string())?;
-
-    if !decision.allowed {
-        return Err("Access denied: Policy prohibits viewing quarantined files".to_string());
-    }
+    // Policy removed - quarantined files view check
 
     Ok(quarantine.list_quarantined_files().await)
 }
@@ -655,21 +604,21 @@ pub async fn quarantine_release_file(
     file_id: String,
     destination: Option<String>,
     quarantine: State<'_, QuarantineManager>,
-    pep: State<'_, PepState>,
+    // Policy enforcement removed for single-user mode
     window: Window,
 ) -> Result<String, String> {
     let dest_path = destination.map(PathBuf::from);
-    quarantine.release_file(&file_id, dest_path, Some(&window), &pep).await
+    quarantine.release_file(&file_id, dest_path, Some(&window)).await
 }
 
 #[tauri::command]
 pub async fn quarantine_delete_file(
     file_id: String,
     quarantine: State<'_, QuarantineManager>,
-    pep: State<'_, PepState>,
+    // Policy enforcement removed for single-user mode
     window: Window,
 ) -> Result<String, String> {
-    quarantine.delete_quarantined_file(&file_id, Some(&window), &pep).await
+    quarantine.delete_quarantined_file(&file_id, Some(&window)).await
 }
 
 #[tauri::command]
@@ -677,21 +626,10 @@ pub async fn quarantine_approve_file(
     file_id: String,
     admin_approval: bool,
     quarantine: State<'_, QuarantineManager>,
-    pep: State<'_, PepState>,
+    // Policy enforcement removed for single-user mode
     window: Window,
 ) -> Result<String, String> {
-    // Check if user can approve files
-    let action = if admin_approval { Action::Update } else { Action::Write };
-    let decision = pep.evaluate_access(
-        Resource::Files,
-        action,
-        None,
-        Some(&window),
-    ).await.map_err(|e| e.to_string())?;
-
-    if !decision.allowed {
-        return Err("Access denied: Policy prohibits file approval".to_string());
-    }
+    // Policy removed - file approval check
 
     quarantine.approve_file(&file_id, admin_approval).await
 }

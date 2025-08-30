@@ -1,14 +1,28 @@
-//! GHOSTSHELL Audit Log
+//! GHOSTSHELL GhostLog - System-Wide Logging Engine
 //! 
-//! Tamper-evident audit logging system with hash chaining and digital signatures
-//! for comprehensive security event tracking and compliance.
+//! Comprehensive logging system with:
+//! - Centralized logging from all GhostShell modules
+//! - PQ-signed log rotation with standardized naming
+//! - Full-text search engine with GUI interface
+//! - Policy-aware redaction and access control
+//! - Tamper-evident storage with hash chaining
 
+pub mod daemon;
+pub mod rotation;
+pub mod search;
+pub mod manifest;
+pub mod viewer;
 pub mod logger;
 pub mod storage;
 pub mod entry;
 pub mod chain;
 pub mod query;
 
+pub use daemon::*;
+pub use rotation::*;
+pub use search::*;
+pub use manifest::*;
+pub use viewer::*;
 pub use logger::*;
 pub use storage::*;
 pub use entry::*;

@@ -7,8 +7,7 @@ use anyhow::Result;
 use tokio::sync::Mutex;
 
 use ghost_pq::signatures::{DilithiumPublicKey, DilithiumPrivateKey};
-use crate::security::PepState;
-use crate::enforce_policy;
+// Policy enforcement removed for single-user mode
 // use ghost_vault::vault::GhostVault; // Commented out for now
 
 /// PCAP Studio Manager - handles packet capture and analysis
@@ -58,7 +57,7 @@ pub enum CaptureStatus {
     PolicyDenied,
 }
 
-/// PCAP analysis results
+/// PCAP analysis results (Enhanced with BruteShark-inspired modules)
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PcapAnalysis {
     pub flows: Vec<NetworkFlow>,
@@ -68,6 +67,17 @@ pub struct PcapAnalysis {
     pub tls_analysis: Option<TlsAnalysis>,
     pub performance_stats: PerformanceStats,
     pub signature: Option<String>,
+    
+    // BruteShark-inspired analysis modules
+    pub overview: AnalysisOverview,
+    pub network_map: Vec<NetworkConnection>,
+    pub sessions: Vec<NetworkSession>,
+    pub passwords: Vec<ExtractedCredential>,
+    pub hashes: Vec<ExtractedHash>,
+    pub files: Vec<ExtractedFile>,
+    pub dns_queries: Vec<DnsQuery>,
+    pub voip_calls: Vec<VoipCall>,
+    pub certificates: Vec<SslCertificate>,
 }
 
 /// Network flow (5-tuple)
@@ -155,6 +165,130 @@ pub struct TlsHandshake {
     pub is_post_quantum: bool,
     pub is_hybrid: bool,
     pub handshake_time_ms: u64,
+}
+
+/// Analysis overview (BruteShark-inspired)
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct AnalysisOverview {
+    pub total_packets: u64,
+    pub total_bytes: u64,
+    pub duration: u64,
+    pub avg_packet_size: u64,
+    pub protocols: HashMap<String, u64>,
+    pub top_talkers: Vec<TopTalkerInfo>,
+    pub anomalies: Vec<SecurityAnomaly>,
+}
+
+/// Top talker information
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct TopTalkerInfo {
+    pub ip: String,
+    pub packets: u64,
+    pub bytes: u64,
+    pub country: String,
+}
+
+/// Security anomaly
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct SecurityAnomaly {
+    pub anomaly_type: String,
+    pub severity: String,
+    pub source: String,
+    pub description: String,
+}
+
+/// Network connection mapping
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct NetworkConnection {
+    pub source: String,
+    pub destination: String,
+    pub protocol: String,
+    pub port: u16,
+    pub packets: u64,
+    pub bytes: u64,
+}
+
+/// Network session
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct NetworkSession {
+    pub id: String,
+    pub protocol: String,
+    pub source: String,
+    pub destination: String,
+    pub packets: u64,
+    pub bytes: u64,
+    pub duration: f64,
+    pub status: String,
+}
+
+/// Extracted credential
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ExtractedCredential {
+    pub protocol: String,
+    pub username: String,
+    pub password: String,
+    pub source: String,
+    pub destination: String,
+    pub timestamp: String,
+}
+
+/// Extracted hash
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ExtractedHash {
+    pub hash_type: String,
+    pub hash: String,
+    pub source: String,
+    pub domain: String,
+    pub username: String,
+}
+
+/// Extracted file
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ExtractedFile {
+    pub name: String,
+    pub file_type: String,
+    pub size: u64,
+    pub source: String,
+    pub destination: String,
+    pub extracted: bool,
+    pub hash: String,
+    pub timestamp: String,
+}
+
+/// DNS query
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct DnsQuery {
+    pub domain: String,
+    pub query_type: String,
+    pub response: String,
+    pub source: String,
+    pub server: String,
+    pub timestamp: String,
+    pub suspicious: Option<bool>,
+}
+
+/// VoIP call
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct VoipCall {
+    pub caller: String,
+    pub callee: String,
+    pub duration: u64,
+    pub codec: String,
+    pub quality: String,
+    pub start_time: String,
+    pub end_time: String,
+}
+
+/// SSL certificate
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct SslCertificate {
+    pub subject: String,
+    pub issuer: String,
+    pub valid_from: String,
+    pub valid_to: String,
+    pub fingerprint: String,
+    pub key_size: u32,
+    pub algorithm: String,
 }
 
 /// Performance statistics
@@ -245,7 +379,7 @@ impl PcapStudioManager {
     }
 
     /// Start packet capture with policy enforcement
-    pub async fn start_capture(&self, config: CaptureConfig, pep_state: &PepState) -> Result<String> {
+    pub async fn start_capture(&self, config: CaptureConfig, /* pep_state: &PepState */) -> Result<String> {
         let capture_id = Uuid::new_v4().to_string();
         
         // Policy enforcement for PCAP capture (simplified for now)
@@ -483,6 +617,183 @@ impl PcapStudioManager {
             cpu_usage_percent: 8.3,
         };
 
+        // BruteShark-inspired analysis modules
+        let overview = AnalysisOverview {
+            total_packets: flows.iter().map(|f| f.packet_count).sum(),
+            total_bytes: flows.iter().map(|f| f.bytes).sum(),
+            duration: 1800, // 30 minutes
+            avg_packet_size: 1024,
+            protocols: protocols.clone(),
+            top_talkers: vec![
+                TopTalkerInfo {
+                    ip: "192.168.1.100".to_string(),
+                    packets: 2341,
+                    bytes: 1234567,
+                    country: "Local".to_string(),
+                },
+                TopTalkerInfo {
+                    ip: "8.8.8.8".to_string(),
+                    packets: 1876,
+                    bytes: 987654,
+                    country: "US".to_string(),
+                },
+            ],
+            anomalies: vec![
+                SecurityAnomaly {
+                    anomaly_type: "Port Scan".to_string(),
+                    severity: "High".to_string(),
+                    source: "192.168.1.200".to_string(),
+                    description: "Multiple port connection attempts detected".to_string(),
+                },
+            ],
+        };
+
+        let network_map = vec![
+            NetworkConnection {
+                source: "192.168.1.100".to_string(),
+                destination: "8.8.8.8".to_string(),
+                protocol: "TCP".to_string(),
+                port: 443,
+                packets: 156,
+                bytes: 89432,
+            },
+            NetworkConnection {
+                source: "192.168.1.100".to_string(),
+                destination: "192.168.1.1".to_string(),
+                protocol: "UDP".to_string(),
+                port: 53,
+                packets: 89,
+                bytes: 12456,
+            },
+        ];
+
+        let sessions = vec![
+            NetworkSession {
+                id: "sess_001".to_string(),
+                protocol: "HTTP".to_string(),
+                source: "192.168.1.100:54321".to_string(),
+                destination: "93.184.216.34:80".to_string(),
+                packets: 23,
+                bytes: 15678,
+                duration: 2.3,
+                status: "Complete".to_string(),
+            },
+            NetworkSession {
+                id: "sess_002".to_string(),
+                protocol: "HTTPS".to_string(),
+                source: "192.168.1.100:54322".to_string(),
+                destination: "8.8.8.8:443".to_string(),
+                packets: 45,
+                bytes: 32145,
+                duration: 5.7,
+                status: "Complete".to_string(),
+            },
+        ];
+
+        let passwords = vec![
+            ExtractedCredential {
+                protocol: "FTP".to_string(),
+                username: "admin".to_string(),
+                password: "password123".to_string(),
+                source: "192.168.1.100".to_string(),
+                destination: "192.168.1.50".to_string(),
+                timestamp: "2024-01-15 14:32:15".to_string(),
+            },
+            ExtractedCredential {
+                protocol: "HTTP".to_string(),
+                username: "user@example.com".to_string(),
+                password: "secret456".to_string(),
+                source: "192.168.1.100".to_string(),
+                destination: "203.0.113.1".to_string(),
+                timestamp: "2024-01-15 14:35:22".to_string(),
+            },
+        ];
+
+        let hashes = vec![
+            ExtractedHash {
+                hash_type: "NTLM".to_string(),
+                hash: "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8".to_string(),
+                source: "192.168.1.100".to_string(),
+                domain: "WORKGROUP".to_string(),
+                username: "admin".to_string(),
+            },
+            ExtractedHash {
+                hash_type: "Kerberos AS-REP".to_string(),
+                hash: "098f6bcd4621d373cade4e832627b4f6".to_string(),
+                source: "192.168.1.101".to_string(),
+                domain: "COMPANY.LOCAL".to_string(),
+                username: "jdoe".to_string(),
+            },
+        ];
+
+        let files = vec![
+            ExtractedFile {
+                name: "document.pdf".to_string(),
+                file_type: "PDF".to_string(),
+                size: 245760,
+                source: "192.168.1.100".to_string(),
+                destination: "203.0.113.1".to_string(),
+                extracted: true,
+                hash: "sha256:abc123...".to_string(),
+                timestamp: "2024-01-15 14:40:12".to_string(),
+            },
+            ExtractedFile {
+                name: "image.jpg".to_string(),
+                file_type: "JPEG".to_string(),
+                size: 102400,
+                source: "192.168.1.100".to_string(),
+                destination: "192.168.1.50".to_string(),
+                extracted: true,
+                hash: "sha256:def456...".to_string(),
+                timestamp: "2024-01-15 14:42:33".to_string(),
+            },
+        ];
+
+        let dns_queries = vec![
+            DnsQuery {
+                domain: "google.com".to_string(),
+                query_type: "A".to_string(),
+                response: "8.8.8.8".to_string(),
+                source: "192.168.1.100".to_string(),
+                server: "192.168.1.1".to_string(),
+                timestamp: "2024-01-15 14:30:15".to_string(),
+                suspicious: Some(false),
+            },
+            DnsQuery {
+                domain: "malicious-site.com".to_string(),
+                query_type: "A".to_string(),
+                response: "203.0.113.100".to_string(),
+                source: "192.168.1.150".to_string(),
+                server: "8.8.8.8".to_string(),
+                timestamp: "2024-01-15 14:33:45".to_string(),
+                suspicious: Some(true),
+            },
+        ];
+
+        let voip_calls = vec![
+            VoipCall {
+                caller: "192.168.1.100".to_string(),
+                callee: "192.168.1.200".to_string(),
+                duration: 120,
+                codec: "G.711".to_string(),
+                quality: "Good".to_string(),
+                start_time: "2024-01-15 14:25:00".to_string(),
+                end_time: "2024-01-15 14:27:00".to_string(),
+            },
+        ];
+
+        let certificates = vec![
+            SslCertificate {
+                subject: "CN=*.google.com".to_string(),
+                issuer: "CN=Google Internet Authority G3".to_string(),
+                valid_from: "2024-01-01".to_string(),
+                valid_to: "2024-12-31".to_string(),
+                fingerprint: "SHA256:1234567890abcdef".to_string(),
+                key_size: 2048,
+                algorithm: "RSA".to_string(),
+            },
+        ];
+
         PcapAnalysis {
             flows,
             protocols,
@@ -491,6 +802,17 @@ impl PcapStudioManager {
             tls_analysis: Some(tls_analysis),
             performance_stats,
             signature: None, // Will be added later
+            
+            // BruteShark-inspired modules
+            overview,
+            network_map,
+            sessions,
+            passwords,
+            hashes,
+            files,
+            dns_queries,
+            voip_calls,
+            certificates,
         }
     }
 
@@ -735,58 +1057,4 @@ impl PcapStudioManager {
     }
 }
 
-// Tauri commands for PCAP Studio
-#[tauri::command]
-pub async fn pcap_get_interfaces(
-    manager: tauri::State<'_, Arc<tokio::sync::Mutex<PcapStudioManager>>>,
-) -> Result<Vec<NetworkInterface>, String> {
-    let manager = manager.lock().await;
-    manager.get_interfaces().await.map_err(|e| e.to_string())
-}
-
-#[tauri::command]
-pub async fn pcap_start_capture(
-    manager: tauri::State<'_, Arc<tokio::sync::Mutex<PcapStudioManager>>>,
-    pep_state: tauri::State<'_, Arc<tokio::sync::Mutex<PepState>>>,
-    config: CaptureConfig,
-) -> Result<String, String> {
-    let manager = manager.lock().await;
-    let pep = pep_state.lock().await;
-    manager.start_capture(config, &pep).await.map_err(|e| e.to_string())
-}
-
-#[tauri::command]
-pub async fn pcap_stop_capture(
-    manager: tauri::State<'_, Arc<tokio::sync::Mutex<PcapStudioManager>>>,
-    capture_id: String,
-) -> Result<(), String> {
-    let manager = manager.lock().await;
-    manager.stop_capture(&capture_id).await.map_err(|e| e.to_string())
-}
-
-#[tauri::command]
-pub async fn pcap_get_capture_status(
-    manager: tauri::State<'_, Arc<tokio::sync::Mutex<PcapStudioManager>>>,
-    capture_id: String,
-) -> Result<Option<PcapCapture>, String> {
-    let manager = manager.lock().await;
-    manager.get_capture_status(&capture_id).await.map_err(|e| e.to_string())
-}
-
-#[tauri::command]
-pub async fn pcap_list_captures(
-    manager: tauri::State<'_, Arc<tokio::sync::Mutex<PcapStudioManager>>>,
-) -> Result<Vec<PcapCapture>, String> {
-    let manager = manager.lock().await;
-    manager.list_captures().await.map_err(|e| e.to_string())
-}
-
-#[tauri::command]
-pub async fn pcap_export_results(
-    manager: tauri::State<'_, Arc<tokio::sync::Mutex<PcapStudioManager>>>,
-    capture_id: String,
-    format: String,
-) -> Result<String, String> {
-    let manager = manager.lock().await;
-    manager.export_results(&capture_id, &format).await.map_err(|e| e.to_string())
-}
+// Tauri commands moved to src-tauri/src/commands/pcap.rs

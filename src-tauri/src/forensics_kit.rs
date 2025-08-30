@@ -7,8 +7,7 @@ use anyhow::Result;
 use tokio::sync::Mutex;
 
 use ghost_pq::signatures::{DilithiumPublicKey, DilithiumPrivateKey, DilithiumVariant};
-use crate::security::PepState;
-use crate::enforce_policy;
+// Policy enforcement removed for single-user mode
 
 // Core data structures for Forensics Kit
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -474,7 +473,7 @@ impl ForensicsKitManager {
         Ok(self.cases.read().unwrap().get(case_id).cloned())
     }
 
-    pub async fn add_evidence(&self, case_id: String, evidence: EvidenceItem, pep_state: &PepState) -> Result<String> {
+    pub async fn add_evidence(&self, case_id: String, evidence: EvidenceItem, /* pep_state: &PepState */) -> Result<String> {
         // Policy enforcement placeholder
         let policy_allowed = true;
         

@@ -3,10 +3,9 @@ use tauri::{State, Window};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
-use ghost_policy::{Resource, Action};
+
 use ghost_vault::{SecretData, SecretType, CreateSecretRequest, SecretMetadata};
-use crate::security::PepState;
-use crate::enforce_policy;
+// Policy enforcement removed for single-user mode
 use crate::commands::vault::VaultState;
 use crate::commands::theme::ThemeV1;
 
@@ -62,7 +61,7 @@ pub struct UpdateThemeRequest {
 pub async fn vault_store_theme(
     request: CreateThemeRequest,
     vault_state: State<'_, VaultState>,
-    pep: State<'_, PepState>,
+    // Policy enforcement removed for single-user mode
     window: Window,
 ) -> Result<String, String> {
     // Enforce policy with context
@@ -70,7 +69,7 @@ pub async fn vault_store_theme(
     context.insert("resource_type".to_string(), "theme".to_string());
     context.insert("operation".to_string(), "store".to_string());
     
-    let _decision = enforce_policy!(pep, Resource::Theme, Action::Create, context, &window);
+    // Policy enforcement removed for single-user mode
 
     let vault_guard = vault_state.read().await;
     if let Some(vault) = vault_guard.as_ref() {
@@ -111,14 +110,8 @@ pub async fn vault_store_theme(
             },
         };
 
-        // Create execution context for vault
-        let exec_context = ghost_policy::ContextBuilder::new()
-            .user("current_user", "user") // TODO: Get from session
-            .pq_available(true)
-            .sensitivity(ghost_policy::SensitivityLevel::Internal)
-            .build();
-
-        let secret_id = vault.store_secret(vault_request, exec_context).await.map_err(|e| e.to_string())?;
+        // Simplified for single-user mode
+        let secret_id = vault.store_secret(vault_request).await.map_err(|e| e.to_string())?;
         
         tracing::info!("Theme '{}' stored in vault with ID: {}", request.name, secret_id);
         Ok(secret_id.to_string())
@@ -131,11 +124,11 @@ pub async fn vault_store_theme(
 #[tauri::command]
 pub async fn vault_list_themes(
     vault_state: State<'_, VaultState>,
-    pep: State<'_, PepState>,
+    // Policy enforcement removed for single-user mode
     window: Window,
 ) -> Result<Vec<VaultThemeMetadata>, String> {
     // Enforce policy
-    let _decision = enforce_policy!(pep, Resource::Theme, Action::Read, &window);
+    // Policy enforcement removed for single-user mode
 
     let vault_guard = vault_state.read().await;
     if let Some(vault) = vault_guard.as_ref() {
@@ -147,19 +140,14 @@ pub async fn vault_list_themes(
             ..Default::default()
         };
 
-        // Create execution context
-        let exec_context = ghost_policy::ContextBuilder::new()
-            .user("current_user", "user")
-            .pq_available(true)
-            .build();
-
-        let summaries = vault.list_secrets(filter, exec_context.clone()).await.map_err(|e| e.to_string())?;
+        // Simplified for single-user mode
+        let summaries = vault.list_secrets(filter).await.map_err(|e| e.to_string())?;
         
         let mut themes = Vec::new();
         
         for summary in summaries {
             // Get the full secret to extract theme metadata
-            let secret_data = vault.get_secret(&summary.id, exec_context.clone()).await.map_err(|e| e.to_string())?;
+            let secret_data = vault.get_secret(&summary.id).await.map_err(|e| e.to_string())?;
             
             if let Some(data) = secret_data {
                 if let SecretData::Custom { data: json_data } = data {
@@ -198,26 +186,23 @@ pub async fn vault_list_themes(
 pub async fn vault_get_theme(
     theme_id: String,
     vault_state: State<'_, VaultState>,
-    pep: State<'_, PepState>,
+    // Policy enforcement removed for single-user mode
     window: Window,
 ) -> Result<Option<VaultTheme>, String> {
     // Enforce policy with context
     let mut context = HashMap::new();
     context.insert("theme_id".to_string(), theme_id.clone());
     
-    let _decision = enforce_policy!(pep, Resource::Theme, Action::Read, context, &window);
+    // Policy enforcement removed for single-user mode
 
     let vault_guard = vault_state.read().await;
     if let Some(vault) = vault_guard.as_ref() {
         let uuid = Uuid::parse_str(&theme_id).map_err(|e| e.to_string())?;
         
         // Create execution context
-        let exec_context = ghost_policy::ContextBuilder::new()
-            .user("current_user", "user")
-            .pq_available(true)
-            .build();
+        // Simplified for single-user mode
 
-        let secret_data = vault.get_secret(&uuid, exec_context).await.map_err(|e| e.to_string())?;
+        let secret_data = vault.get_secret(&uuid).await.map_err(|e| e.to_string())?;
         
         if let Some(data) = secret_data {
             if let SecretData::Custom { data: json_data } = data {
@@ -242,7 +227,7 @@ pub async fn vault_update_theme(
     theme_id: String,
     request: UpdateThemeRequest,
     vault_state: State<'_, VaultState>,
-    pep: State<'_, PepState>,
+    // Policy enforcement removed for single-user mode
     window: Window,
 ) -> Result<String, String> {
     // Enforce policy with context
@@ -250,19 +235,16 @@ pub async fn vault_update_theme(
     context.insert("theme_id".to_string(), theme_id.clone());
     context.insert("operation".to_string(), "update".to_string());
     
-    let _decision = enforce_policy!(pep, Resource::Theme, Action::Update, context, &window);
+    // Policy enforcement removed for single-user mode
 
     let vault_guard = vault_state.read().await;
     if let Some(vault) = vault_guard.as_ref() {
         // First, get the existing theme
         let uuid = Uuid::parse_str(&theme_id).map_err(|e| e.to_string())?;
         
-        let exec_context = ghost_policy::ContextBuilder::new()
-            .user("current_user", "user")
-            .pq_available(true)
-            .build();
+        // Simplified for single-user mode
 
-        let secret_data = vault.get_secret(&uuid, exec_context.clone()).await.map_err(|e| e.to_string())?;
+        let secret_data = vault.get_secret(&uuid).await.map_err(|e| e.to_string())?;
         
         if let Some(data) = secret_data {
             if let SecretData::Custom { data: json_data } = data {
@@ -292,7 +274,7 @@ pub async fn vault_update_theme(
 
                 // Update the secret (this would require implementing update in the vault)
                 // For now, we'll delete and recreate
-                vault.delete_secret(&uuid, exec_context.clone()).await.map_err(|e| e.to_string())?;
+                vault.delete_secret(&uuid).await.map_err(|e| e.to_string())?;
 
                 // Create new secret with updated data
                 let mut secret_tags = vec!["theme".to_string(), "ui".to_string()];
@@ -313,7 +295,7 @@ pub async fn vault_update_theme(
                     },
                 };
 
-                let new_secret_id = vault.store_secret(vault_request, exec_context).await.map_err(|e| e.to_string())?;
+                let new_secret_id = vault.store_secret(vault_request).await.map_err(|e| e.to_string())?;
                 
                 tracing::info!("Theme '{}' updated in vault with new ID: {}", vault_theme.name, new_secret_id);
                 Ok(new_secret_id.to_string())
@@ -334,7 +316,7 @@ pub async fn vault_delete_theme(
     theme_id: String,
     justification: Option<String>,
     vault_state: State<'_, VaultState>,
-    pep: State<'_, PepState>,
+    // Policy enforcement removed for single-user mode
     window: Window,
 ) -> Result<bool, String> {
     // Enforce policy with context
@@ -345,23 +327,17 @@ pub async fn vault_delete_theme(
         context.insert("justification".to_string(), just.clone());
     }
     
-    let decision = enforce_policy!(pep, Resource::Theme, Action::Delete, context, &window);
+    // Policy enforcement removed for single-user mode
     
-    // Check if justification is required
-    if decision.requires_justification && justification.is_none() {
-        return Err("Justification required for theme deletion".to_string());
-    }
+    // Policy enforcement removed for single-user mode
 
     let vault_guard = vault_state.read().await;
     if let Some(vault) = vault_guard.as_ref() {
         let uuid = Uuid::parse_str(&theme_id).map_err(|e| e.to_string())?;
         
-        let exec_context = ghost_policy::ContextBuilder::new()
-            .user("current_user", "user")
-            .pq_available(true)
-            .build();
+        // Simplified for single-user mode
 
-        let deleted = vault.delete_secret(&uuid, exec_context).await.map_err(|e| e.to_string())?;
+        let deleted = vault.delete_secret(&uuid).await.map_err(|e| e.to_string())?;
         
         if deleted {
             tracing::info!("Theme deleted from vault: {}", theme_id);
@@ -378,7 +354,7 @@ pub async fn vault_delete_theme(
 pub async fn vault_export_theme(
     theme_id: String,
     vault_state: State<'_, VaultState>,
-    pep: State<'_, PepState>,
+    // Policy enforcement removed for single-user mode
     window: Window,
 ) -> Result<String, String> {
     // Enforce policy with context
@@ -386,18 +362,15 @@ pub async fn vault_export_theme(
     context.insert("theme_id".to_string(), theme_id.clone());
     context.insert("operation".to_string(), "export".to_string());
     
-    let _decision = enforce_policy!(pep, Resource::Theme, Action::Export, context, &window);
+    // Policy enforcement removed for single-user mode
 
     let vault_guard = vault_state.read().await;
     if let Some(vault) = vault_guard.as_ref() {
         let uuid = Uuid::parse_str(&theme_id).map_err(|e| e.to_string())?;
         
-        let exec_context = ghost_policy::ContextBuilder::new()
-            .user("current_user", "user")
-            .pq_available(true)
-            .build();
+        // Simplified for single-user mode
 
-        let secret_data = vault.get_secret(&uuid, exec_context).await.map_err(|e| e.to_string())?;
+        let secret_data = vault.get_secret(&uuid).await.map_err(|e| e.to_string())?;
         
         if let Some(data) = secret_data {
             if let SecretData::Custom { data: json_data } = data {
@@ -428,14 +401,14 @@ pub async fn vault_export_theme(
 pub async fn vault_import_theme(
     theme_data: String,
     vault_state: State<'_, VaultState>,
-    pep: State<'_, PepState>,
+    // Policy enforcement removed for single-user mode
     window: Window,
 ) -> Result<String, String> {
     // Enforce policy with context
     let mut context = HashMap::new();
     context.insert("operation".to_string(), "import".to_string());
     
-    let _decision = enforce_policy!(pep, Resource::Theme, Action::Import, context, &window);
+    // Policy enforcement removed for single-user mode
 
     let vault_guard = vault_state.read().await;
     if let Some(vault) = vault_guard.as_ref() {
@@ -473,7 +446,7 @@ pub async fn vault_import_theme(
         };
 
         drop(vault_guard);
-        vault_store_theme(request, vault_state, pep, window).await
+        vault_store_theme(request, vault_state, window).await
     } else {
         Err("Vault not initialized".to_string())
     }
@@ -483,14 +456,14 @@ pub async fn vault_import_theme(
 #[tauri::command]
 pub async fn migrate_themes_to_vault(
     vault_state: State<'_, VaultState>,
-    pep: State<'_, PepState>,
+    // Policy enforcement removed for single-user mode
     window: Window,
 ) -> Result<MigrationResult, String> {
     // Enforce policy with context
     let mut context = HashMap::new();
     context.insert("operation".to_string(), "migration".to_string());
     
-    let _decision = enforce_policy!(pep, Resource::Theme, Action::Create, context, &window);
+    // Policy enforcement removed for single-user mode
 
     let vault_guard = vault_state.read().await;
     if let Some(_vault) = vault_guard.as_ref() {
@@ -516,7 +489,7 @@ pub async fn migrate_themes_to_vault(
                 is_default: name == "Cyberpunk Neon",
             };
 
-            match vault_store_theme(request, vault_state.clone(), pep.clone(), window.clone()).await {
+            match vault_store_theme(request, vault_state.clone(), window.clone()).await {
                 Ok(_) => migrated += 1,
                 Err(e) => {
                     failed += 1;

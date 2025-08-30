@@ -75,8 +75,8 @@ impl PersistenceProvider for VaultPersistenceProvider {
         };
         
         // Store in vault
-        let context = ghost_policy::ExecutionContext::for_user("system", "admin");
-        let _secret_id = self.vault.store_secret(request, context).await?;
+        // Policy context removed for single-user mode
+        let _secret_id = self.vault.store_secret(request).await?;
         
         Ok(key)
     }
@@ -105,8 +105,8 @@ impl PersistenceProvider for VaultPersistenceProvider {
             metadata: ghost_vault::SecretMetadata::default(),
         };
         
-        let context = ghost_policy::ExecutionContext::for_user("system", "admin");
-        let _secret_id = self.vault.store_secret(request, context).await?;
+        // Policy context removed for single-user mode
+        let _secret_id = self.vault.store_secret(request).await?;
         Ok(())
     }
 
@@ -169,8 +169,8 @@ impl PersistenceProvider for VaultPersistenceProvider {
             metadata: ghost_vault::SecretMetadata::default(),
         };
         
-        let context = ghost_policy::ExecutionContext::for_user("system", "admin");
-        let _secret_id = self.vault.store_secret(request, context).await?;
+        // Policy context removed for single-user mode
+        let _secret_id = self.vault.store_secret(request).await?;
         Ok(())
     }
 

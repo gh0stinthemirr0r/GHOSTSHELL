@@ -1,11 +1,11 @@
 pub mod layout;
-pub mod policy;
+// Policy module removed for single-user mode
 pub mod presets;
 pub mod validator;
 pub mod workspace;
 
 pub use layout::*;
-pub use policy::*;
+// Policy module removed for single-user mode
 pub use presets::*;
 pub use validator::*;
 pub use workspace::*;
@@ -16,15 +16,15 @@ use anyhow::Result;
 /// Handles sidebar layout, policy enforcement, and workspace management
 pub struct NavigationManager {
     vault: std::sync::Arc<ghost_vault::Vault>,
-    policy: std::sync::Arc<ghost_policy::PolicyEvaluator>,
+    // Policy evaluator removed for single-user mode
 }
 
 impl NavigationManager {
     pub fn new(
         vault: std::sync::Arc<ghost_vault::Vault>,
-        policy: std::sync::Arc<ghost_policy::PolicyEvaluator>,
+        // Policy evaluator removed for single-user mode
     ) -> Self {
-        Self { vault, policy }
+        Self { vault }
     }
 
     /// Get the current layout for a workspace, with policy overlay applied
@@ -35,16 +35,16 @@ impl NavigationManager {
         let base_layout = self.load_layout_from_vault(workspace_name).await?;
         
         // Apply policy overlay
-        let policy_overlay = self.compute_policy_overlay().await?;
-        let final_layout = self.apply_policy_overlay(base_layout, policy_overlay)?;
+        // Policy overlay removed for single-user mode
+        let final_layout = base_layout;
         
         Ok(final_layout)
     }
 
     /// Preview a layout draft with policy overlay applied
     pub async fn preview_layout(&self, draft: LayoutV2) -> Result<LayoutV2> {
-        let policy_overlay = self.compute_policy_overlay().await?;
-        self.apply_policy_overlay(draft, policy_overlay)
+        // Policy overlay removed for single-user mode
+        Ok(draft)
     }
 
     /// Save a layout to the vault
@@ -71,39 +71,7 @@ impl NavigationManager {
         Ok(LayoutV2::default_for_workspace(workspace))
     }
 
-    async fn compute_policy_overlay(&self) -> Result<PolicyOverlay> {
-        // Implementation will compute policy based on current user/role/environment
-        Ok(PolicyOverlay::default())
-    }
-
-    fn apply_policy_overlay(&self, mut layout: LayoutV2, overlay: PolicyOverlay) -> Result<LayoutV2> {
-        // Apply force show/hide rules
-        for module_id in &overlay.force_hide {
-            if let Some(module) = layout.modules.iter_mut().find(|m| &m.id == module_id) {
-                module.visible = false;
-                module.locked = true;
-                module.lock_reason = Some("policy:force_hide".to_string());
-            }
-        }
-
-        for module_id in &overlay.force_show {
-            if let Some(module) = layout.modules.iter_mut().find(|m| &m.id == module_id) {
-                module.visible = true;
-                module.locked = true;
-                module.lock_reason = Some("policy:force_show".to_string());
-            }
-        }
-
-        // Apply specific locks
-        for (module_id, reason) in &overlay.locks {
-            if let Some(module) = layout.modules.iter_mut().find(|m| &m.id == module_id) {
-                module.locked = true;
-                module.lock_reason = Some(reason.clone());
-            }
-        }
-
-        Ok(layout)
-    }
+    // Policy overlay functions removed for single-user mode
 
     async fn sign_layout(&self, layout: LayoutV2) -> Result<SignedLayout> {
         // Implementation will use PQ signatures

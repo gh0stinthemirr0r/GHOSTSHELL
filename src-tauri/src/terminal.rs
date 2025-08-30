@@ -1,16 +1,17 @@
 use anyhow::{Result, anyhow};
-use portable_pty::{CommandBuilder, PtySize, PtySystem, native_pty_system};
+use portable_pty::{CommandBuilder, PtySize, native_pty_system};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::sync::Arc;
 use tauri::{State, Window};
-use tokio::sync::{mpsc, RwLock, Mutex};
-use tracing::{info, warn, error, debug};
+use tokio::sync::{mpsc, RwLock};
+use tracing::{info, error, debug};
 use uuid::Uuid;
-use crate::console_manager::ConsoleManager;
+// Console manager replaced by GhostShell enterprise system
+// use crate::console_manager::ConsoleManager;
 
 #[cfg(windows)]
-use std::os::windows::process::CommandExt;
+// use std::os::windows::process::CommandExt; // Not used
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct TerminalSession {

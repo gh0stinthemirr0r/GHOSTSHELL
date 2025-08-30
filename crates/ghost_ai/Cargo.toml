@@ -16,7 +16,7 @@ hex = { workspace = true }
 
 # Internal dependencies
 ghost_log = { path = "../ghost_log" }
-ghost_policy = { path = "../ghost_policy" }
+
 ghost_pq = { path = "../ghost_pq" }
 ghost_errmap = { path = "../ghost_errmap" }
 ghost_explain = { path = "../ghost_explain" }

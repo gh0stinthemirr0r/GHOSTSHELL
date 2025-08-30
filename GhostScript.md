@@ -244,7 +244,7 @@ constraints = { notify="critical" }
 * **Results Archive** with searchable logs.
 * **PQ-signed exports** of scripts + runs.
 * **Policy enforcement** (sandbox, whitelists/blacklists).
-* **GhostLog integration**: every run signed + stored.
+* **GhostLog integration**: every run signed + stored.thhensi
 
 ---
 

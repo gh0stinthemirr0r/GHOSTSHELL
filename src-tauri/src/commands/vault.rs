@@ -3,14 +3,13 @@ use tauri::{State, Window};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
-use ghost_policy::{Resource, Action};
+
 use ghost_vault::{
     Vault, VaultConfig, CreateSecretRequest, SecretData, SecretType, SecretSummary, SecretFilter,
-    MfaChallenge, MfaChallengeBuilder, MfaMethod
+    MfaChallengeBuilder, MfaMethod
 };
 use ghost_pq::{KyberPrivateKey, KyberVariant};
-use crate::security::PepState;
-use crate::enforce_policy;
+// Policy enforcement removed for single-user mode
 
 /// Vault state for Tauri
 pub type VaultState = std::sync::Arc<tokio::sync::RwLock<Option<Vault>>>;
@@ -29,11 +28,11 @@ pub struct VaultStatsResponse {
 pub async fn vault_initialize(
     master_password: String,
     vault_state: State<'_, VaultState>,
-    pep: State<'_, PepState>,
+    // Policy enforcement removed for single-user mode
     window: Window,
 ) -> Result<String, String> {
     // Enforce policy
-    let _decision = enforce_policy!(pep, Resource::Vault, Action::Create, &window);
+    // Policy enforcement removed for single-user mode
 
     // Create vault config
     let config = VaultConfig {
@@ -63,11 +62,11 @@ pub async fn vault_unlock(
     master_password: String,
     kyber_secret: Vec<u8>,
     vault_state: State<'_, VaultState>,
-    pep: State<'_, PepState>,
+    // Policy enforcement removed for single-user mode
     window: Window,
 ) -> Result<String, String> {
     // Enforce policy
-    let _decision = enforce_policy!(pep, Resource::Vault, Action::Read, &window);
+    // Policy enforcement removed for single-user mode
 
     let vault_guard = vault_state.read().await;
     if let Some(vault) = vault_guard.as_ref() {
@@ -85,11 +84,11 @@ pub async fn vault_unlock(
 #[tauri::command]
 pub async fn vault_lock(
     vault_state: State<'_, VaultState>,
-    pep: State<'_, PepState>,
+    // Policy enforcement removed for single-user mode
     window: Window,
 ) -> Result<String, String> {
     // Enforce policy
-    let _decision = enforce_policy!(pep, Resource::Vault, Action::Update, &window);
+    // Policy enforcement removed for single-user mode
 
     let vault_guard = vault_state.read().await;
     if let Some(vault) = vault_guard.as_ref() {
@@ -104,11 +103,11 @@ pub async fn vault_lock(
 #[tauri::command]
 pub async fn vault_is_unlocked(
     vault_state: State<'_, VaultState>,
-    pep: State<'_, PepState>,
+    // Policy enforcement removed for single-user mode
     window: Window,
 ) -> Result<bool, String> {
     // Enforce policy
-    let _decision = enforce_policy!(pep, Resource::Vault, Action::Read, &window);
+    // Policy enforcement removed for single-user mode
 
     let vault_guard = vault_state.read().await;
     if let Some(vault) = vault_guard.as_ref() {
@@ -123,11 +122,11 @@ pub async fn vault_is_unlocked(
 pub async fn vault_setup_mfa(
     user_id: String,
     vault_state: State<'_, VaultState>,
-    pep: State<'_, PepState>,
+    // Policy enforcement removed for single-user mode
     window: Window,
 ) -> Result<MfaSetupResponse, String> {
     // Enforce policy
-    let _decision = enforce_policy!(pep, Resource::Vault, Action::Update, &window);
+    // Policy enforcement removed for single-user mode
 
     let vault_guard = vault_state.read().await;
     if let Some(vault) = vault_guard.as_ref() {
@@ -150,11 +149,11 @@ pub async fn vault_verify_mfa(
     method: String,
     code: String,
     vault_state: State<'_, VaultState>,
-    pep: State<'_, PepState>,
+    // Policy enforcement removed for single-user mode
     window: Window,
 ) -> Result<String, String> {
     // Enforce policy
-    let _decision = enforce_policy!(pep, Resource::Vault, Action::Update, &window);
+    // Policy enforcement removed for single-user mode
 
     let vault_guard = vault_state.read().await;
     if let Some(vault) = vault_guard.as_ref() {
@@ -182,7 +181,7 @@ pub async fn vault_verify_mfa(
 pub async fn vault_store_secret(
     request: CreateSecretRequestDto,
     vault_state: State<'_, VaultState>,
-    pep: State<'_, PepState>,
+    // Policy enforcement removed for single-user mode
     window: Window,
 ) -> Result<String, String> {
     // Enforce policy with context
@@ -190,7 +189,7 @@ pub async fn vault_store_secret(
     context.insert("secret_type".to_string(), format!("{:?}", request.secret_type));
     context.insert("sensitivity".to_string(), "confidential".to_string());
     
-    let _decision = enforce_policy!(pep, Resource::Vault, Action::Write, context, &window);
+    // Policy enforcement removed for single-user mode
 
     let vault_guard = vault_state.read().await;
     if let Some(vault) = vault_guard.as_ref() {
@@ -205,14 +204,9 @@ pub async fn vault_store_secret(
             metadata: Default::default(),
         };
 
-        // Create execution context for vault
-        let exec_context = ghost_policy::ContextBuilder::new()
-            .user("current_user", "user") // TODO: Get from session
-            .pq_available(true)
-            .sensitivity(ghost_policy::SensitivityLevel::Confidential)
-            .build();
+        // Simplified for single-user mode - no policy enforcement needed
 
-        let secret_id = vault.store_secret(vault_request, exec_context).await.map_err(|e| e.to_string())?;
+        let secret_id = vault.store_secret(vault_request).await.map_err(|e| e.to_string())?;
         Ok(secret_id.to_string())
     } else {
         Err("Vault not initialized".to_string())
@@ -224,11 +218,11 @@ pub async fn vault_store_secret(
 pub async fn vault_list_secrets(
     filter: Option<SecretFilterDto>,
     vault_state: State<'_, VaultState>,
-    pep: State<'_, PepState>,
+    // Policy enforcement removed for single-user mode
     window: Window,
 ) -> Result<Vec<SecretSummary>, String> {
     // Enforce policy
-    let _decision = enforce_policy!(pep, Resource::Vault, Action::Read, &window);
+    // Policy enforcement removed for single-user mode
 
     let vault_guard = vault_state.read().await;
     if let Some(vault) = vault_guard.as_ref() {
@@ -244,13 +238,8 @@ pub async fn vault_list_secrets(
             offset: f.offset,
         }).unwrap_or_default();
 
-        // Create execution context
-        let exec_context = ghost_policy::ContextBuilder::new()
-            .user("current_user", "user")
-            .pq_available(true)
-            .build();
-
-        let summaries = vault.list_secrets(vault_filter, exec_context).await.map_err(|e| e.to_string())?;
+        // Simplified for single-user mode
+        let summaries = vault.list_secrets(vault_filter).await.map_err(|e| e.to_string())?;
         Ok(summaries)
     } else {
         Err("Vault not initialized".to_string())
@@ -262,7 +251,7 @@ pub async fn vault_list_secrets(
 pub async fn vault_get_secret(
     secret_id: String,
     vault_state: State<'_, VaultState>,
-    pep: State<'_, PepState>,
+    // Policy enforcement removed for single-user mode
     window: Window,
 ) -> Result<Option<SecretData>, String> {
     // Enforce policy with high sensitivity
@@ -270,23 +259,17 @@ pub async fn vault_get_secret(
     context.insert("secret_id".to_string(), secret_id.clone());
     context.insert("sensitivity".to_string(), "secret".to_string());
     
-    let decision = enforce_policy!(pep, Resource::Vault, Action::Read, context, &window);
+    // Policy enforcement removed for single-user mode
 
     let vault_guard = vault_state.read().await;
     if let Some(vault) = vault_guard.as_ref() {
         let uuid = Uuid::parse_str(&secret_id).map_err(|e| e.to_string())?;
         
-        // Create execution context
-        let exec_context = ghost_policy::ContextBuilder::new()
-            .user("current_user", "user")
-            .pq_available(true)
-            .sensitivity(ghost_policy::SensitivityLevel::Secret)
-            .build();
-
-        let secret_data = vault.get_secret(&uuid, exec_context).await.map_err(|e| e.to_string())?;
+        // Simplified for single-user mode
+        let secret_data = vault.get_secret(&uuid).await.map_err(|e| e.to_string())?;
         
         // Apply policy constraints
-        if decision.mask_preview {
+        if false { // Policy removed - decision.mask_preview
             // Return masked version if policy requires it
             if let Some(data) = &secret_data {
                 return Ok(Some(data.masked()));
@@ -305,7 +288,7 @@ pub async fn vault_delete_secret(
     secret_id: String,
     justification: Option<String>,
     vault_state: State<'_, VaultState>,
-    pep: State<'_, PepState>,
+    // Policy enforcement removed for single-user mode
     window: Window,
 ) -> Result<bool, String> {
     // Enforce policy with context
@@ -316,24 +299,16 @@ pub async fn vault_delete_secret(
         context.insert("justification".to_string(), just.clone());
     }
     
-    let decision = enforce_policy!(pep, Resource::Vault, Action::Delete, context, &window);
+    // Policy enforcement removed for single-user mode
     
-    // Check if justification is required
-    if decision.requires_justification && justification.is_none() {
-        return Err("Justification required for secret deletion".to_string());
-    }
+    // Policy enforcement removed for single-user mode
 
     let vault_guard = vault_state.read().await;
     if let Some(vault) = vault_guard.as_ref() {
         let uuid = Uuid::parse_str(&secret_id).map_err(|e| e.to_string())?;
         
-        // Create execution context
-        let exec_context = ghost_policy::ContextBuilder::new()
-            .user("current_user", "user")
-            .pq_available(true)
-            .build();
-
-        let deleted = vault.delete_secret(&uuid, exec_context).await.map_err(|e| e.to_string())?;
+        // Simplified for single-user mode
+        let deleted = vault.delete_secret(&uuid).await.map_err(|e| e.to_string())?;
         Ok(deleted)
     } else {
         Err("Vault not initialized".to_string())
@@ -344,11 +319,11 @@ pub async fn vault_delete_secret(
 #[tauri::command]
 pub async fn vault_get_stats(
     vault_state: State<'_, VaultState>,
-    pep: State<'_, PepState>,
+    // Policy enforcement removed for single-user mode
     window: Window,
 ) -> Result<VaultStatsResponse, String> {
     // Enforce policy
-    let _decision = enforce_policy!(pep, Resource::Vault, Action::Read, &window);
+    // Policy enforcement removed for single-user mode
 
     let vault_guard = vault_state.read().await;
     if let Some(vault) = vault_guard.as_ref() {

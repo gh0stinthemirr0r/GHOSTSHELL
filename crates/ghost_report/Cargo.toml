@@ -1,0 +1,57 @@
+[package]
+name = "ghost_report"
+version = "0.1.0"
+edition = "2021"
+description = "GhostShell automated reporting engine with CSV/XLSX/PDF outputs"
+
+[dependencies]
+# Async runtime
+tokio = { workspace = true }
+
+# Serialization
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+# Date/time handling
+chrono = { workspace = true }
+
+# Error handling
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+
+# Utilities
+uuid = { workspace = true }
+hex = { workspace = true }
+
+# Logging
+tracing = { workspace = true }
+
+# CSV export
+csv = "1.3"
+
+# XLSX export
+xlsxwriter = "0.6"
+
+# PDF export
+printpdf = "0.7"
+
+# Post-quantum cryptography
+ghost_pq = { path = "../ghost_pq" }
+
+# GhostShell integrations
+ghost_log = { path = "../ghost_log" }
+ghost_dash = { path = "../ghost_dash" }
+ghost_vault = { path = "../ghost_vault" }
+
+
+# Database
+rusqlite = { workspace = true }
+
+# Base64 encoding
+base64 = { workspace = true }
+
+# Hashing
+sha3 = { workspace = true }
+
+# File system operations
+tempfile = "3.8"

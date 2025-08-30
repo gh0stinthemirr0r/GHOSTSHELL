@@ -7,7 +7,7 @@ description = "Secure vault for GHOSTSHELL secrets and configuration storage"
 [dependencies]
 # Workspace dependencies
 ghost_pq = { path = "../ghost_pq" }
-ghost_policy = { path = "../ghost_policy" }
+
 
 # Serialization
 serde = { workspace = true }

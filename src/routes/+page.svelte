@@ -27,7 +27,7 @@
     
     // Core Modules
     'ghostvault': () => import('$lib/components/GhostVault.svelte'),
-    'security': () => import('$lib/components/SecurityPolicy.svelte'),
+
     'topology': () => import('$lib/components/NetworkTopology.svelte'),
     'ghostvpn': () => import('$lib/components/VpnClient.svelte'),
     'ghostai': () => import('$lib/components/AiAssistant.svelte'),
@@ -35,7 +35,7 @@
     // Tools
     'layers': () => import('$lib/components/LayersTool.svelte'),
     'surveyor': () => import('$lib/components/SurveyorTool.svelte'),
-    'pcap': () => import('$lib/components/PcapStudio.svelte'),
+    'pcap-advanced': () => import('$lib/components/PcapStudioAdvanced.svelte'),
     'exploit': () => import('$lib/components/ExploitEngine.svelte'),
     'forensics': () => import('$lib/components/ForensicsKit.svelte'),
     

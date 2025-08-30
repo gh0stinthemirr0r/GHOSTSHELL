@@ -27,7 +27,7 @@ ghost_tls = { path = "../ghost_tls" }
 ghost_autofill = { path = "../ghost_autofill" }
 ghost_download = { path = "../ghost_download" }
 ghost_vault = { path = "../ghost_vault" }
-ghost_policy = { path = "../ghost_policy" }
+
 ghost_log = { path = "../ghost_log" }
 ghost_pq = { path = "../ghost_pq" }
 

@@ -6,7 +6,7 @@ use std::sync::Arc;
 use tokio::sync::RwLock;
 use uuid::Uuid;
 
-use crate::security::PepState;
+// Policy enforcement removed for single-user mode
 use ghost_pq::{DilithiumPrivateKey, DilithiumPublicKey, DilithiumVariant, KyberPrivateKey, KyberPublicKey, KyberVariant};
 
 // Core data structures for Quantum-Safe Operations
@@ -67,12 +67,12 @@ pub enum PQAlgorithm {
     Kyber1024,
     Falcon512,
     Falcon1024,
-    SPHINCS_SHA256_128s,
-    SPHINCS_SHA256_192s,
-    SPHINCS_SHA256_256s,
-    HybridRSA_Dilithium,
-    HybridECDSA_Dilithium,
-    HybridAES_Kyber,
+    SphincsSha256_128s,
+    SphincsSha256_192s,
+    SphincsSha256_256s,
+    HybridRsaDilithium,
+    HybridEcdsaDilithium,
+    HybridAesKyber,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -478,8 +478,8 @@ impl QuantumSafeOperationsManager {
             protocol_type: QuantumProtocolType::Hybrid,
             status: ProtocolStatus::Active,
             algorithms: vec![
-                PQAlgorithm::HybridECDSA_Dilithium,
-                PQAlgorithm::HybridAES_Kyber,
+                PQAlgorithm::HybridEcdsaDilithium,
+                PQAlgorithm::HybridAesKyber,
             ],
             security_level: QuantumResistanceLevel::Level3,
             compliance_status: ComplianceStatus::Compliant,

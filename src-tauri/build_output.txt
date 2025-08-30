@@ -1,0 +1,1693 @@
+warning: unused variable: `bytes`
+  --> crates\ghost_pq\src\kem.rs:57:23
+   |
+57 |     pub fn from_bytes(bytes: Vec<u8>, variant: KyberVariant) -> Result<Self> {
+   |                       ^^^^^ help: if this is intentional, prefix it with an underscore: `_bytes`
+   |
+   = note: `#[warn(unused_variables)]` on by default
+
+warning: unused variable: `bytes`
+  --> crates\ghost_pq\src\kem.rs:86:23
+   |
+86 |     pub fn from_bytes(bytes: Vec<u8>, variant: KyberVariant) -> Result<Self> {
+   |                       ^^^^^ help: if this is intentional, prefix it with an underscore: `_bytes`
+
+warning: unused variable: `ciphertext`
+   --> crates\ghost_pq\src\kem.rs:179:62
+    |
+179 |     pub fn decapsulate(&self, private_key: &KyberPrivateKey, ciphertext: &[u8]) -> Result<Vec<u8>> {
+    |                                                              ^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_ciphertext`
+
+warning: unused variable: `bytes`
+  --> crates\ghost_pq\src\signatures.rs:61:23
+   |
+61 |     pub fn from_bytes(bytes: Vec<u8>, variant: DilithiumVariant) -> Result<Self> {
+   |                       ^^^^^ help: if this is intentional, prefix it with an underscore: `_bytes`
+
+warning: unused variable: `bytes`
+  --> crates\ghost_pq\src\signatures.rs:85:23
+   |
+85 |     pub fn from_bytes(bytes: Vec<u8>, variant: DilithiumVariant) -> Result<Self> {
+   |                       ^^^^^ help: if this is intentional, prefix it with an underscore: `_bytes`
+
+warning: unused variable: `message`
+   --> crates\ghost_pq\src\signatures.rs:163:59
+    |
+163 |     pub fn verify(&self, public_key: &DilithiumPublicKey, message: &[u8], signature: &DilithiumSignature) -> Result<bool> {
+    |                                                           ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_message`
+
+warning: unused variable: `dek`
+   --> crates\ghost_pq\src\envelope.rs:150:13
+    |
+150 |         let dek = DataEncryptionKey::generate(algorithm);
+    |             ^^^ help: if this is intentional, prefix it with an underscore: `_dek`
+
+warning: unused variable: `metadata`
+  --> crates\ghost_pq\src\kms.rs:79:13
+   |
+79 |         let metadata = KeyMetadata {
+   |             ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_metadata`
+
+warning: unused variable: `metadata`
+   --> crates\ghost_pq\src\kms.rs:102:13
+    |
+102 |         let metadata = KeyMetadata {
+    |             ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_metadata`
+
+warning: unused variable: `metadata`
+   --> crates\ghost_pq\src\kms.rs:123:13
+    |
+123 |         let metadata = KeyMetadata {
+    |             ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_metadata`
+
+warning: unused variable: `data`
+  --> crates\ghost_pq\src\lib.rs:75:56
+   |
+75 | pub fn encrypt_with_kyber(public_key: &KyberPublicKey, data: &[u8]) -> Result<Vec<u8>> {
+   |                                                        ^^^^ help: if this is intentional, prefix it with an underscore: `_data`
+
+warning: `ghost_pq` (lib) generated 11 warnings
+warning: unused import: `chrono::Utc`
+ --> crates\ghost_log\src\logger.rs:3:5
+  |
+3 | use chrono::Utc;
+  |     ^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused imports: `ChainMetadata` and `LogBatch`
+ --> crates\ghost_log\src\logger.rs:5:15
+  |
+5 |     LogEntry, LogBatch, HashChain, LogStorage, ChainMetadata,
+  |               ^^^^^^^^                         ^^^^^^^^^^^^^
+
+warning: unused import: `ActorType`
+   --> crates\ghost_log\src\storage.rs:527:28
+    |
+527 |         use crate::{Actor, ActorType, Resource, EventDetails};
+    |                            ^^^^^^^^^
+
+warning: unused import: `std::collections::HashMap`
+ --> crates\ghost_log\src\chain.rs:5:5
+  |
+5 | use std::collections::HashMap;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `LogError`
+ --> crates\ghost_log\src\query.rs:7:5
+  |
+7 |     LogError, Result,
+  |     ^^^^^^^^
+
+warning: ambiguous glob re-exports
+  --> crates\ghost_log\src\lib.rs:12:9
+   |
+12 | pub use logger::*;
+   |         ^^^^^^^^^ the name `LogEntryBuilder` in the type namespace is first re-exported here
+13 | pub use storage::*;
+14 | pub use entry::*;
+   |         -------- but the name `LogEntryBuilder` in the type namespace is also re-exported here
+   |
+   = note: `#[warn(ambiguous_glob_reexports)]` on by default
+
+warning: use of deprecated function `base64::encode`: Use Engine::encode
+  --> crates\ghost_log\src\chain.rs:70:39
+   |
+70 |             verification_key: base64::encode(&public_key.as_bytes()),
+   |                                       ^^^^^^
+   |
+   = note: `#[warn(deprecated)]` on by default
+
+warning: use of deprecated function `base64::decode`: Use Engine::decode
+  --> crates\ghost_log\src\chain.rs:83:46
+   |
+83 |         let verification_key_bytes = base64::decode(&metadata.verification_key)
+   |                                              ^^^^^^
+
+warning: use of deprecated function `base64::encode`: Use Engine::encode
+   --> crates\ghost_log\src\chain.rs:143:32
+    |
+143 |             signature: base64::encode(signature),
+    |                                ^^^^^^
+
+warning: use of deprecated function `base64::decode`: Use Engine::decode
+   --> crates\ghost_log\src\chain.rs:163:33
+    |
+163 |         let signature = base64::decode(&batch.signature)
+    |                                 ^^^^^^
+
+warning: use of deprecated function `base64::encode`: Use Engine::encode
+   --> crates\ghost_log\src\chain.rs:267:26
+    |
+267 |             Some(base64::encode(sig))
+    |                          ^^^^^^
+
+warning: use of deprecated function `base64::decode`: Use Engine::decode
+   --> crates\ghost_log\src\chain.rs:293:37
+    |
+293 |             let sig_bytes = base64::decode(signature)
+    |                                     ^^^^^^
+
+warning: field `config` is never read
+  --> crates\ghost_log\src\logger.rs:15:5
+   |
+11 | pub struct AuditLogger {
+   |            ----------- field in this struct
+...
+15 |     config: LoggerConfig,
+   |     ^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: unused import: `SealedVmk`
+ --> crates\ghost_vault\src\vault.rs:8:52
+  |
+8 |     VaultStorage, VaultEncryption, VaultMasterKey, SealedVmk, MfaManager, MfaChallenge, MfaSession,
+  |                                                    ^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `PasswordHash`
+   --> crates\ghost_vault\src\mfa.rs:230:37
+    |
+230 |         use argon2::password_hash::{PasswordHash, SaltString, rand_core::OsRng};
+    |                                     ^^^^^^^^^^^^
+
+warning: unused imports: `ImageBuffer` and `Rgb`
+   --> crates\ghost_vault\src\mfa.rs:257:21
+    |
+257 |         use image::{ImageBuffer, Rgb};
+    |                     ^^^^^^^^^^^  ^^^
+
+warning: unused import: `KyberPublicKey`
+ --> crates\ghost_vault\src\encryption.rs:1:113
+  |
+1 | use ghost_pq::{EnvelopeEncryption, EnvelopeKey, generate_kyber_keypair, encrypt_with_kyber, decrypt_with_kyber, KyberPublicKey, KyberPriv...
+  |                                                                                                                 ^^^^^^^^^^^^^^
+
+warning: unused import: `PasswordHash`
+   --> crates\ghost_vault\src\encryption.rs:125:37
+    |
+125 |         use argon2::password_hash::{PasswordHash, SaltString};
+    |                                     ^^^^^^^^^^^^
+
+warning: unused variable: `private_key`
+   --> crates\ghost_vault\src\secrets.rs:389:34
+    |
+389 |             SecretData::SshKey { private_key, public_key, .. } => SecretData::SshKey {
+    |                                  ^^^^^^^^^^^-
+    |                                  |
+    |                                  help: try removing the field
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: unused variable: `password`
+   --> crates\ghost_vault\src\secrets.rs:394:57
+    |
+394 |             SecretData::DatabaseCredentials { username, password, connection_string } => {
+    |                                                         ^^^^^^^^ help: try ignoring the field: `password: _`
+
+warning: unused variable: `secret_key`
+   --> crates\ghost_vault\src\secrets.rs:401:56
+    |
+401 |             SecretData::CloudCredentials { access_key, secret_key, session_token, region } => {
+    |                                                        ^^^^^^^^^^ help: try ignoring the field: `secret_key: _`
+
+warning: unused variable: `user_id`
+  --> crates\ghost_vault\src\mfa.rs:78:30
+   |
+78 |     pub fn setup_totp(&self, user_id: &str, issuer: &str) -> Result<MfaSetup> {
+   |                              ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_user_id`
+
+warning: unused variable: `issuer`
+  --> crates\ghost_vault\src\mfa.rs:78:45
+   |
+78 |     pub fn setup_totp(&self, user_id: &str, issuer: &str) -> Result<MfaSetup> {
+   |                                             ^^^^^^ help: if this is intentional, prefix it with an underscore: `_issuer`
+
+warning: unused variable: `e`
+   --> crates\ghost_vault\src\mfa.rs:126:23
+    |
+126 |             .map_err(|e| VaultError::MfaFailed)?;
+    |                       ^ help: if this is intentional, prefix it with an underscore: `_e`
+
+warning: unused variable: `hash_a`
+   --> crates\ghost_vault\src\mfa.rs:246:20
+    |
+246 |         if let (Ok(hash_a), Ok(hash_b)) = (PasswordHash::new(a), PasswordHash::new(b)) {
+    |                    ^^^^^^ help: if this is intentional, prefix it with an underscore: `_hash_a`
+
+warning: unused variable: `qr_string`
+   --> crates\ghost_vault\src\mfa.rs:266:13
+    |
+266 |         let qr_string = qr_code.render::<char>()
+    |             ^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_qr_string`
+
+warning: unused variable: `kyber_secret`
+  --> crates\ghost_vault\src\encryption.rs:65:28
+   |
+65 |         let (kyber_public, kyber_secret) = generate_kyber_keypair()
+   |                            ^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_kyber_secret`
+
+warning: unused variable: `iterations`
+   --> crates\ghost_vault\src\encryption.rs:123:69
+    |
+123 |     fn derive_key_from_password_static(password: &str, salt: &[u8], iterations: u32) -> Result<Vec<u8>> {
+    |                                                                     ^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_iterations`
+
+warning: `ghost_log` (lib) generated 13 warnings (run `cargo fix --lib -p ghost_log` to apply 5 suggestions)
+warning: `ghost_vault` (lib) generated 15 warnings (run `cargo fix --lib -p ghost_vault` to apply 6 suggestions)
+warning: unused import: `catalog::*`
+ --> crates\ghost_controls\src\lib.rs:7:9
+  |
+7 | pub use catalog::*;
+  |         ^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: `ghost_controls` (lib) generated 1 warning (run `cargo fix --lib -p ghost_controls` to apply 1 suggestion)
+warning: unused import: `ExplainError`
+ --> crates\ghost_explain\src\compliance_explainer.rs:1:78
+  |
+1 | use crate::{Explanation, ExplanationType, ExplanationContext, ExplainResult, ExplainError};
+  |                                                                              ^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `ExplainError`
+ --> crates\ghost_explain\src\signal_explainer.rs:1:78
+  |
+1 | use crate::{Explanation, ExplanationType, ExplanationContext, ExplainResult, ExplainError};
+  |                                                                              ^^^^^^^^^^^^
+
+warning: unused variable: `context`
+  --> crates\ghost_explain\src\compliance_explainer.rs:20:9
+   |
+20 |         context: &ExplanationContext,
+   |         ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_context`
+   |
+   = note: `#[warn(unused_variables)]` on by default
+
+warning: unused variable: `context`
+  --> crates\ghost_explain\src\compliance_explainer.rs:63:9
+   |
+63 |         context: &ExplanationContext,
+   |         ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_context`
+
+warning: unused variable: `context`
+  --> crates\ghost_explain\src\signal_explainer.rs:13:9
+   |
+13 |         context: &ExplanationContext,
+   |         ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_context`
+
+warning: `ghost_explain` (lib) generated 5 warnings (run `cargo fix --lib -p ghost_explain` to apply 2 suggestions)
+warning: unused import: `warn`
+ --> crates\ghost_tls\src\client.rs:5:28
+  |
+5 | use tracing::{debug, info, warn, error};
+  |                            ^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused imports: `Deserialize` and `Serialize`
+ --> crates\ghost_tls\src\config.rs:1:13
+  |
+1 | use serde::{Deserialize, Serialize};
+  |             ^^^^^^^^^^^  ^^^^^^^^^
+
+warning: unused variable: `log_entry`
+   --> crates\ghost_tls\src\client.rs:142:13
+    |
+142 |         let log_entry = serde_json::json!({
+    |             ^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_log_entry`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: field `signer` is never read
+  --> crates\ghost_tls\src\client.rs:16:5
+   |
+12 | pub struct GhostTLSClient {
+   |            -------------- field in this struct
+...
+16 |     signer: Arc<DilithiumSigner>,
+   |     ^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: field `logger` is never read
+  --> crates\ghost_notify\src\engine.rs:12:5
+   |
+9  | pub struct NotificationEngine {
+   |            ------------------ field in this struct
+...
+12 |     logger: Arc<AuditLogger>,
+   |     ^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: unused imports: `error` and `warn`
+ --> crates\ghost_autofill\src\bridge.rs:4:28
+  |
+4 | use tracing::{debug, info, warn, error};
+  |                            ^^^^  ^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `warn`
+ --> crates\ghost_autofill\src\injector.rs:2:28
+  |
+2 | use tracing::{debug, info, warn};
+  |                            ^^^^
+
+warning: unused variable: `vault`
+  --> crates\ghost_autofill\src\bridge.rs:62:13
+   |
+62 |         let vault = self.vault_manager.lock().await;
+   |             ^^^^^ help: if this is intentional, prefix it with an underscore: `_vault`
+   |
+   = note: `#[warn(unused_variables)]` on by default
+
+warning: unused variable: `vault`
+  --> crates\ghost_autofill\src\bridge.rs:79:9
+   |
+79 |         vault: &Vault,
+   |         ^^^^^ help: if this is intentional, prefix it with an underscore: `_vault`
+
+warning: unused variable: `log_entry`
+  --> crates\ghost_autofill\src\bridge.rs:95:13
+   |
+95 |         let log_entry = serde_json::json!({
+   |             ^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_log_entry`
+
+warning: unused variable: `signed_layout`
+   --> crates\ghost_nav\src\lib.rs:117:43
+    |
+117 |     async fn store_layout_in_vault(&self, signed_layout: SignedLayout) -> Result<String> {
+    |                                           ^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_signed_layout`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: fields `vault` and `policy` are never read
+  --> crates\ghost_nav\src\lib.rs:18:5
+   |
+17 | pub struct NavigationManager {
+   |            ----------------- fields in this struct
+18 |     vault: std::sync::Arc<ghost_vault::Vault>,
+   |     ^^^^^
+19 |     policy: std::sync::Arc<ghost_policy::PolicyEvaluator>,
+   |     ^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: unused import: `warn`
+ --> crates\ghost_download\src\manager.rs:5:28
+  |
+5 | use tracing::{debug, info, warn, error};
+  |                            ^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused variable: `log_entry`
+   --> crates\ghost_download\src\manager.rs:294:13
+    |
+294 |         let log_entry = serde_json::json!({
+    |             ^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_log_entry`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: unused variable: `vault_manager`
+  --> crates\ghost_download\src\sealer.rs:36:9
+   |
+36 |         vault_manager: &Vault,
+   |         ^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_vault_manager`
+
+warning: unused variable: `vault_manager`
+  --> crates\ghost_download\src\sealer.rs:79:9
+   |
+79 |         vault_manager: &Vault,
+   |         ^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_vault_manager`
+
+warning: unused import: `LinkError`
+ --> crates\ghost_link\src\playbook_linker.rs:1:60
+  |
+1 | use crate::{ActionLink, LinkType, LinkContext, LinkResult, LinkError};
+  |                                                            ^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused variable: `context`
+  --> crates\ghost_link\src\playbook_linker.rs:13:9
+   |
+13 |         context: &LinkContext,
+   |         ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_context`
+   |
+   = note: `#[warn(unused_variables)]` on by default
+
+warning: unused variable: `context`
+  --> crates\ghost_link\src\policy_linker.rs:13:9
+   |
+13 |         context: &LinkContext,
+   |         ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_context`
+
+warning: `ghost_tls` (lib) generated 4 warnings (run `cargo fix --lib -p ghost_tls` to apply 2 suggestions)
+warning: `ghost_notify` (lib) generated 1 warning
+warning: `ghost_autofill` (lib) generated 5 warnings (run `cargo fix --lib -p ghost_autofill` to apply 2 suggestions)
+warning: `ghost_nav` (lib) generated 2 warnings
+warning: `ghost_download` (lib) generated 4 warnings (run `cargo fix --lib -p ghost_download` to apply 1 suggestion)
+warning: `ghost_link` (lib) generated 3 warnings (run `cargo fix --lib -p ghost_link` to apply 1 suggestion)
+warning: unused import: `WorkspaceMeta`
+ --> crates\ghost_prefs\src\manager.rs:2:27
+  |
+2 | use ghost_nav::{LayoutV2, WorkspaceMeta, NavPreset};
+  |                           ^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused imports: `Deserialize` and `Serialize`
+ --> crates\ghost_prefs\src\persistence.rs:4:13
+  |
+4 | use serde::{Deserialize, Serialize};
+  |             ^^^^^^^^^^^  ^^^^^^^^^
+
+warning: unused import: `LayoutV2`
+ --> crates\ghost_prefs\src\export.rs:2:17
+  |
+2 | use ghost_nav::{LayoutV2, NavigationManager, WorkspaceExport};
+  |                 ^^^^^^^^
+
+warning: unused imports: `WorkspaceExport` and `WorkspaceMeta`
+ --> crates\ghost_prefs\src\import.rs:2:46
+  |
+2 | use ghost_nav::{LayoutV2, NavigationManager, WorkspaceExport, LayoutValidator, WorkspaceMeta};
+  |                                              ^^^^^^^^^^^^^^^                   ^^^^^^^^^^^^^
+
+warning: unused imports: `DateTime` and `Utc`
+ --> crates\ghost_prefs\src\import.rs:5:14
+  |
+5 | use chrono::{DateTime, Utc};
+  |              ^^^^^^^^  ^^^
+
+warning: private item shadows public glob re-export
+  --> crates\ghost_prefs\src\lib.rs:14:5
+   |
+14 | use crate::persistence::PersistenceProvider;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+note: the name `PersistenceProvider` in the type namespace is supposed to be publicly re-exported here
+  --> crates\ghost_prefs\src\lib.rs:7:9
+   |
+7  | pub use persistence::*;
+   |         ^^^^^^^^^^^^^^
+note: but the private item here shadows it
+  --> crates\ghost_prefs\src\lib.rs:14:5
+   |
+14 | use crate::persistence::PersistenceProvider;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = note: `#[warn(hidden_glob_reexports)]` on by default
+
+warning: unused variable: `layout_id`
+  --> crates\ghost_prefs\src\lib.rs:95:13
+   |
+95 |         let layout_id = self.nav_manager.save_layout(preset.layout).await?;
+   |             ^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_layout_id`
+   |
+   = note: `#[warn(unused_variables)]` on by default
+
+warning: field `nav_manager` is never read
+ --> crates\ghost_prefs\src\export.rs:9:5
+  |
+8 | pub struct WorkspaceExporter {
+  |            ----------------- field in this struct
+9 |     nav_manager: Arc<NavigationManager>,
+  |     ^^^^^^^^^^^
+  |
+  = note: `#[warn(dead_code)]` on by default
+
+warning: unused imports: `error` and `warn`
+ --> crates\ghost_browse\src\engine.rs:5:28
+  |
+5 | use tracing::{debug, info, warn, error};
+  |                            ^^^^  ^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused imports: `error` and `warn`
+ --> crates\ghost_browse\src\webview.rs:5:28
+  |
+5 | use tracing::{debug, info, warn, error};
+  |                            ^^^^  ^^^^^
+
+warning: unused variable: `log_data`
+   --> crates\ghost_browse\src\engine.rs:242:17
+    |
+242 |             let log_data = serde_json::json!({
+    |                 ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_log_data`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: unused variable: `log_entry`
+   --> crates\ghost_browse\src\engine.rs:388:13
+    |
+388 |         let log_entry = serde_json::json!({
+    |             ^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_log_entry`
+
+warning: fields `tls_client` and `vault_manager` are never read
+  --> crates\ghost_browse\src\engine.rs:45:5
+   |
+40 | pub struct BrowserEngine {
+   |            ------------- fields in this struct
+...
+45 |     tls_client: Arc<GhostTLSClient>,
+   |     ^^^^^^^^^^
+...
+48 |     vault_manager: Arc<Mutex<Vault>>,
+   |     ^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: unused import: `ControlStatus`
+ --> crates\ghost_trends\src\lib.rs:5:36
+  |
+5 | use ghost_align::{PostureSnapshot, ControlStatus};
+  |                                    ^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `uuid::Uuid`
+ --> crates\ghost_trends\src\storage.rs:4:5
+  |
+4 | use uuid::Uuid;
+  |     ^^^^^^^^^^
+
+warning: unused variable: `control_id`
+   --> crates\ghost_trends\src\storage.rs:135:9
+    |
+135 |         control_id: &str,
+    |         ^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_control_id`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: unused variable: `points`
+   --> crates\ghost_trends\src\analysis.rs:344:38
+    |
+344 |     fn calculate_forecast_confidence(points: &[PostureTrendPoint], periods_ahead: usize) -> f64 {
+    |                                      ^^^^^^ help: if this is intentional, prefix it with an underscore: `_points`
+
+warning: unused variable: `period_key`
+   --> crates\ghost_trends\src\rollup.rs:164:9
+    |
+164 |         period_key: &str,
+    |         ^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_period_key`
+
+warning: `ghost_prefs` (lib) generated 8 warnings (run `cargo fix --lib -p ghost_prefs` to apply 5 suggestions)
+warning: `ghost_browse` (lib) generated 5 warnings (run `cargo fix --lib -p ghost_browse` to apply 2 suggestions)
+warning: `ghost_trends` (lib) generated 5 warnings (run `cargo fix --lib -p ghost_trends` to apply 2 suggestions)
+warning: unused import: `ExplanationType`
+ --> crates\ghost_ai\src\engine.rs:3:60
+  |
+3 | use ghost_explain::{ExplanationEngine, ExplanationContext, ExplanationType};
+  |                                                            ^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused imports: `error` and `warn`
+  --> crates\ghost_ai\src\engine.rs:11:28
+   |
+11 | use tracing::{debug, info, warn, error};
+   |                            ^^^^  ^^^^^
+
+warning: unused variable: `explanation_context`
+   --> crates\ghost_ai\src\engine.rs:102:13
+    |
+102 |         let explanation_context = ExplanationContext {
+    |             ^^^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_explanation_context`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: unused variable: `suggestion_json`
+   --> crates\ghost_ai\src\engine.rs:277:13
+    |
+277 |         let suggestion_json = serde_json::to_string(suggestion)
+    |             ^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_suggestion_json`
+
+warning: fields `logger` and `signer` are never read
+  --> crates\ghost_ai\src\engine.rs:46:5
+   |
+41 | pub struct AIEngine {
+   |            -------- fields in this struct
+...
+46 |     logger: Arc<AuditLogger>,
+   |     ^^^^^^
+47 |     signer: Arc<DilithiumSigner>,
+   |     ^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `ghost_ai` (lib) generated 5 warnings (run `cargo fix --lib -p ghost_ai` to apply 2 suggestions)
+   Compiling ghostshell v0.1.0 (D:\DevOps\GHOSTSHELL\src-tauri)
+error: proc macro panicked
+    --> src-tauri\src\main.rs:1101:14
+     |
+1101 |         .run(tauri::generate_context!())
+     |              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+     |
+     = help: message: The `distDir` configuration is set to `"../dist"` but this path doesn't exist
+
+error[E0433]: failed to resolve: could not find `Diagnostics` in `System`
+  --> src-tauri\src\pure_winapi_executor.rs:18:13
+   |
+18 |             Diagnostics::Debug::{ReadProcessMemory, WriteProcessMemory},
+   |             ^^^^^^^^^^^ could not find `Diagnostics` in `System`
+   |
+note: found an item that was configured out
+  --> C:\Users\ghost\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\windows-0.52.0\src\Windows\Win32\System\mod.rs:48:9
+   |
+48 | pub mod Diagnostics;
+   |         ^^^^^^^^^^^
+note: the item is gated behind the `Win32_System_Diagnostics` feature
+  --> C:\Users\ghost\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\windows-0.52.0\src\Windows\Win32\System\mod.rs:46:7
+   |
+46 | #[cfg(feature = "Win32_System_Diagnostics")]
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0432]: unresolved import `windows::Win32::System::Memory`
+   --> src-tauri\src\pure_winapi_executor.rs:19:13
+    |
+19  |             Memory::{VirtualAllocEx, VirtualFreeEx, MEM_COMMIT, MEM_RELEASE, PAGE_READWRITE},
+    |             ^^^^^^ could not find `Memory` in `System`
+    |
+note: found an item that was configured out
+   --> C:\Users\ghost\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\windows-0.52.0\src\Windows\Win32\System\mod.rs:111:9
+    |
+111 | pub mod Memory;
+    |         ^^^^^^
+note: the item is gated behind the `Win32_System_Memory` feature
+   --> C:\Users\ghost\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\windows-0.52.0\src\Windows\Win32\System\mod.rs:109:7
+    |
+109 | #[cfg(feature = "Win32_System_Memory")]
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `MfaChallenge`
+ --> src-tauri\src\commands\vault.rs:9:5
+  |
+9 |     MfaChallenge, MfaChallengeBuilder, MfaMethod
+  |     ^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused imports: `NotificationError` and `NotificationResult`
+ --> src-tauri\src\commands\notify.rs:6:33
+  |
+6 |     AlertSource, AlertSeverity, NotificationResult, NotificationError
+  |                                 ^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `AlertListConfig`
+ --> src-tauri\src\commands\notify.rs:8:28
+  |
+8 | use ghost_alert::{UIAlert, AlertListConfig, NotificationCenterConfig};
+  |                            ^^^^^^^^^^^^^^^
+
+warning: unused import: `serde_json::Value`
+ --> src-tauri\src\commands\notify.rs:9:5
+  |
+9 | use serde_json::Value;
+  |     ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `warn`
+ --> src-tauri\src\commands\ai.rs:9:28
+  |
+9 | use tracing::{debug, info, warn, error};
+  |                            ^^^^
+
+warning: unused import: `DownloadMeta`
+ --> src-tauri\src\commands\browse.rs:6:22
+  |
+6 | use ghost_download::{DownloadMeta, ActiveDownload};
+  |                      ^^^^^^^^^^^^
+
+warning: unused imports: `Deserialize` and `Serialize`
+ --> src-tauri\src\commands\vpn_status.rs:1:13
+  |
+1 | use serde::{Deserialize, Serialize};
+  |             ^^^^^^^^^^^  ^^^^^^^^^
+
+warning: unused import: `crate::simple_shell::SimpleShellManager`
+ --> src-tauri\src\commands\shell.rs:3:5
+  |
+3 | use crate::simple_shell::SimpleShellManager;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused imports: `Command` and `Stdio`
+   --> src-tauri\src\commands\shell.rs:178:24
+    |
+178 |     use std::process::{Command, Stdio};
+    |                        ^^^^^^^  ^^^^^
+
+warning: unused import: `std::process::Command`
+   --> src-tauri\src\commands\shell.rs:216:9
+    |
+216 |     use std::process::Command;
+    |         ^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `warn`
+ --> src-tauri\src\commands\fonts.rs:6:29
+  |
+6 | use tracing::{debug, error, warn};
+  |                             ^^^^
+
+warning: unused import: `std::collections::HashMap`
+ --> src-tauri\src\commands\settings.rs:3:5
+  |
+3 | use std::collections::HashMap;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused imports: `Deserialize` and `Serialize`
+ --> src-tauri\src\commands\pure_executor.rs:3:13
+  |
+3 | use serde::{Deserialize, Serialize};
+  |             ^^^^^^^^^^^  ^^^^^^^^^
+
+warning: unused import: `debug`
+ --> src-tauri\src\commands\pure_executor.rs:6:15
+  |
+6 | use tracing::{debug, error, info};
+  |               ^^^^^
+
+warning: unused imports: `AllocConsole`, `FreeConsole`, and `PROCESS_CREATION_FLAGS`
+  --> src-tauri\src\console_manager.rs:11:23
+   |
+11 |             Console::{AllocConsole, FreeConsole, GetConsoleWindow},
+   |                       ^^^^^^^^^^^^  ^^^^^^^^^^^
+12 |             Threading::{GetCurrentProcessId, PROCESS_CREATION_FLAGS},
+   |                                              ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused imports: `FindWindowA`, `FindWindowExA`, `GetCurrentProcessId`, `GetProcessId`, `HWND_TOPMOST`, `MoveWindow`, `OpenProcess`, `PCSTR`, `PROCESS_QUERY_INFORMATION`, `PWSTR`, `SWP_FRAMECHANGED`, `SWP_NOMOVE`, `SWP_NOOWNERZORDER`, `SW_SHOWMINNOACTIVE`, and `WPARAM`
+  --> src-tauri\src\window_controller.rs:9:12
+   |
+9  |     core::{PCSTR, PWSTR},
+   |            ^^^^^  ^^^^^
+10 |     Win32::{
+11 |         Foundation::{BOOL, HWND, LPARAM, RECT, WPARAM},
+   |                                                ^^^^^^
+12 |         System::Threading::{GetCurrentProcessId, GetProcessId, OpenProcess, PROCESS_QUERY_INFORMATION},
+   |                             ^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^  ^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^^^^
+13 |         UI::WindowsAndMessaging::{
+14 |             EnumWindows, FindWindowA, FindWindowExA, GetClassNameA, GetWindowRect, GetWindowTextA,
+   |                          ^^^^^^^^^^^  ^^^^^^^^^^^^^
+15 |             GetWindowThreadProcessId, IsWindowVisible, MoveWindow, SetWindowPos, ShowWindow,
+   |                                                        ^^^^^^^^^^
+16 |             SWP_FRAMECHANGED, SWP_NOACTIVATE, SWP_NOMOVE, SWP_NOOWNERZORDER, SWP_NOZORDER,
+   |             ^^^^^^^^^^^^^^^^                  ^^^^^^^^^^  ^^^^^^^^^^^^^^^^^
+17 |             SW_HIDE, SW_MINIMIZE, SW_SHOWMINNOACTIVE, HWND_BOTTOM, HWND_TOPMOST,
+   |                                   ^^^^^^^^^^^^^^^^^^               ^^^^^^^^^^^^
+
+warning: unused import: `std::ptr`
+ --> src-tauri\src\pure_winapi_executor.rs:6:5
+  |
+6 | use std::ptr;
+  |     ^^^^^^^^
+
+warning: unused imports: `debug`, `error`, and `warn`
+ --> src-tauri\src\pure_winapi_executor.rs:9:15
+  |
+9 | use tracing::{debug, error, info, warn};
+  |               ^^^^^  ^^^^^        ^^^^
+
+warning: unused imports: `AllocConsole`, `GetCurrentProcessId`, `OpenProcess`, `PROCESS_ALL_ACCESS`, `PROCESS_QUERY_INFORMATION`, `PROCESS_TERMINATE`, `RECT`, `WAIT_OBJECT_0`, and `WAIT_TIMEOUT`
+  --> src-tauri\src\pure_winapi_executor.rs:15:50
+   |
+15 |         Foundation::{BOOL, HANDLE, HWND, LPARAM, RECT, WAIT_OBJECT_0, WAIT_TIMEOUT},
+   |                                                  ^^^^  ^^^^^^^^^^^^^  ^^^^^^^^^^^^
+16 |         System::{
+17 |             Console::{AllocConsole, FreeConsole, GetConsoleWindow},
+   |                       ^^^^^^^^^^^^
+...
+21 |                 CreateProcessW, GetCurrentProcessId, GetExitCodeProcess, OpenProcess, 
+   |                                 ^^^^^^^^^^^^^^^^^^^                      ^^^^^^^^^^^
+...
+24 |                 PROCESS_ALL_ACCESS, PROCESS_QUERY_INFORMATION, PROCESS_TERMINATE
+   |                 ^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `std::os::windows::ffi::OsStringExt`
+   --> src-tauri\src\pure_winapi_executor.rs:164:13
+    |
+164 |         use std::os::windows::ffi::OsStringExt;
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `std::path::PathBuf`
+ --> src-tauri\src\windows_api_shell.rs:3:5
+  |
+3 | use std::path::PathBuf;
+  |     ^^^^^^^^^^^^^^^^^^
+
+warning: unused imports: `error` and `warn`
+ --> src-tauri\src\windows_api_shell.rs:4:21
+  |
+4 | use tracing::{info, warn, error, debug};
+  |                     ^^^^  ^^^^^
+
+warning: unused imports: `ERROR_SUCCESS` and `WIN32_ERROR`
+  --> src-tauri\src\windows_api_shell.rs:10:22
+   |
+10 |         Foundation::{ERROR_SUCCESS, MAX_PATH, WIN32_ERROR},
+   |                      ^^^^^^^^^^^^^            ^^^^^^^^^^^
+
+warning: unused import: `anyhow`
+ --> src-tauri\src\windows_api_network.rs:1:22
+  |
+1 | use anyhow::{Result, anyhow};
+  |                      ^^^^^^
+
+warning: unused imports: `error`, `info`, and `warn`
+ --> src-tauri\src\windows_api_network.rs:3:15
+  |
+3 | use tracing::{info, warn, error, debug};
+  |               ^^^^  ^^^^  ^^^^^
+
+warning: unused imports: `ERROR_SUCCESS`, `HANDLE`, `INVALID_HANDLE_VALUE`, `PWSTR`, `REG_DWORD`, `REG_SZ`, `RegQueryValueExW`, and `WIN32_ERROR`
+  --> src-tauri\src\windows_api_network.rs:7:12
+   |
+7  |     core::{PWSTR, PCWSTR},
+   |            ^^^^^
+8  |     Win32::{
+9  |         Foundation::{ERROR_SUCCESS, HANDLE, INVALID_HANDLE_VALUE, WIN32_ERROR},
+   |                      ^^^^^^^^^^^^^  ^^^^^^  ^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^
+10 |         System::Registry::{
+11 |             RegOpenKeyExW, RegQueryValueExW, RegCloseKey,
+   |                            ^^^^^^^^^^^^^^^^
+12 |             HKEY_LOCAL_MACHINE, KEY_READ, REG_SZ, REG_DWORD, HKEY,
+   |                                           ^^^^^^  ^^^^^^^^^
+
+warning: unused import: `warn`
+ --> src-tauri\src\windows_api_browser.rs:2:21
+  |
+2 | use tracing::{info, warn, error, debug};
+  |                     ^^^^
+
+warning: unused imports: `HANDLE`, `PWSTR`, and `SW_HIDE`
+  --> src-tauri\src\windows_api_browser.rs:6:12
+   |
+6  |     core::{PWSTR, PCWSTR},
+   |            ^^^^^
+7  |     Win32::{
+8  |         Foundation::{HWND, HANDLE},
+   |                            ^^^^^^
+...
+11 |             WindowsAndMessaging::{SW_SHOWNORMAL, SW_HIDE},
+   |                                                  ^^^^^^^
+
+warning: unused import: `std::ffi::OsStr`
+  --> src-tauri\src\windows_api_browser.rs:95:13
+   |
+95 |         use std::ffi::OsStr;
+   |             ^^^^^^^^^^^^^^^
+
+warning: unused import: `std::os::windows::ffi::OsStrExt`
+  --> src-tauri\src\windows_api_browser.rs:96:13
+   |
+96 |         use std::os::windows::ffi::OsStrExt;
+   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `std::ffi::OsStr`
+   --> src-tauri\src\windows_api_browser.rs:109:13
+    |
+109 |         use std::ffi::OsStr;
+    |             ^^^^^^^^^^^^^^^
+
+warning: unused import: `std::os::windows::ffi::OsStrExt`
+   --> src-tauri\src\windows_api_browser.rs:110:13
+    |
+110 |         use std::os::windows::ffi::OsStrExt;
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `State`
+ --> src-tauri\src\security\pep.rs:4:13
+  |
+4 | use tauri::{State, Window};
+  |             ^^^^^
+
+warning: unused import: `chrono::Utc`
+ --> src-tauri\src\security\pep.rs:5:5
+  |
+5 | use chrono::Utc;
+  |     ^^^^^^^^^^^
+
+warning: unused import: `EnforcementDecision`
+ --> src-tauri\src\security\pep.rs:8:72
+  |
+8 |     PolicyEvaluator, ExecutionContext, ContextBuilder, PolicyDecision, EnforcementDecision,
+  |                                                                        ^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ghost_log::entry::LogEntryBuilder`
+  --> src-tauri\src\security\pep.rs:15:5
+   |
+15 | use ghost_log::entry::LogEntryBuilder;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused imports: `PepDecision` and `PolicyEnforcementPoint`
+ --> src-tauri\src\security.rs:7:15
+  |
+7 | pub use pep::{PolicyEnforcementPoint, PepState, PepDecision, PolicyStats, DryRunResult, initialize_pep};
+  |               ^^^^^^^^^^^^^^^^^^^^^^            ^^^^^^^^^^^
+
+warning: unused imports: `AppHandle` and `Manager`
+ --> src-tauri\src\clipboard.rs:5:13
+  |
+5 | use tauri::{AppHandle, Manager, State, Window};
+  |             ^^^^^^^^^  ^^^^^^^
+
+warning: unused import: `interval`
+ --> src-tauri\src\clipboard.rs:7:19
+  |
+7 | use tokio::time::{interval, sleep};
+  |                   ^^^^^^^^
+
+warning: unused imports: `error` and `warn`
+  --> src-tauri\src\clipboard.rs:10:21
+   |
+10 | use tracing::{info, warn, error, debug};
+   |                     ^^^^  ^^^^^
+
+warning: unused import: `ghost_policy::PolicyDecision`
+  --> src-tauri\src\clipboard.rs:14:5
+   |
+14 | use ghost_policy::PolicyDecision;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `Duration`
+ --> src-tauri\src\quarantine.rs:4:17
+  |
+4 | use std::time::{Duration, SystemTime, UNIX_EPOCH};
+  |                 ^^^^^^^^
+
+warning: unused imports: `debug` and `error`
+  --> src-tauri\src\quarantine.rs:10:27
+   |
+10 | use tracing::{info, warn, error, debug};
+   |                           ^^^^^  ^^^^^
+
+warning: unused import: `Mutex`
+ --> src-tauri\src\terminal.rs:7:33
+  |
+7 | use tokio::sync::{mpsc, RwLock, Mutex};
+  |                                 ^^^^^
+
+warning: unused import: `warn`
+ --> src-tauri\src\terminal.rs:8:21
+  |
+8 | use tracing::{info, warn, error, debug};
+  |                     ^^^^
+
+warning: unused import: `crate::console_manager::ConsoleManager`
+  --> src-tauri\src\terminal.rs:10:5
+   |
+10 | use crate::console_manager::ConsoleManager;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `std::os::windows::process::CommandExt`
+  --> src-tauri\src\terminal.rs:13:5
+   |
+13 | use std::os::windows::process::CommandExt;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `warn`
+  --> src-tauri\src\embedded_nushell.rs:13:35
+   |
+13 | use tracing::{debug, error, info, warn};
+   |                                   ^^^^
+
+warning: unused import: `uuid::Uuid`
+  --> src-tauri\src\embedded_nushell.rs:14:5
+   |
+14 | use uuid::Uuid;
+   |     ^^^^^^^^^^
+
+warning: unused import: `anyhow`
+ --> src-tauri\src\ai_assistant.rs:1:22
+  |
+1 | use anyhow::{Result, anyhow};
+  |                      ^^^^^^
+
+warning: unused import: `Window`
+ --> src-tauri\src\ai_assistant.rs:5:20
+  |
+5 | use tauri::{State, Window};
+  |                    ^^^^^^
+
+warning: unused import: `Window`
+ --> src-tauri\src\file_manager.rs:6:20
+  |
+6 | use tauri::{State, Window};
+  |                    ^^^^^^
+
+warning: unused import: `std::os::windows::fs::MetadataExt`
+   --> src-tauri\src\file_manager.rs:616:13
+    |
+616 |         use std::os::windows::fs::MetadataExt;
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `Ipv6Addr`
+ --> src-tauri\src\network_topology.rs:4:34
+  |
+4 | use std::net::{IpAddr, Ipv4Addr, Ipv6Addr};
+  |                                  ^^^^^^^^
+
+warning: unused import: `Window`
+ --> src-tauri\src\network_topology.rs:6:20
+  |
+6 | use tauri::{State, Window};
+  |                    ^^^^^^
+
+warning: unused imports: `IpAddr` and `Ipv4Addr`
+ --> src-tauri\src\tools.rs:4:16
+  |
+4 | use std::net::{IpAddr, Ipv4Addr};
+  |                ^^^^^^  ^^^^^^^^
+
+warning: unused import: `Mutex`
+ --> src-tauri\src\tools.rs:7:27
+  |
+7 | use tokio::sync::{RwLock, Mutex};
+  |                           ^^^^^
+
+warning: unused import: `warn`
+ --> src-tauri\src\tools.rs:8:21
+  |
+8 | use tracing::{info, warn, error};
+  |                     ^^^^
+
+warning: unused import: `tokio::sync::Mutex`
+ --> src-tauri\src\pcap_studio.rs:7:5
+  |
+7 | use tokio::sync::Mutex;
+  |     ^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `crate::enforce_policy`
+  --> src-tauri\src\pcap_studio.rs:11:5
+   |
+11 | use crate::enforce_policy;
+   |     ^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `tokio::sync::Mutex`
+ --> src-tauri\src\exploit_engine.rs:7:5
+  |
+7 | use tokio::sync::Mutex;
+  |     ^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `crate::enforce_policy`
+  --> src-tauri\src\exploit_engine.rs:11:5
+   |
+11 | use crate::enforce_policy;
+   |     ^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `tokio::sync::Mutex`
+ --> src-tauri\src\forensics_kit.rs:7:5
+  |
+7 | use tokio::sync::Mutex;
+  |     ^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `crate::enforce_policy`
+  --> src-tauri\src\forensics_kit.rs:11:5
+   |
+11 | use crate::enforce_policy;
+   |     ^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `tokio::sync::Mutex`
+ --> src-tauri\src\threat_intelligence.rs:7:5
+  |
+7 | use tokio::sync::Mutex;
+  |     ^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `crate::security::PepState`
+ --> src-tauri\src\behavioral_analytics.rs:9:5
+  |
+9 | use crate::security::PepState;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: variant `Script_Kiddie` should have an upper camel case name
+   --> src-tauri\src\predictive_security.rs:328:5
+    |
+328 |     Script_Kiddie,
+    |     ^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `ScriptKiddie`
+    |
+    = note: `#[warn(non_camel_case_types)]` on by default
+
+warning: variant `Nation_State` should have an upper camel case name
+   --> src-tauri\src\predictive_security.rs:333:5
+    |
+333 |     Nation_State,
+    |     ^^^^^^^^^^^^ help: convert the identifier to upper camel case: `NationState`
+
+warning: unused import: `Window`
+ --> src-tauri\src\orchestration.rs:5:20
+  |
+5 | use tauri::{State, Window};
+  |                    ^^^^^^
+
+warning: unused import: `Mutex`
+ --> src-tauri\src\orchestration.rs:6:27
+  |
+6 | use tokio::sync::{RwLock, Mutex};
+  |                           ^^^^^
+
+warning: unused imports: `error` and `warn`
+ --> src-tauri\src\orchestration.rs:7:21
+  |
+7 | use tracing::{info, warn, error};
+  |                     ^^^^  ^^^^^
+
+warning: unused import: `crate::security::PepState`
+  --> src-tauri\src\orchestration.rs:13:5
+   |
+13 | use crate::security::PepState;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `anyhow`
+ --> src-tauri\src\compliance.rs:1:22
+  |
+1 | use anyhow::{Result, anyhow};
+  |                      ^^^^^^
+
+warning: unused import: `Window`
+ --> src-tauri\src\compliance.rs:5:20
+  |
+5 | use tauri::{State, Window};
+  |                    ^^^^^^
+
+warning: unused import: `Mutex`
+ --> src-tauri\src\compliance.rs:6:27
+  |
+6 | use tokio::sync::{RwLock, Mutex};
+  |                           ^^^^^
+
+warning: unused imports: `error` and `warn`
+ --> src-tauri\src\compliance.rs:7:21
+  |
+7 | use tracing::{info, warn, error};
+  |                     ^^^^  ^^^^^
+
+warning: unused import: `DilithiumVariant`
+  --> src-tauri\src\compliance.rs:12:57
+   |
+12 | use ghost_pq::{DilithiumPublicKey, DilithiumPrivateKey, DilithiumVariant};
+   |                                                         ^^^^^^^^^^^^^^^^
+
+warning: unused import: `crate::security::PepState`
+  --> src-tauri\src\compliance.rs:13:5
+   |
+13 | use crate::security::PepState;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `Window`
+ --> src-tauri\src\reporting.rs:5:20
+  |
+5 | use tauri::{State, Window};
+  |                    ^^^^^^
+
+warning: unused import: `Mutex`
+ --> src-tauri\src\reporting.rs:6:27
+  |
+6 | use tokio::sync::{RwLock, Mutex};
+  |                           ^^^^^
+
+warning: unused imports: `error` and `warn`
+ --> src-tauri\src\reporting.rs:7:21
+  |
+7 | use tracing::{info, warn, error};
+  |                     ^^^^  ^^^^^
+
+warning: unused import: `DilithiumVariant`
+  --> src-tauri\src\reporting.rs:12:57
+   |
+12 | use ghost_pq::{DilithiumPublicKey, DilithiumPrivateKey, DilithiumVariant};
+   |                                                         ^^^^^^^^^^^^^^^^
+
+warning: unused import: `crate::security::PepState`
+  --> src-tauri\src\reporting.rs:13:5
+   |
+13 | use crate::security::PepState;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `anyhow`
+ --> src-tauri\src\multi_tenant.rs:1:22
+  |
+1 | use anyhow::{Result, anyhow};
+  |                      ^^^^^^
+
+warning: unused import: `Window`
+ --> src-tauri\src\multi_tenant.rs:5:20
+  |
+5 | use tauri::{State, Window};
+  |                    ^^^^^^
+
+warning: unused import: `Mutex`
+ --> src-tauri\src\multi_tenant.rs:6:27
+  |
+6 | use tokio::sync::{RwLock, Mutex};
+  |                           ^^^^^
+
+warning: unused imports: `error` and `warn`
+ --> src-tauri\src\multi_tenant.rs:7:21
+  |
+7 | use tracing::{info, warn, error};
+  |                     ^^^^  ^^^^^
+
+warning: unused import: `DilithiumVariant`
+  --> src-tauri\src\multi_tenant.rs:12:57
+   |
+12 | use ghost_pq::{DilithiumPublicKey, DilithiumPrivateKey, DilithiumVariant};
+   |                                                         ^^^^^^^^^^^^^^^^
+
+warning: unused import: `crate::security::PepState`
+  --> src-tauri\src\multi_tenant.rs:13:5
+   |
+13 | use crate::security::PepState;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `Window`
+ --> src-tauri\src\api_gateway.rs:5:20
+  |
+5 | use tauri::{State, Window};
+  |                    ^^^^^^
+
+warning: unused import: `Mutex`
+ --> src-tauri\src\api_gateway.rs:6:27
+  |
+6 | use tokio::sync::{RwLock, Mutex};
+  |                           ^^^^^
+
+warning: unused imports: `error` and `warn`
+ --> src-tauri\src\api_gateway.rs:7:21
+  |
+7 | use tracing::{info, warn, error};
+  |                     ^^^^  ^^^^^
+
+warning: unused import: `DilithiumVariant`
+  --> src-tauri\src\api_gateway.rs:12:57
+   |
+12 | use ghost_pq::{DilithiumPublicKey, DilithiumPrivateKey, DilithiumVariant};
+   |                                                         ^^^^^^^^^^^^^^^^
+
+warning: unused import: `crate::security::PepState`
+  --> src-tauri\src\api_gateway.rs:13:5
+   |
+13 | use crate::security::PepState;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `crate::security::PepState`
+ --> src-tauri\src\autonomous_soc.rs:9:5
+  |
+9 | use crate::security::PepState;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `DilithiumVariant`
+  --> src-tauri\src\autonomous_soc.rs:10:57
+   |
+10 | use ghost_pq::{DilithiumPrivateKey, DilithiumPublicKey, DilithiumVariant};
+   |                                                         ^^^^^^^^^^^^^^^^
+
+warning: unused import: `error`
+ --> src-tauri\src\shell_integration.rs:5:27
+  |
+5 | use tracing::{info, warn, error, debug};
+  |                           ^^^^^
+
+warning: unused import: `crate::console_manager::ConsoleManager`
+ --> src-tauri\src\shell_integration.rs:6:5
+  |
+6 | use crate::console_manager::ConsoleManager;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `crate::security::PepState`
+ --> src-tauri\src\security_automation.rs:9:5
+  |
+9 | use crate::security::PepState;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `DilithiumVariant`
+  --> src-tauri\src\security_automation.rs:10:57
+   |
+10 | use ghost_pq::{DilithiumPrivateKey, DilithiumPublicKey, DilithiumVariant};
+   |                                                         ^^^^^^^^^^^^^^^^
+
+warning: unused import: `crate::security::PepState`
+ --> src-tauri\src\quantum_safe_operations.rs:9:5
+  |
+9 | use crate::security::PepState;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: variant `SPHINCS_SHA256_128s` should have an upper camel case name
+  --> src-tauri\src\quantum_safe_operations.rs:70:5
+   |
+70 |     SPHINCS_SHA256_128s,
+   |     ^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `SphincsSha256_128s`
+
+warning: variant `SPHINCS_SHA256_192s` should have an upper camel case name
+  --> src-tauri\src\quantum_safe_operations.rs:71:5
+   |
+71 |     SPHINCS_SHA256_192s,
+   |     ^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `SphincsSha256_192s`
+
+warning: variant `SPHINCS_SHA256_256s` should have an upper camel case name
+  --> src-tauri\src\quantum_safe_operations.rs:72:5
+   |
+72 |     SPHINCS_SHA256_256s,
+   |     ^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `SphincsSha256_256s`
+
+warning: variant `HybridRSA_Dilithium` should have an upper camel case name
+  --> src-tauri\src\quantum_safe_operations.rs:73:5
+   |
+73 |     HybridRSA_Dilithium,
+   |     ^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `HybridRsaDilithium`
+
+warning: variant `HybridECDSA_Dilithium` should have an upper camel case name
+  --> src-tauri\src\quantum_safe_operations.rs:74:5
+   |
+74 |     HybridECDSA_Dilithium,
+   |     ^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `HybridEcdsaDilithium`
+
+warning: variant `HybridAES_Kyber` should have an upper camel case name
+  --> src-tauri\src\quantum_safe_operations.rs:75:5
+   |
+75 |     HybridAES_Kyber,
+   |     ^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `HybridAesKyber`
+
+warning: unused import: `crate::security::PepState`
+ --> src-tauri\src\global_threat_intelligence.rs:9:5
+  |
+9 | use crate::security::PepState;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `DilithiumVariant`
+  --> src-tauri\src\global_threat_intelligence.rs:10:57
+   |
+10 | use ghost_pq::{DilithiumPrivateKey, DilithiumPublicKey, DilithiumVariant};
+   |                                                         ^^^^^^^^^^^^^^^^
+
+warning: variant `Script_Kiddie` should have an upper camel case name
+   --> src-tauri\src\global_threat_intelligence.rs:234:5
+    |
+234 |     Script_Kiddie,
+    |     ^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `ScriptKiddie`
+
+warning: unused imports: `AlignResult` and `SignalValue`
+  --> src-tauri\src\compliance_dashboard.rs:11:22
+   |
+11 |     SignalCollector, SignalValue, TimeWindow, ControlEvaluator, PostureScorer, 
+   |                      ^^^^^^^^^^^
+12 |     PostureSnapshot, ControlEvaluation, ControlStatus, AlignResult
+   |                                                        ^^^^^^^^^^^
+
+warning: unused import: `AggregationPeriod`
+  --> src-tauri\src\compliance_dashboard.rs:16:85
+   |
+16 | use ghost_trends::{PostureStorage, TrendAnalyzer, PostureTrendPoint, TrendAnalysis, AggregationPeriod};
+   |                                                                                     ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `policy`
+  --> src-tauri\src\main.rs:70:53
+   |
+70 | use commands::{settings, theme, theme_vault, vault, policy};
+   |                                                     ^^^^^^
+
+warning: unused import: `PepState`
+  --> src-tauri\src\main.rs:71:16
+   |
+71 | use security::{PepState, initialize_pep};
+   |                ^^^^^^^^
+
+warning: unused import: `multi_tenant::MultiTenantManager`
+  --> src-tauri\src\main.rs:90:5
+   |
+90 | use multi_tenant::MultiTenantManager;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ghost_log::LoggerConfig`
+   --> src-tauri\src\main.rs:550:21
+    |
+550 |                 use ghost_log::LoggerConfig;
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused variable: `vault`
+   --> src-tauri\src\commands\theme_vault.rs:441:17
+    |
+441 |     if let Some(vault) = vault_guard.as_ref() {
+    |                 ^^^^^ help: if this is intentional, prefix it with an underscore: `_vault`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: unused variable: `style`
+   --> src-tauri\src\commands\ai.rs:138:5
+    |
+138 |     style: Option<String>,
+    |     ^^^^^ help: if this is intentional, prefix it with an underscore: `_style`
+
+warning: unused variable: `url`
+   --> src-tauri\src\commands\browse.rs:122:5
+    |
+122 |     url: String,
+    |     ^^^ help: if this is intentional, prefix it with an underscore: `_url`
+
+warning: unused variable: `filename`
+   --> src-tauri\src\commands\browse.rs:123:5
+    |
+123 |     filename: Option<String>,
+    |     ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_filename`
+
+warning: unused variable: `tab_id`
+   --> src-tauri\src\commands\browse.rs:124:5
+    |
+124 |     tab_id: Option<String>,
+    |     ^^^^^^ help: if this is intentional, prefix it with an underscore: `_tab_id`
+
+warning: unused variable: `engine`
+   --> src-tauri\src\commands\browse.rs:126:9
+    |
+126 |     let engine = browser_engine.lock().await;
+    |         ^^^^^^ help: if this is intentional, prefix it with an underscore: `_engine`
+
+warning: unused variable: `download_id`
+   --> src-tauri\src\commands\browse.rs:150:5
+    |
+150 |     download_id: String,
+    |     ^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_download_id`
+
+warning: unused variable: `download_id`
+   --> src-tauri\src\commands\browse.rs:162:5
+    |
+162 |     download_id: String,
+    |     ^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_download_id`
+
+warning: unused variable: `output_path`
+   --> src-tauri\src\commands\browse.rs:163:5
+    |
+163 |     output_path: String,
+    |     ^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_output_path`
+
+warning: unused variable: `config`
+   --> src-tauri\src\commands\browse.rs:186:5
+    |
+186 |     config: BrowserConfig,
+    |     ^^^^^^ help: if this is intentional, prefix it with an underscore: `_config`
+
+warning: unused variable: `mode`
+   --> src-tauri\src\commands\browse.rs:198:5
+    |
+198 |     mode: BrowserMode,
+    |     ^^^^ help: if this is intentional, prefix it with an underscore: `_mode`
+
+warning: unused variable: `script_content`
+   --> src-tauri\src\commands\shell.rs:122:5
+    |
+122 |     script_content: String,
+    |     ^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_script_content`
+
+warning: unused variable: `guard`
+  --> src-tauri\src\commands\pure_executor.rs:23:13
+   |
+23 |         let guard = state.executor.lock().unwrap();
+   |             ^^^^^ help: if this is intentional, prefix it with an underscore: `_guard`
+
+warning: unused variable: `state`
+  --> src-tauri\src\commands\pure_executor.rs:43:5
+   |
+43 |     state: State<'_, PureExecutorState>,
+   |     ^^^^^ help: if this is intentional, prefix it with an underscore: `_state`
+
+warning: unused variable: `state`
+  --> src-tauri\src\commands\pure_executor.rs:99:5
+   |
+99 |     state: State<'_, PureExecutorState>,
+   |     ^^^^^ help: if this is intentional, prefix it with an underscore: `_state`
+
+warning: unused variable: `state`
+   --> src-tauri\src\commands\pure_executor.rs:146:5
+    |
+146 |     state: State<'_, PureExecutorState>,
+    |     ^^^^^ help: if this is intentional, prefix it with an underscore: `_state`
+
+warning: unused variable: `window_controller`
+   --> src-tauri\src\console_manager.rs:138:13
+    |
+138 |         let window_controller = &self.window_controller;
+    |             ^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_window_controller`
+
+warning: unused variable: `wait_result`
+   --> src-tauri\src\pure_winapi_executor.rs:258:17
+    |
+258 |             let wait_result = WaitForSingleObject(process_info.hProcess, 30000); // 30 second timeout
+    |                 ^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_wait_result`
+
+warning: unused variable: `evaluator`
+   --> src-tauri\src\security\pep.rs:252:21
+    |
+252 |         if let Some(evaluator) = evaluator_guard.as_ref() {
+    |                     ^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_evaluator`
+
+warning: value assigned to `content` is never read
+   --> src-tauri\src\ai_assistant.rs:398:17
+    |
+398 |         let mut content = String::new();
+    |                 ^^^^^^^
+    |
+    = help: maybe it is overwritten before being read?
+    = note: `#[warn(unused_assignments)]` on by default
+
+warning: unused variable: `context`
+   --> src-tauri\src\ai_assistant.rs:519:9
+    |
+519 |         context: &AiContext,
+    |         ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_context`
+
+warning: unused variable: `user_input`
+   --> src-tauri\src\ai_assistant.rs:571:9
+    |
+571 |         user_input: &str,
+    |         ^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_user_input`
+
+warning: unused variable: `target`
+   --> src-tauri\src\tools.rs:498:24
+    |
+498 |     async fn scan_port(target: &str, port: u16, _options: &SurveyorOptions) -> PortScan {
+    |                        ^^^^^^ help: if this is intentional, prefix it with an underscore: `_target`
+
+warning: unused variable: `pep_state`
+   --> src-tauri\src\pcap_studio.rs:248:62
+    |
+248 |     pub async fn start_capture(&self, config: CaptureConfig, pep_state: &PepState) -> Result<String> {
+    |                                                              ^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_pep_state`
+
+warning: unused variable: `config`
+   --> src-tauri\src\pcap_studio.rs:380:42
+    |
+380 |     async fn generate_simulated_analysis(config: &CaptureConfig) -> PcapAnalysis {
+    |                                          ^^^^^^ help: if this is intentional, prefix it with an underscore: `_config`
+
+warning: unused variable: `private_key`
+   --> src-tauri\src\pcap_studio.rs:504:25
+    |
+504 |         if let Some((_, private_key)) = keys.get("default") {
+    |                         ^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_private_key`
+
+warning: variable does not need to be mutable
+   --> src-tauri\src\pcap_studio.rs:256:17
+    |
+256 |             let mut capture = PcapCapture {
+    |                 ----^^^^^^^
+    |                 |
+    |                 help: remove this `mut`
+    |
+    = note: `#[warn(unused_mut)]` on by default
+
+warning: variable does not need to be mutable
+   --> src-tauri\src\pcap_studio.rs:286:17
+    |
+286 |             let mut capture = PcapCapture {
+    |                 ----^^^^^^^
+    |                 |
+    |                 help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src-tauri\src\pcap_studio.rs:307:13
+    |
+307 |         let mut capture = PcapCapture {
+    |             ----^^^^^^^
+    |             |
+    |             help: remove this `mut`
+
+warning: unused variable: `data`
+   --> src-tauri\src\pcap_studio.rs:550:21
+    |
+550 |                 let data = serde_json::to_vec(results)?;
+    |                     ^^^^ help: if this is intentional, prefix it with an underscore: `_data`
+
+warning: unused variable: `metadata`
+   --> src-tauri\src\pcap_studio.rs:554:21
+    |
+554 |                 let metadata = format!("PCAP capture from {} on {}", 
+    |                     ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_metadata`
+
+warning: unused variable: `private_key`
+   --> src-tauri\src\pcap_studio.rs:638:25
+    |
+638 |         if let Some((_, private_key)) = keys.get("default") {
+    |                         ^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_private_key`
+
+warning: unused variable: `pep_state`
+   --> src-tauri\src\forensics_kit.rs:477:79
+    |
+477 |     pub async fn add_evidence(&self, case_id: String, evidence: EvidenceItem, pep_state: &PepState) -> Result<String> {
+    |                                                                               ^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_pep_state`
+
+warning: unused variable: `report`
+   --> src-tauri\src\forensics_kit.rs:548:13
+    |
+548 |         let report = ForensicsReport {
+    |             ^^^^^^ help: if this is intentional, prefix it with an underscore: `_report`
+
+warning: unused variable: `incident_id`
+   --> src-tauri\src\autonomous_soc.rs:580:61
+    |
+580 |     pub async fn execute_playbook(&self, playbook_id: &str, incident_id: &str) -> Result<String> {
+    |                                                             ^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_incident_id`
+
+warning: unused variable: `playbook`
+   --> src-tauri\src\remediation_playbooks.rs:155:13
+    |
+155 |         let playbook = self.playbooks
+    |             ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_playbook`
+
+warning: unused import: `PtySystem`
+ --> src-tauri\src\terminal.rs:2:45
+  |
+2 | use portable_pty::{CommandBuilder, PtySize, PtySystem, native_pty_system};
+  |                                             ^^^^^^^^^
+
+warning: value assigned to `windows` is never read
+   --> src-tauri\src\window_controller.rs:367:17
+    |
+367 |         let mut windows = Vec::new();
+    |                 ^^^^^^^
+    |
+    = help: maybe it is overwritten before being read?
+
+warning: value assigned to `suppressed` is never read
+   --> src-tauri\src\pure_winapi_executor.rs:395:17
+    |
+395 |         let mut suppressed = 0;
+    |                 ^^^^^^^^^^
+    |
+    = help: maybe it is overwritten before being read?
+
+warning: value assigned to `suppressed` is never read
+   --> src-tauri\src\pure_winapi_executor.rs:430:17
+    |
+430 |         let mut suppressed = 0;
+    |                 ^^^^^^^^^^
+    |
+    = help: maybe it is overwritten before being read?
+
+Some errors have detailed explanations: E0432, E0433.
+For more information about an error, try `rustc --explain E0432`.
+warning: `ghostshell` (bin "ghostshell") generated 156 warnings
+error: could not compile `ghostshell` (bin "ghostshell") due to 3 previous errors; 156 warnings emitted

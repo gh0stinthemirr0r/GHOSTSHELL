@@ -10,8 +10,8 @@ use nu_command::add_shell_command_context;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
-use tracing::{debug, error, info, warn};
-use uuid::Uuid;
+use tracing::{debug, error, info};
+// use uuid::Uuid; // Not used directly
 
 /// Result of executing a Nushell command
 #[derive(Debug, Clone, Serialize, Deserialize)]

@@ -10,7 +10,7 @@ use ghost_tls::{GhostTLSClient, GhostTLSConfig, PQPosture};
 use ghost_autofill::AutofillBridge;
 use ghost_download::DownloadManager;
 use ghost_vault::Vault;
-use ghost_policy::PolicyEvaluator;
+
 use ghost_log::AuditLogger;
 use ghost_pq::signatures::DilithiumSigner;
 
@@ -46,7 +46,7 @@ pub struct BrowserEngine {
     autofill_bridge: Arc<AutofillBridge>,
     download_manager: Arc<DownloadManager>,
     vault_manager: Arc<Mutex<Vault>>,
-    policy_engine: Arc<Mutex<PolicyEvaluator>>,
+    // Policy engine removed for single-user mode
     logger: Arc<AuditLogger>,
 }
 
@@ -55,7 +55,7 @@ impl BrowserEngine {
     pub async fn new(
         config: BrowserConfig,
         vault_manager: Arc<Mutex<Vault>>,
-        policy_engine: Arc<Mutex<PolicyEvaluator>>,
+        // Policy engine removed for single-user mode
         logger: Arc<AuditLogger>,
         signer: Arc<DilithiumSigner>,
     ) -> Result<Self> {
@@ -83,7 +83,7 @@ impl BrowserEngine {
             autofill_bridge,
             download_manager,
             vault_manager,
-            policy_engine,
+            // Policy engine removed for single-user mode
             logger,
         })
     }
@@ -111,8 +111,8 @@ impl BrowserEngine {
 
         // Check policy (simplified for now)
         {
-            let _policy_engine = self.policy_engine.lock().await;
-            // TODO: Implement proper policy checking with PolicyEvaluator
+            // Policy engine removed for single-user mode
+            // Policy checking removed for single-user mode
             // For now, allow all requests
         }
 
@@ -175,8 +175,8 @@ impl BrowserEngine {
         if let Some(tab) = tabs.get_mut(tab_id) {
             // Check policy (simplified for now)
             {
-                let _policy_engine = self.policy_engine.lock().await;
-                // TODO: Implement proper policy checking with PolicyEvaluator
+                // Policy engine removed for single-user mode
+                // Policy checking removed for single-user mode
                 // For now, allow all requests
             }
 

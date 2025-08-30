@@ -325,12 +325,12 @@ pub struct AttackStep {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum SkillLevel {
-    Script_Kiddie,
+    ScriptKiddie,
     Novice,
     Intermediate,
     Advanced,
     Expert,
-    Nation_State,
+    NationState,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

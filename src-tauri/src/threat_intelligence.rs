@@ -7,7 +7,7 @@ use anyhow::Result;
 use tokio::sync::Mutex;
 
 use ghost_pq::signatures::{DilithiumPublicKey, DilithiumPrivateKey, DilithiumVariant};
-use crate::security::PepState;
+// Policy enforcement removed for single-user mode
 
 // Core data structures for Threat Intelligence
 pub struct ThreatIntelligenceManager {
@@ -603,7 +603,7 @@ detection:
         Ok(self.iocs.read().unwrap().get(ioc_id).cloned())
     }
 
-    pub async fn add_ioc(&self, ioc: IndicatorOfCompromise, _pep_state: &PepState) -> Result<String> {
+    pub async fn add_ioc(&self, ioc: IndicatorOfCompromise, /* _pep_state: &PepState */) -> Result<String> {
         // Policy enforcement placeholder
         let policy_allowed = true;
         

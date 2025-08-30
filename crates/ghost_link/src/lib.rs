@@ -3,10 +3,10 @@ use std::collections::HashMap;
 use thiserror::Error;
 
 pub mod playbook_linker;
-pub mod policy_linker;
+// Policy linker module removed for single-user mode
 
 pub use playbook_linker::PlaybookLinker;
-pub use policy_linker::PolicyLinker;
+// PolicyLinker removed for single-user mode
 
 /// Link result type
 pub type LinkResult<T> = Result<T, LinkError>;
@@ -84,7 +84,7 @@ pub struct LinkContext {
 /// Main link engine
 pub struct LinkEngine {
     playbook_linker: PlaybookLinker,
-    policy_linker: PolicyLinker,
+    // Policy linker removed for single-user mode
     playbook_registry: HashMap<String, PlaybookReference>,
     policy_registry: HashMap<String, PolicyReference>,
 }
@@ -93,7 +93,7 @@ impl LinkEngine {
     pub fn new() -> Self {
         let mut engine = Self {
             playbook_linker: PlaybookLinker::new(),
-            policy_linker: PolicyLinker::new(),
+            // Policy linker removed
             playbook_registry: HashMap::new(),
             policy_registry: HashMap::new(),
         };
@@ -114,9 +114,7 @@ impl LinkEngine {
         }
 
         // Get policy links
-        if let Ok(policy_links) = self.policy_linker.get_relevant_policies(error_category, context) {
-            links.extend(policy_links);
-        }
+        // Policy linker removed for single-user mode
 
         // Sort by priority (highest first)
         links.sort_by(|a, b| b.priority.cmp(&a.priority));

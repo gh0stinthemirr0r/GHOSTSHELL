@@ -2,7 +2,7 @@ use std::sync::Arc;
 use tokio::sync::RwLock;
 use uuid::Uuid;
 use chrono::Utc;
-use ghost_policy::{PolicyEvaluator, ExecutionContext, Resource, Action};
+
 
 use crate::{
     VaultStorage, VaultEncryption, VaultMasterKey, SealedVmk, MfaManager, MfaChallenge, MfaSession,
@@ -16,7 +16,7 @@ pub struct Vault {
     storage: Arc<VaultStorage>,
     encryption: Arc<RwLock<VaultEncryption>>,
     mfa_manager: Arc<MfaManager>,
-    policy_evaluator: Option<Arc<PolicyEvaluator>>,
+
     current_session: Arc<RwLock<Option<MfaSession>>>,
 }
 
@@ -53,7 +53,7 @@ impl Vault {
             storage,
             encryption,
             mfa_manager,
-            policy_evaluator: None,
+
             current_session: Arc::new(RwLock::new(None)),
         })
     }
@@ -68,9 +68,7 @@ impl Vault {
     }
 
     /// Set policy evaluator for access control
-    pub fn set_policy_evaluator(&mut self, evaluator: PolicyEvaluator) {
-        self.policy_evaluator = Some(Arc::new(evaluator));
-    }
+
 
     /// Initialize vault with master password (first time setup)
     pub async fn initialize(&self, master_password: &str) -> Result<()> {
@@ -177,7 +175,7 @@ impl Vault {
     }
 
     /// Store a secret
-    pub async fn store_secret(&self, request: CreateSecretRequest, context: ExecutionContext) -> Result<Uuid> {
+    pub async fn store_secret(&self, request: CreateSecretRequest) -> Result<Uuid> {
         // Check if vault is unlocked
         if !self.is_unlocked().await {
             return Err(VaultError::VaultLocked);
@@ -186,28 +184,7 @@ impl Vault {
         // Validate MFA session
         self.require_valid_session().await?;
 
-        // Check policy if enabled
-        if let Some(evaluator) = &self.policy_evaluator {
-            let policy_context = context.to_policy_context();
-            let decision = evaluator.evaluate(
-                &context.subject,
-                &Resource::Vault,
-                &Action::Write,
-                &policy_context,
-            );
-
-            if decision.is_denied() {
-                return Err(VaultError::PolicyViolation(
-                    decision.reason().unwrap_or("Access denied").to_string()
-                ));
-            }
-
-            if decision.requires_justification() {
-                // In a real implementation, this would prompt for justification
-                tracing::warn!("Vault write requires justification: {}", 
-                    decision.reason().unwrap_or("No reason provided"));
-            }
-        }
+        // Policy evaluation removed for single-user mode
 
         // Validate secret data
         request.data.validate()?;
@@ -231,7 +208,7 @@ impl Vault {
     }
 
     /// Retrieve a secret
-    pub async fn get_secret(&self, id: &Uuid, context: ExecutionContext) -> Result<Option<SecretData>> {
+    pub async fn get_secret(&self, id: &Uuid) -> Result<Option<SecretData>> {
         // Check if vault is unlocked
         if !self.is_unlocked().await {
             return Err(VaultError::VaultLocked);
@@ -241,21 +218,7 @@ impl Vault {
         self.require_valid_session().await?;
 
         // Check policy if enabled
-        if let Some(evaluator) = &self.policy_evaluator {
-            let policy_context = context.to_policy_context();
-            let decision = evaluator.evaluate(
-                &context.subject,
-                &Resource::Vault,
-                &Action::Read,
-                &policy_context,
-            );
-
-            if decision.is_denied() {
-                return Err(VaultError::PolicyViolation(
-                    decision.reason().unwrap_or("Access denied").to_string()
-                ));
-            }
-        }
+        // Policy evaluation removed for single-user mode
 
         // Get secret from storage
         let secret = self.storage.get_secret(id).await?;
@@ -277,7 +240,7 @@ impl Vault {
     }
 
     /// List secrets (summaries only, no sensitive data)
-    pub async fn list_secrets(&self, filter: SecretFilter, context: ExecutionContext) -> Result<Vec<SecretSummary>> {
+    pub async fn list_secrets(&self, filter: SecretFilter) -> Result<Vec<SecretSummary>> {
         // Check if vault is unlocked
         if !self.is_unlocked().await {
             return Err(VaultError::VaultLocked);
@@ -287,21 +250,7 @@ impl Vault {
         self.require_valid_session().await?;
 
         // Check policy if enabled
-        if let Some(evaluator) = &self.policy_evaluator {
-            let policy_context = context.to_policy_context();
-            let decision = evaluator.evaluate(
-                &context.subject,
-                &Resource::Vault,
-                &Action::Query,
-                &policy_context,
-            );
-
-            if decision.is_denied() {
-                return Err(VaultError::PolicyViolation(
-                    decision.reason().unwrap_or("Access denied").to_string()
-                ));
-            }
-        }
+        // Policy evaluation removed for single-user mode
 
         let summaries = self.storage.list_secrets(&filter).await?;
         tracing::debug!("Listed {} secrets", summaries.len());
@@ -309,7 +258,7 @@ impl Vault {
     }
 
     /// Update a secret
-    pub async fn update_secret(&self, id: &Uuid, request: UpdateSecretRequest, context: ExecutionContext) -> Result<()> {
+    pub async fn update_secret(&self, id: &Uuid, request: UpdateSecretRequest) -> Result<()> {
         // Check if vault is unlocked
         if !self.is_unlocked().await {
             return Err(VaultError::VaultLocked);
@@ -319,21 +268,7 @@ impl Vault {
         self.require_valid_session().await?;
 
         // Check policy
-        if let Some(evaluator) = &self.policy_evaluator {
-            let policy_context = context.to_policy_context();
-            let decision = evaluator.evaluate(
-                &context.subject,
-                &Resource::Vault,
-                &Action::Update,
-                &policy_context,
-            );
-
-            if decision.is_denied() {
-                return Err(VaultError::PolicyViolation(
-                    decision.reason().unwrap_or("Access denied").to_string()
-                ));
-            }
-        }
+        // Policy evaluation removed for single-user mode
 
         // Get existing secret
         let mut secret = self.storage.get_secret(id).await?
@@ -357,7 +292,7 @@ impl Vault {
     }
 
     /// Delete a secret
-    pub async fn delete_secret(&self, id: &Uuid, context: ExecutionContext) -> Result<bool> {
+    pub async fn delete_secret(&self, id: &Uuid) -> Result<bool> {
         // Check if vault is unlocked
         if !self.is_unlocked().await {
             return Err(VaultError::VaultLocked);
@@ -366,26 +301,7 @@ impl Vault {
         // Validate MFA session
         self.require_valid_session().await?;
 
-        // Check policy
-        if let Some(evaluator) = &self.policy_evaluator {
-            let policy_context = context.to_policy_context();
-            let decision = evaluator.evaluate(
-                &context.subject,
-                &Resource::Vault,
-                &Action::Delete,
-                &policy_context,
-            );
-
-            if decision.is_denied() {
-                return Err(VaultError::PolicyViolation(
-                    decision.reason().unwrap_or("Access denied").to_string()
-                ));
-            }
-
-            if decision.requires_justification() {
-                tracing::warn!("Secret deletion requires justification for ID: {}", id);
-            }
-        }
+        // Policy evaluation removed for single-user mode
 
         let deleted = self.storage.delete_secret(id).await?;
         
@@ -397,30 +313,15 @@ impl Vault {
     }
 
     /// Export secrets (encrypted bundle)
-    pub async fn export_secrets(&self, filter: SecretFilter, context: ExecutionContext) -> Result<Vec<u8>> {
-        // Check policy for export
-        if let Some(evaluator) = &self.policy_evaluator {
-            let policy_context = context.to_policy_context();
-            let decision = evaluator.evaluate(
-                &context.subject,
-                &Resource::Vault,
-                &Action::Export,
-                &policy_context,
-            );
-
-            if decision.is_denied() {
-                return Err(VaultError::PolicyViolation(
-                    decision.reason().unwrap_or("Export denied").to_string()
-                ));
-            }
-        }
+    pub async fn export_secrets(&self, filter: SecretFilter) -> Result<Vec<u8>> {
+        // Policy evaluation removed for single-user mode
 
         // Get all matching secrets
-        let summaries = self.list_secrets(filter, context.clone()).await?;
+        let summaries = self.list_secrets(filter).await?;
         let mut secrets = Vec::new();
 
         for summary in summaries {
-            if let Some(secret_data) = self.get_secret(&summary.id, context.clone()).await? {
+            if let Some(secret_data) = self.get_secret(&summary.id).await? {
                 secrets.push((summary, secret_data));
             }
         }
@@ -441,23 +342,8 @@ impl Vault {
     }
 
     /// Import secrets from encrypted bundle
-    pub async fn import_secrets(&self, encrypted_bundle: &[u8], context: ExecutionContext) -> Result<u32> {
-        // Check policy for import
-        if let Some(evaluator) = &self.policy_evaluator {
-            let policy_context = context.to_policy_context();
-            let decision = evaluator.evaluate(
-                &context.subject,
-                &Resource::Vault,
-                &Action::Import,
-                &policy_context,
-            );
-
-            if decision.is_denied() {
-                return Err(VaultError::PolicyViolation(
-                    decision.reason().unwrap_or("Import denied").to_string()
-                ));
-            }
-        }
+    pub async fn import_secrets(&self, encrypted_bundle: &[u8]) -> Result<u32> {
+        // Policy evaluation removed for single-user mode
 
         // Decrypt bundle
         let encryption = self.encryption.read().await;
@@ -484,7 +370,7 @@ impl Vault {
             };
 
             // Store imported secret
-            self.store_secret(request, context.clone()).await?;
+            self.store_secret(request).await?;
             imported_count += 1;
         }
 
@@ -576,36 +462,5 @@ mod tests {
         assert!(!setup.backup_codes.is_empty());
     }
 
-    #[tokio::test]
-    async fn test_policy_enforcement() {
-        let mut vault = Vault::in_memory().await.unwrap();
-        
-        // Create restrictive policy
-        let policy = ghost_policy::Policy::restrictive_default();
-        let evaluator = ghost_policy::PolicyEvaluator::new(policy);
-        vault.set_policy_evaluator(evaluator);
-        
-        let context = ContextBuilder::new()
-            .user("test_user", "user")
-            .sensitivity(SensitivityLevel::Confidential)
-            .pq_available(false)
-            .build();
-
-        // This should fail due to policy restrictions
-        let request = CreateSecretRequest {
-            name: "Test Secret".to_string(),
-            description: None,
-            secret_type: SecretType::Password,
-            data: SecretData::Password {
-                password: "secret".to_string(),
-            },
-            tags: vec![],
-            expires_at: None,
-            metadata: Default::default(),
-        };
-
-        // Would fail because vault is locked, but demonstrates policy integration
-        let result = vault.store_secret(request, context).await;
-        assert!(result.is_err());
-    }
+    // Policy enforcement test removed for single-user mode
 }

@@ -2,16 +2,14 @@ use std::collections::HashMap;
 use std::sync::Arc;
 use std::time::Duration;
 use chrono::{DateTime, Utc};
-use tauri::{AppHandle, Manager, State, Window};
+use tauri::{State, Window};
 use tokio::sync::{Mutex, RwLock};
-use tokio::time::{interval, sleep};
+use tokio::time::sleep;
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
-use tracing::{info, warn, error, debug};
+use tracing::{info, debug};
 
-use ghost_policy::{Resource, Action};
-use crate::security::PepState;
-use ghost_policy::PolicyDecision;
+// Policy enforcement removed for single-user mode
 
 /// Clipboard entry with metadata
 #[derive(Debug, Clone, Serialize)]
@@ -138,30 +136,16 @@ impl ClipboardManager {
         &self,
         content: String,
         window: Option<&Window>,
-        pep: &PepState,
+        // Policy enforcement removed for single-user mode
     ) -> Result<ClipboardCopyResult, String> {
         // Ensure clipboard manager is initialized
         self.ensure_initialized().await;
         
-        // Evaluate policy for clipboard copy
-        let decision = pep.evaluate_access(
-            Resource::Clipboard,
-            Action::Copy,
-            None,
-            window,
-        ).await.map_err(|e| e.to_string())?;
-
-        if !decision.allowed {
-            return Err("Access denied: Policy prohibits clipboard copy".to_string());
-        }
-
-        // Detect content type and apply redaction if needed
+        // Policy evaluation removed for single-user mode
+        
+        // Detect content type
         let content_type = self.detect_content_type(&content).await;
-        let masked_preview = if decision.mask_preview {
-            self.create_masked_preview(&content, &content_type).await
-        } else {
-            content.clone()
-        };
+        let masked_preview = content.clone();
 
         // Create clipboard entry
         let entry = ClipboardEntry {
@@ -169,13 +153,11 @@ impl ClipboardManager {
             content: content.clone(),
             masked_preview,
             created_at: Utc::now(),
-            expires_at: decision.auto_clear_clipboard_ms.map(|ms| {
-                Utc::now() + chrono::Duration::milliseconds(ms as i64)
-            }),
+            expires_at: None, // Auto-clear removed for single-user mode
             source_window: window.map(|w| w.label().to_string()),
             content_type,
             size_bytes: content.len(),
-            policy_rule_id: decision.policy_rule_id.clone(),
+            policy_rule_id: None, // Policy removed for single-user mode
         };
 
         // Store entry
@@ -190,9 +172,7 @@ impl ClipboardManager {
         }
 
         // Set up auto-clear if specified
-        if let Some(clear_ms) = decision.auto_clear_clipboard_ms {
-            self.schedule_auto_clear(entry.id.clone(), clear_ms).await;
-        }
+        // Auto-clear removed for single-user mode
 
         // Actually copy to system clipboard
         self.copy_to_system_clipboard(&content).await?;
@@ -201,33 +181,23 @@ impl ClipboardManager {
             "Clipboard copy: {} bytes, type: {:?}, auto-clear: {:?}ms",
             content.len(),
             entry.content_type,
-            decision.auto_clear_clipboard_ms
+            None::<u64> // Auto-clear removed for single-user mode
         );
 
         Ok(ClipboardCopyResult {
             entry_id: entry.id,
             masked_preview: entry.masked_preview,
-            auto_clear_ms: decision.auto_clear_clipboard_ms,
-            warning_message: decision.warning_message,
+            auto_clear_ms: None, // Auto-clear removed for single-user mode
+            warning_message: None, // Policy warnings removed for single-user mode
         })
     }
 
     pub async fn paste_with_policy(
         &self,
         window: Option<&Window>,
-        pep: &PepState,
+        // Policy enforcement removed for single-user mode
     ) -> Result<ClipboardPasteResult, String> {
-        // Evaluate policy for clipboard paste
-        let decision = pep.evaluate_access(
-            Resource::Clipboard,
-            Action::Paste,
-            None,
-            window,
-        ).await.map_err(|e| e.to_string())?;
-
-        if !decision.allowed {
-            return Err("Access denied: Policy prohibits clipboard paste".to_string());
-        }
+        // Policy evaluation removed for single-user mode
 
         // Get content from system clipboard
         let content = self.get_from_system_clipboard().await?;
@@ -236,27 +206,13 @@ impl ClipboardManager {
             return Err("Clipboard is empty".to_string());
         }
 
-        // Check size limits
-        if let Some(size_limit_mb) = decision.size_limit_mb {
-            let size_limit_bytes = (size_limit_mb * 1024 * 1024) as usize;
-            if content.len() > size_limit_bytes {
-                return Err(format!(
-                    "Clipboard content too large: {} bytes exceeds limit of {} MB",
-                    content.len(),
-                    size_limit_mb
-                ));
-            }
-        }
+        // Size limits removed for single-user mode
 
         // Detect content type
         let content_type = self.detect_content_type(&content).await;
         
-        // Create masked preview if needed
-        let preview = if decision.mask_preview {
-            self.create_masked_preview(&content, &content_type).await
-        } else {
-            content.clone()
-        };
+        // Create preview (masking removed for single-user mode)
+        let preview = content.clone();
 
         info!(
             "Clipboard paste: {} bytes, type: {:?}",
@@ -270,9 +226,9 @@ impl ClipboardManager {
             preview,
             content_type,
             size_bytes: content_len,
-            requires_justification: decision.requires_justification,
-            justification_prompt: decision.justification_prompt,
-            warning_message: decision.warning_message,
+            requires_justification: false, // Policy removed for single-user mode
+            justification_prompt: None, // Policy removed for single-user mode
+            warning_message: None, // Policy removed for single-user mode
         })
     }
 
@@ -458,38 +414,31 @@ pub struct ClipboardPasteResult {
 pub async fn clipboard_copy(
     content: String,
     clipboard: State<'_, ClipboardManager>,
-    pep: State<'_, PepState>,
+    // Policy enforcement removed for single-user mode
     window: Window,
 ) -> Result<ClipboardCopyResult, String> {
-    clipboard.copy_with_policy(content, Some(&window), &pep).await
+    clipboard.copy_with_policy(content, Some(&window)).await
 }
 
 #[tauri::command]
 pub async fn clipboard_paste(
     clipboard: State<'_, ClipboardManager>,
-    pep: State<'_, PepState>,
+    // Policy enforcement removed for single-user mode
     window: Window,
 ) -> Result<ClipboardPasteResult, String> {
-    clipboard.paste_with_policy(Some(&window), &pep).await
+    clipboard.paste_with_policy(Some(&window)).await
 }
 
 #[tauri::command]
 pub async fn clipboard_get_history(
     clipboard: State<'_, ClipboardManager>,
-    pep: State<'_, PepState>,
+    // Policy enforcement removed for single-user mode
     window: Window,
 ) -> Result<Vec<ClipboardEntry>, String> {
     // Check if user can read clipboard history
-    let decision = pep.evaluate_access(
-        Resource::Clipboard,
-        Action::Read,
-        None,
-        Some(&window),
-    ).await.map_err(|e| e.to_string())?;
+    // Policy evaluation removed for single-user mode
 
-    if !decision.allowed {
-        return Err("Access denied: Policy prohibits reading clipboard history".to_string());
-    }
+    // Policy evaluation removed for single-user mode
 
     Ok(clipboard.get_history().await)
 }
@@ -498,20 +447,10 @@ pub async fn clipboard_get_history(
 pub async fn clipboard_clear_entry(
     entry_id: String,
     clipboard: State<'_, ClipboardManager>,
-    pep: State<'_, PepState>,
+    // Policy enforcement removed for single-user mode
     window: Window,
 ) -> Result<String, String> {
-    // Check if user can delete clipboard entries
-    let decision = pep.evaluate_access(
-        Resource::Clipboard,
-        Action::Delete,
-        None,
-        Some(&window),
-    ).await.map_err(|e| e.to_string())?;
-
-    if !decision.allowed {
-        return Err("Access denied: Policy prohibits clearing clipboard entries".to_string());
-    }
+    // Policy evaluation removed for single-user mode
 
     clipboard.clear_entry(&entry_id).await?;
     Ok("Entry cleared".to_string())
@@ -520,20 +459,13 @@ pub async fn clipboard_clear_entry(
 #[tauri::command]
 pub async fn clipboard_clear_all(
     clipboard: State<'_, ClipboardManager>,
-    pep: State<'_, PepState>,
+    // Policy enforcement removed for single-user mode
     window: Window,
 ) -> Result<String, String> {
     // Check if user can delete all clipboard entries
-    let decision = pep.evaluate_access(
-        Resource::Clipboard,
-        Action::Delete,
-        None,
-        Some(&window),
-    ).await.map_err(|e| e.to_string())?;
+    // Policy evaluation removed for single-user mode
 
-    if !decision.allowed {
-        return Err("Access denied: Policy prohibits clearing clipboard".to_string());
-    }
+    // Policy evaluation removed for single-user mode
 
     clipboard.clear_all().await?;
     Ok("All entries cleared".to_string())

@@ -3,10 +3,10 @@ use tauri::State;
 use tokio::sync::Mutex;
 use ghost_notify::{
     NotificationEngine, AlertMeta, AlertFilter, NotificationStats, AlertRule, 
-    AlertSource, AlertSeverity, NotificationResult, NotificationError
+    AlertSource, AlertSeverity
 };
-use ghost_alert::{UIAlert, AlertListConfig, NotificationCenterConfig};
-use serde_json::Value;
+use ghost_alert::{UIAlert, NotificationCenterConfig};
+// use serde_json::Value; // Not used
 
 /// Get all alerts with optional filtering
 #[tauri::command]

@@ -10,4 +10,4 @@ thiserror = { workspace = true }
 tracing = { workspace = true }
 
 # Internal dependencies
-ghost_policy = { path = "../ghost_policy" }
+

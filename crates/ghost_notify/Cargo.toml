@@ -15,5 +15,5 @@ regex = { workspace = true }
 hex = { workspace = true }
 reqwest = { workspace = true }
 ghost_log = { path = "../ghost_log" }
-ghost_policy = { path = "../ghost_policy" }
+
 ghost_pq = { path = "../ghost_pq" }

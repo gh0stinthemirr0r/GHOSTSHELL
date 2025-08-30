@@ -10,7 +10,7 @@ use chrono::{DateTime, Utc};
 
 // Import our post-quantum cryptography and security modules
 use ghost_pq::{DilithiumPublicKey, DilithiumPrivateKey, DilithiumVariant};
-use crate::security::PepState;
+// Policy enforcement removed for single-user mode
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ReportTemplate {

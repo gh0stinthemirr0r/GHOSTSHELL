@@ -1,0 +1,55 @@
+[package]
+name = "ghost_dash"
+version = "0.1.0"
+edition = "2021"
+description = "GhostDash - System dashboard with network analytics and queryable tables"
+
+[dependencies]
+# Workspace dependencies
+ghost_log = { path = "../ghost_log" }
+ghost_pq = { path = "../ghost_pq" }
+ghost_vault = { path = "../ghost_vault" }
+
+
+# Serialization
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+# Async runtime
+tokio = { workspace = true }
+
+# Time
+chrono = { workspace = true }
+
+# Error handling
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+
+# Utilities
+uuid = { version = "1.6", features = ["v4", "serde"] }
+hex = { workspace = true }
+sha2 = "0.10"
+
+# Logging
+tracing = { workspace = true }
+
+# System information
+sysinfo = "0.30"
+
+# Network utilities
+if-addrs = "0.10"
+
+# Windows-specific
+[target.'cfg(windows)'.dependencies]
+winapi = { version = "0.3", features = [
+    "winbase", "processthreadsapi", "handleapi", "synchapi", "winnt",
+    "iphlpapi", "winsock2", "ws2def", "ws2ipdef", "netioapi"
+] }
+wmi = "0.13"
+
+# Unix-specific
+[target.'cfg(unix)'.dependencies]
+nix = "0.27"
+
+[dev-dependencies]
+tempfile = "3.8"

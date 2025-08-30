@@ -3,7 +3,7 @@ use std::sync::Arc;
 use tokio::sync::Mutex;
 
 use ghost_browse::{BrowserEngine, BrowserConfig, TabMeta, BrowserMode, BrowserWindowConfig};
-use ghost_download::{DownloadMeta, ActiveDownload};
+use ghost_download::ActiveDownload;
 use ghost_tls::PQPosture;
 
 /// Open a new browser tab
@@ -268,8 +268,24 @@ pub async fn browse_navigate_window(
 pub async fn browse_open_external(
     url: String,
 ) -> Result<(), String> {
-    use crate::windows_api_browser::WindowsBrowserLauncher;
+    // Windows API browser launcher replaced by enterprise browser system
+    // use crate::windows_api_browser::WindowsBrowserLauncher;
     
-    let launcher = WindowsBrowserLauncher::new();
-    launcher.open_url(&url).await.map_err(|e| e.to_string())
+    // TODO: Implement with enterprise browser system
+    // For now, use standard system browser opening
+    #[cfg(windows)]
+    {
+        use std::process::Command;
+        Command::new("cmd")
+            .args(["/C", "start", &url])
+            .spawn()
+            .map_err(|e| e.to_string())?;
+    }
+    
+    #[cfg(not(windows))]
+    {
+        return Err("External browser opening not implemented for this platform".to_string());
+    }
+    
+    Ok(())
 }

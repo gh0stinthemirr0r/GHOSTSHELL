@@ -6,7 +6,7 @@ use uuid::Uuid;
 use anyhow::Result;
 
 use ghost_pq::signatures::{DilithiumPublicKey, DilithiumPrivateKey, DilithiumVariant};
-use crate::security::PepState;
+// Policy enforcement removed for single-user mode
 
 // Core data structures for Behavioral Analytics
 pub struct BehavioralAnalyticsManager {

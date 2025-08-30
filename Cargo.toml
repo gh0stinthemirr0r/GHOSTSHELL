@@ -2,9 +2,12 @@
 members = [
     "src-tauri",
     "crates/ghost_pq",
-    "crates/ghost_policy", 
+ 
     "crates/ghost_vault",
     "crates/ghost_log",
+    "crates/ghost_dash",
+    "crates/ghost_report",
+    "crates/ghost_script",
     "crates/ghost_align",
     "crates/ghost_controls",
     "crates/ghost_evidence",

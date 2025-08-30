@@ -6,7 +6,7 @@ use anyhow::Result;
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 use tauri::{Manager, Window};
-use tracing::{info, warn, error, debug};
+use tracing::{info, warn, debug};
 use std::fs;
 use tracing_appender::rolling::{RollingFileAppender, Rotation};
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt, EnvFilter};
@@ -24,18 +24,22 @@ use ghost_ai::{AIEngine, AIConfig};
 // Browser system imports
 use ghost_browse::{BrowserEngine, BrowserConfig};
 
+// ============================================================================
+// Enterprise Module Imports - Comprehensive Systems
+// ============================================================================
+
+// Core enterprise modules
+mod ghost_shell;           // Comprehensive shell management system
+mod ghost_ssh;             // Enterprise SSH management system
+
+// Legacy modules (to be consolidated)
 mod commands;
-mod console_manager;
-mod windows_api_shell;
-mod windows_api_network;
-mod windows_api_browser;
 mod security;
 mod window_effects;
 mod clipboard;
 mod quarantine;
 mod terminal;
 mod embedded_nushell;
-mod ssh;
 mod vpn;
 mod ai_assistant;
 mod file_manager;
@@ -53,24 +57,39 @@ mod reporting;
 mod multi_tenant;
 mod api_gateway;
 mod autonomous_soc;
-mod shell_integration;
-// mod pty_shell; // Removed - using simple_shell instead
-mod simple_shell;
-
 mod security_automation;
 mod quantum_safe_operations;
 mod global_threat_intelligence;
-
-
 mod compliance_dashboard;
 mod remediation_playbooks;
 
-use commands::{settings, theme, theme_vault, vault, policy};
-use security::{PepState, initialize_pep};
+// Deprecated modules (will be removed)
+// mod console_manager;        // Replaced by ghost_shell
+// mod window_controller;      // Replaced by ghost_shell
+// mod pure_winapi_executor;   // Replaced by ghost_shell
+// mod windows_api_shell;      // Replaced by ghost_shell
+// mod windows_api_network;    // To be consolidated
+// mod windows_api_browser;    // To be consolidated
+// mod shell_integration;      // Replaced by ghost_shell
+// mod simple_shell;           // Replaced by ghost_shell
+// mod ssh;                    // Replaced by ghost_ssh
+
+// ============================================================================
+// Enterprise System Imports
+// ============================================================================
+
+// Core enterprise systems
+use ghost_shell::{GhostShell, GhostShellState};
+use ghost_ssh::{GhostSSH, GhostSSHState};
+
+// Command modules
+use commands::{settings, theme, theme_vault, vault};
+
+// Security and core systems
+// Policy enforcement removed for single-user mode
 use clipboard::ClipboardManager;
 use quarantine::QuarantineManager;
 use terminal::TerminalManager;
-use ssh::SshManager;
 use vpn::VpnManager;
 use ai_assistant::AiAssistantManager;
 use file_manager::FileManager;
@@ -85,31 +104,65 @@ use predictive_security::PredictiveSecurityManager;
 use orchestration::OrchestrationManager;
 use compliance::ComplianceManager;
 use reporting::ReportingManager;
-use multi_tenant::MultiTenantManager;
+// use multi_tenant::MultiTenantManager; // Unused
 use api_gateway::ApiGatewayManager;
 use autonomous_soc::AutonomousSOCManager;
-
 use security_automation::SecurityAutomationManager;
 use quantum_safe_operations::QuantumSafeOperationsManager;
 use global_threat_intelligence::GlobalThreatIntelligenceManager;
 
 
 
-// Application state
-#[derive(Debug, Default)]
+// ============================================================================
+// Enterprise Application State
+// ============================================================================
+
+/// Main application state with enterprise systems
+#[derive(Debug)]
 pub struct AppState {
+    // Theme and UI state
     themes: Mutex<HashMap<String, theme::ThemeV1>>,
     current_theme: Mutex<Option<String>>,
     settings: Mutex<settings::AppSettings>,
+    
+    // Enterprise systems
+    ghost_shell: Arc<GhostShell>,
+    ghost_ssh: Arc<GhostSSH>,
+}
+
+impl Default for AppState {
+    fn default() -> Self {
+        Self::new().expect("Failed to create default AppState")
+    }
 }
 
 impl AppState {
     pub fn new() -> Result<Self> {
+        info!("Initializing enterprise application state");
+        
+        // Initialize enterprise systems
+        let ghost_shell = Arc::new(GhostShell::new());
+        let ghost_ssh = Arc::new(GhostSSH::new());
+        
+        info!("Enterprise systems initialized successfully");
+        
         Ok(Self {
             themes: Mutex::new(HashMap::new()),
             current_theme: Mutex::new(None),
             settings: Mutex::new(settings::AppSettings::default()),
+            ghost_shell,
+            ghost_ssh,
         })
+    }
+    
+    /// Get GhostShell system
+    pub fn ghost_shell(&self) -> &Arc<GhostShell> {
+        &self.ghost_shell
+    }
+    
+    /// Get GhostSSH system
+    pub fn ghost_ssh(&self) -> &Arc<GhostSSH> {
+        &self.ghost_ssh
     }
 }
 
@@ -169,9 +222,22 @@ fn main() -> Result<()> {
 
     let app_state = AppState::new()?;
     debug!("AppState created successfully");
+    
+    // Clone the enterprise systems before moving app_state
+    let ghost_shell_state = GhostShellState {
+        ghost_shell: Arc::clone(&app_state.ghost_shell()),
+    };
+    let ghost_ssh_state = GhostSSHState {
+        ghost_ssh: Arc::clone(&app_state.ghost_ssh()),
+    };
 
     tauri::Builder::default()
         .manage(app_state)
+        .manage(ghost_shell_state)
+        .manage(ghost_ssh_state)
+        .manage(commands::ghostdash::GhostDashState::new())
+        .manage(commands::ghostreport::GhostReportState::new())
+        .manage(commands::ghostscript::GhostScriptState::new())
         .setup(|app| {
             debug!("Entering Tauri setup function");
             let rt = tokio::runtime::Runtime::new().unwrap();
@@ -198,20 +264,40 @@ fn main() -> Result<()> {
             // Initialize Phase 2 security components
             let rt = tokio::runtime::Runtime::new().unwrap();
             
-            // Initialize Policy Enforcement Point
-            let pep_state = rt.block_on(async {
-                match initialize_pep().await {
-                    Ok(pep) => {
-                        info!("Policy Enforcement Point initialized");
-                        Ok(pep)
+            // Initialize GhostLog system
+            rt.block_on(async {
+                use ghost_log::{initialize_ghost_log, GhostLogConfig};
+                
+                let config = GhostLogConfig {
+                    log_directory: std::path::PathBuf::from("logs/ghostlog"),
+                    max_file_size: 50 * 1024 * 1024, // 50MB per file
+                    max_file_age_hours: 24, // Daily rotation
+                    max_events_per_second: 1000,
+                    enable_search_indexing: true,
+                    retention_days: 90,
+                };
+                
+                match initialize_ghost_log(config).await {
+                    Ok(()) => {
+                        info!("GhostLog system initialized successfully");
+                        
+                        // Log the application startup
+                        if let Some(ghost_log) = ghost_log::get_ghost_log() {
+                            let _ = ghost_log.log(
+                                "system",
+                                ghost_log::LogSeverity::Info,
+                                "app-startup",
+                                "GhostShell application started"
+                            );
+                        }
                     }
                     Err(e) => {
-                        warn!("Failed to initialize PEP: {}", e);
-                        Err(anyhow::anyhow!("PEP initialization failed: {}", e))
+                        warn!("Failed to initialize GhostLog: {}", e);
                     }
                 }
-            })?;
-            app.manage(pep_state);
+            });
+            
+            // Policy enforcement removed for single-user mode
 
             // Initialize Clipboard Manager
             let clipboard_manager = ClipboardManager::new();
@@ -250,20 +336,8 @@ fn main() -> Result<()> {
             app.manage(terminal_manager);
             info!("Terminal manager initialized");
 
-            // Initialize SSH Manager (Phase 3)
-            debug!("About to initialize SSH manager");
-            let ssh_manager = match SshManager::new() {
-                Ok(manager) => {
-                    debug!("SSH manager created successfully");
-                    Arc::new(Mutex::new(manager))
-                },
-                Err(e) => {
-                    error!("Failed to initialize SSH manager: {}", e);
-                    return Err(anyhow::anyhow!("Failed to initialize SSH manager: {}", e).into());
-                }
-            };
-            app.manage(ssh_manager);
-            info!("SSH manager initialized");
+            // SSH Manager replaced by GhostSSH enterprise system (managed in AppState)
+            info!("SSH management handled by GhostSSH enterprise system");
 
             // Initialize VPN Manager (Phase 3)
             let vpn_manager = Arc::new(Mutex::new(VpnManager::new()
@@ -428,7 +502,7 @@ fn main() -> Result<()> {
                 use ghost_pq::signatures::DilithiumVariant;
                 
                 debug!("Creating logger config for notifications");
-                let config = LoggerConfig::default();
+                let _config = LoggerConfig::default();
                 debug!("Creating in-memory audit logger");
                 let logger = Arc::new(AuditLogger::in_memory("notifications".to_string()).await
                     .map_err(|e| anyhow::anyhow!("Failed to create notification logger: {}", e))?);
@@ -495,7 +569,7 @@ fn main() -> Result<()> {
                 use ghost_log::LoggerConfig;
                 use ghost_pq::signatures::DilithiumVariant;
 
-                let config = LoggerConfig::default();
+                let _config = LoggerConfig::default();
                 let logger = Arc::new(AuditLogger::in_memory("ai".to_string()).await
                     .map_err(|e| anyhow::anyhow!("Failed to create AI logger: {}", e))?);
                 let signer = Arc::new(DilithiumSigner::new(DilithiumVariant::Dilithium3)
@@ -544,7 +618,7 @@ fn main() -> Result<()> {
 
                 // Use shared vault, policy, logger, and signer
                 use ghost_vault::Vault;
-                use ghost_policy::PolicyEvaluator;
+
                 use ghost_log::LoggerConfig;
                 use ghost_pq::signatures::DilithiumVariant;
 
@@ -580,7 +654,7 @@ fn main() -> Result<()> {
                 
                 let vault_manager = Arc::new(tokio::sync::Mutex::new(Vault::new(browser_vault_config).await
                     .map_err(|e| anyhow::anyhow!("Failed to create browser vault manager: {}", e))?));
-                let policy_engine = Arc::new(tokio::sync::Mutex::new(PolicyEvaluator::new(ghost_policy::Policy::new(1))));
+
                 let logger = Arc::new(AuditLogger::in_memory("browser".to_string()).await
                     .map_err(|e| anyhow::anyhow!("Failed to create browser logger: {}", e))?);
                 let signer = Arc::new(DilithiumSigner::new(DilithiumVariant::Dilithium3)
@@ -589,7 +663,6 @@ fn main() -> Result<()> {
                 let engine = BrowserEngine::new(
                     browser_config,
                     vault_manager,
-                    policy_engine,
                     logger,
                     signer,
                 ).await
@@ -616,14 +689,11 @@ fn main() -> Result<()> {
             debug!("Skipping navigation manager initialization for debugging");
             info!("Navigation Manager initialization skipped");
 
-            // Initialize Simple Shell Manager (only system we use now)
-            debug!("Initializing simple shell manager");
-            let simple_shell_manager = Arc::new(simple_shell::SimpleShellManager::new());
-            debug!("Simple shell manager initialized");
+            // Shell management handled by GhostShell enterprise system (managed in AppState)
+            info!("Shell management handled by GhostShell enterprise system");
 
-            app.manage(simple_shell_manager);
-            debug!("Shell integration initialized successfully");
-            info!("Shell Integration initialized");
+            // Window control and execution handled by GhostShell enterprise system
+            info!("Window control and execution integrated with GhostShell enterprise system");
 
             // Initialize Embedded Nushell Manager
             debug!("Initializing embedded Nushell manager");
@@ -656,6 +726,129 @@ fn main() -> Result<()> {
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
+            // ============================================================================
+            // Enterprise System Commands
+            // ============================================================================
+            
+            // GhostShell commands - comprehensive shell management
+            ghost_shell::ghost_shell_get_profiles,
+            ghost_shell::ghost_shell_create_session,
+            ghost_shell::ghost_shell_execute_command,
+            ghost_shell::ghost_shell_execute_direct,
+            ghost_shell::ghost_shell_get_session,
+            ghost_shell::ghost_shell_list_sessions,
+            ghost_shell::ghost_shell_close_session,
+            
+            // GhostSSH commands - enterprise SSH management
+            ghost_ssh::ghost_ssh_list_hosts,
+            ghost_ssh::ghost_ssh_add_host,
+            ghost_ssh::ghost_ssh_connect,
+            ghost_ssh::ghost_ssh_disconnect,
+            ghost_ssh::ghost_ssh_list_connections,
+            ghost_ssh::ghost_ssh_generate_key,
+            ghost_ssh::ghost_ssh_list_keys,
+            ghost_ssh::ghost_ssh_create_local_forward,
+            ghost_ssh::ghost_ssh_create_dynamic_forward,
+            ghost_ssh::ghost_ssh_list_forwards,
+
+            // GhostLog commands - system-wide logging
+            commands::ghostlog::ghostlog_initialize,
+            commands::ghostlog::ghostlog_log_entry,
+            commands::ghostlog::ghostlog_search,
+            commands::ghostlog::ghostlog_get_modules,
+            commands::ghostlog::ghostlog_get_stats,
+            commands::ghostlog::ghostlog_export,
+            commands::ghostlog::ghostlog_get_recent,
+            commands::ghostlog::ghostlog_verify_integrity,
+            commands::ghostlog::ghostlog_rotation_status,
+            commands::ghostlog::ghostlog_rotate_logs,
+            commands::ghostlog::ghostlog_cleanup_old_files,
+
+            // GhostDash commands - system dashboard and network analytics
+            commands::ghostdash::ghostdash_initialize,
+            commands::ghostdash::ghostdash_start_monitoring,
+            commands::ghostdash::ghostdash_get_state,
+            commands::ghostdash::ghostdash_get_system_info,
+            commands::ghostdash::ghostdash_get_network_snapshot,
+            commands::ghostdash::ghostdash_query_interfaces,
+            commands::ghostdash::ghostdash_query_dns_servers,
+            commands::ghostdash::ghostdash_query_routes,
+            commands::ghostdash::ghostdash_query_connections,
+            commands::ghostdash::ghostdash_get_table_stats,
+            commands::ghostdash::ghostdash_get_stats,
+            commands::ghostdash::ghostdash_export_data,
+            commands::ghostdash::ghostdash_get_analytics,
+            commands::ghostdash::ghostdash_create_snapshot,
+            commands::ghostdash::ghostdash_get_theme,
+            commands::ghostdash::ghostdash_update_config,
+            commands::ghostdash::ghostdash_refresh_data,
+            commands::ghostdash::ghostdash_get_export_formats,
+            commands::ghostdash::ghostdash_get_export_data_types,
+            commands::ghostdash::ghostdash_test_connectivity,
+
+            // GhostReport commands - automated reporting engine
+            commands::ghostreport::ghostreport_initialize,
+            commands::ghostreport::ghostreport_get_jobs,
+            commands::ghostreport::ghostreport_get_templates,
+            commands::ghostreport::ghostreport_get_stats,
+            commands::ghostreport::ghostreport_create_job,
+            commands::ghostreport::ghostreport_run_job,
+            commands::ghostreport::ghostreport_delete_job,
+            commands::ghostreport::ghostreport_generate_report,
+            commands::ghostreport::ghostreport_generate_preview,
+            commands::ghostreport::ghostreport_schedule_report,
+            commands::ghostreport::ghostreport_get_scheduled_reports,
+            commands::ghostreport::ghostreport_cancel_scheduled_report,
+            commands::ghostreport::ghostreport_get_stats,
+            commands::ghostreport::ghostreport_search_archive,
+            commands::ghostreport::ghostreport_get_archive_stats,
+            commands::ghostreport::ghostreport_verify_artifact,
+            
+            // GhostScript commands - script management and execution engine
+            commands::ghostscript::ghostscript_initialize,
+            commands::ghostscript::ghostscript_select_directory,
+            commands::ghostscript::ghostscript_get_repositories,
+            commands::ghostscript::ghostscript_add_repository,
+            commands::ghostscript::ghostscript_set_active_repository,
+            commands::ghostscript::ghostscript_remove_repository,
+            commands::ghostscript::ghostscript_store_script,
+            commands::ghostscript::ghostscript_update_script,
+            commands::ghostscript::ghostscript_get_script_metadata,
+            commands::ghostscript::ghostscript_get_script_content,
+            commands::ghostscript::ghostscript_search_scripts,
+            commands::ghostscript::ghostscript_delete_script,
+            commands::ghostscript::ghostscript_execute_script,
+            commands::ghostscript::ghostscript_cancel_execution,
+            commands::ghostscript::ghostscript_get_execution_record,
+            commands::ghostscript::ghostscript_search_executions,
+            commands::ghostscript::ghostscript_get_repository_stats,
+            commands::ghostscript::ghostscript_get_execution_stats,
+            commands::ghostscript::ghostscript_validate_script,
+            commands::ghostscript::ghostscript_format_script,
+            commands::ghostscript::ghostscript_schedule_script,
+            commands::ghostscript::ghostscript_get_scheduled_scripts,
+            commands::ghostscript::ghostscript_cancel_schedule,
+            commands::ghostscript::ghostscript_verify_execution,
+            commands::ghostreport::ghostreport_get_templates,
+            commands::ghostreport::ghostreport_get_templates_by_category,
+            commands::ghostreport::ghostreport_get_template,
+            commands::ghostreport::ghostreport_create_security_audit,
+            commands::ghostreport::ghostreport_create_network_activity,
+            commands::ghostreport::ghostreport_create_system_health,
+            commands::ghostreport::ghostreport_create_compliance_report,
+            commands::ghostreport::ghostreport_create_incident_response,
+            commands::ghostreport::ghostreport_create_daily_operations,
+            commands::ghostreport::ghostreport_build_custom_report,
+            commands::ghostreport::ghostreport_get_formats,
+            commands::ghostreport::ghostreport_get_schedule_frequencies,
+            commands::ghostreport::ghostreport_delete_artifact,
+            commands::ghostreport::ghostreport_cleanup_old_artifacts,
+            commands::ghostreport::ghostreport_export_archive_index,
+            
+            // ============================================================================
+            // Legacy Commands (to be migrated to enterprise systems)
+            // ============================================================================
+            
             // Theme commands
             theme::list_themes,
             theme::apply_theme,
@@ -690,14 +883,7 @@ fn main() -> Result<()> {
             commands::vault::vault_delete_secret,
             commands::vault::vault_get_stats,
             // Policy commands (Phase 2)
-            commands::policy::policy_load,
-            commands::policy::policy_get_stats,
-            commands::policy::policy_dry_run,
-            commands::policy::policy_set_user,
-            commands::policy::policy_update_context,
-            commands::policy::policy_test_access,
-            commands::policy::policy_get_defaults,
-            commands::policy::policy_validate,
+            // Policy commands removed for single-user mode
             // Clipboard commands (Phase 2)
             clipboard::clipboard_copy,
             clipboard::clipboard_paste,
@@ -714,13 +900,13 @@ fn main() -> Result<()> {
             terminal::resize_terminal,
             terminal::close_terminal_session,
             terminal::list_terminal_sessions,
-            // SSH commands (Phase 3)
-            ssh::ssh_get_crypto_config,
-            ssh::ssh_generate_pq_keypair,
-            ssh::ssh_connect,
-            ssh::ssh_execute_command,
-            ssh::ssh_disconnect,
-            ssh::ssh_list_connections,
+            // SSH commands (Phase 3) - REPLACED by GhostSSH enterprise system
+            // ssh::ssh_get_crypto_config,        // Use ghost_ssh commands instead
+            // ssh::ssh_generate_pq_keypair,      // Use ghost_ssh_generate_key instead
+            // ssh::ssh_connect,                  // Use ghost_ssh_connect instead
+            // ssh::ssh_execute_command,          // Use ghost_ssh with shell integration
+            // ssh::ssh_disconnect,               // Use ghost_ssh_disconnect instead
+            // ssh::ssh_list_connections,         // Use ghost_ssh_list_connections instead
             // VPN commands (Phase 3)
             vpn::vpn_generate_pq_keypair,
             vpn::vpn_create_config,
@@ -768,13 +954,7 @@ fn main() -> Result<()> {
             tools::tools_list_runs,
             tools::tools_export_results,
             tools::tools_generate_signing_keypair,
-            // PCAP Studio commands (Phase 5)
-            pcap_studio::pcap_get_interfaces,
-            pcap_studio::pcap_start_capture,
-            pcap_studio::pcap_stop_capture,
-            pcap_studio::pcap_get_capture_status,
-            pcap_studio::pcap_list_captures,
-            pcap_studio::pcap_export_results,
+            // PCAP Studio commands (Phase 5) - moved to commands::pcap
             // Exploit Engine commands (Phase 6)
             exploit_engine::exploit_scan_target,
             exploit_engine::exploit_get_targets,
@@ -1013,8 +1193,7 @@ fn main() -> Result<()> {
             commands::browse::browse_navigate_window,
             commands::browse::browse_open_external,
             
-            // VPN Status Commands
-            commands::vpn_status::check_vpn_status,
+            // VPN Status Commands - removed unused placeholder functionality
             
             // Navigation Commands (Phase 16) - TEMPORARILY DISABLED
             // commands::navigation::nav_get_layout,
@@ -1037,7 +1216,7 @@ fn main() -> Result<()> {
             // Shell Integration Commands (old PTY-based system removed - commands removed to prevent console windows)
             
             // Simple Shell Commands (PTY commands removed)
-            commands::shell::simple_execute_command,
+            // commands::shell::simple_execute_command, // Replaced by ghost_shell::ghost_shell_execute_direct
             // Embedded Nushell Commands
             commands::nushell::nushell_create_session,
             commands::nushell::nushell_execute_command,
@@ -1059,6 +1238,49 @@ fn main() -> Result<()> {
             commands::settings::apply_font_settings,
             
             quarantine::quarantine_approve_file,
+            
+            // Window control commands
+            // Window control commands replaced by enterprise system
+            // commands::window_control::window_set_strategy,
+            // commands::window_control::window_control_by_pattern,
+            // commands::window_control::window_get_all,
+            // commands::window_control::window_emergency_hide_consoles,
+            // commands::window_control::window_control_by_handle,
+            // Window control commands removed - functionality integrated with GhostShell
+            
+            // Pure WinAPI executor commands
+            // Pure executor commands temporarily disabled due to compilation errors
+            // commands::pure_executor::pure_test_powershell,
+            // commands::pure_executor::pure_test_cmd,
+            commands::pure_executor::pure_initialize,
+            commands::pure_executor::pure_shutdown,
+            // commands::pure_executor::pure_comprehensive_test,
+            // commands::pure_executor::pure_test_problematic_commands,
+            
+            // Layers commands - OSI layer testing
+            commands::layers::layers_run_test,
+            commands::layers::layers_get_report_path,
+            
+            // Surveyor commands - network quality testing
+            commands::surveyor::surveyor_analyze_endpoint,
+            commands::surveyor::surveyor_start_test,
+            commands::surveyor::surveyor_stop_test,
+            commands::surveyor::surveyor_get_metrics,
+            
+                    // PCAP Studio commands - network traffic analysis (BruteShark-inspired)
+        commands::pcap::pcap_get_interfaces,
+        commands::pcap::pcap_list_captures,
+        commands::pcap::pcap_start_capture,
+        commands::pcap::pcap_stop_capture,
+        commands::pcap::pcap_get_live_stats,
+        commands::pcap::pcap_get_captured_packets,
+        commands::pcap::pcap_analyze_capture,
+        commands::pcap::pcap_delete_capture,
+        commands::pcap::pcap_export_results,
+        commands::pcap::pcap_get_sessions,
+        commands::pcap::pcap_get_credentials,
+        commands::pcap::pcap_get_hashes,
+        commands::pcap::pcap_get_files,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

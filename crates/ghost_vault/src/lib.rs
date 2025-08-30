@@ -56,9 +56,6 @@ pub enum VaultError {
     #[error("Decryption failed: {0}")]
     DecryptionError(String),
     
-    #[error("Database error: {0}")]
-    DatabaseError(#[from] sqlx::Error),
-    
     #[error("Policy violation: {0}")]
     PolicyViolation(String),
     
@@ -68,8 +65,10 @@ pub enum VaultError {
     #[error("Cryptography error: {0}")]
     CryptoError(#[from] ghost_pq::CryptoError),
     
-    #[error("Policy error: {0}")]
-    PolicyError(#[from] ghost_policy::PolicyError),
+    // Policy error removed for single-user mode
+    
+    #[error("Database error: {0}")]
+    DatabaseError(#[from] sqlx::Error),
     
     #[error("I/O error: {0}")]
     IoError(#[from] std::io::Error),

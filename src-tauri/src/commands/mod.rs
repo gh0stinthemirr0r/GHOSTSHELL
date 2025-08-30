@@ -2,13 +2,22 @@ pub mod theme;
 pub mod theme_v2;
 pub mod theme_vault;
 pub mod vault;
-pub mod policy;
+// Policy module removed for single-user mode
 pub mod notify;
 pub mod ai;
 pub mod browse;
-pub mod vpn_status;
-pub mod navigation;
+// pub mod vpn_status; // Removed - was unused placeholder
+// pub mod navigation; // Removed - was unused dead code
 pub mod shell;
 pub mod nushell;
 pub mod fonts;
 pub mod settings;
+// pub mod window_control; // Removed - functionality moved to GhostShell
+pub mod pure_executor;
+pub mod ghostlog;
+pub mod ghostdash;
+pub mod ghostreport;
+pub mod ghostscript;
+pub mod layers;
+pub mod surveyor;
+pub mod pcap;

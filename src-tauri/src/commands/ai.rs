@@ -6,7 +6,7 @@ use std::collections::HashMap;
 use std::sync::Arc;
 use tauri::State;
 use tokio::sync::Mutex;
-use tracing::{debug, info, warn, error};
+use tracing::{debug, info, error};
 
 /// AI suggestion request
 #[derive(Debug, Deserialize)]
@@ -135,7 +135,7 @@ pub async fn ai_explain_control(
 #[tauri::command]
 pub async fn ai_generate_report(
     inputs: HashMap<String, String>,
-    style: Option<String>,
+    _style: Option<String>,
     ai_engine: State<'_, Arc<Mutex<AIEngine>>>,
 ) -> Result<AISuggestionResponse, String> {
     debug!("AI generate report request: {:?}", inputs);
