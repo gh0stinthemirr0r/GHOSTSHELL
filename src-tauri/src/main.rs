@@ -1268,6 +1268,8 @@ fn main() -> Result<()> {
             commands::surveyor::surveyor_get_metrics,
             
                     // PCAP Studio commands - network traffic analysis (BruteShark-inspired)
+        commands::pcap::pcap_check_dependencies, // NEW - Check for WinPcap/Npcap
+        commands::pcap::pcap_install_npcap,      // NEW - Install via winget
         commands::pcap::pcap_get_interfaces,
         commands::pcap::pcap_list_captures,
         commands::pcap::pcap_start_capture,
@@ -1278,9 +1280,9 @@ fn main() -> Result<()> {
         commands::pcap::pcap_delete_capture,
         commands::pcap::pcap_export_results,
         commands::pcap::pcap_get_sessions,
-        commands::pcap::pcap_get_credentials,
-        commands::pcap::pcap_get_hashes,
-        commands::pcap::pcap_get_files,
+        commands::pcap::pcap_get_credentials,    // NEW - BruteShark-inspired credential extraction
+        commands::pcap::pcap_get_hashes,         // NEW - BruteShark-inspired hash extraction
+        commands::pcap::pcap_get_files,          // NEW - BruteShark-inspired file carving
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

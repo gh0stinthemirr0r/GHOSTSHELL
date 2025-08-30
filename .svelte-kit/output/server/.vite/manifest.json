@@ -769,7 +769,7 @@
     "src": "src/lib/components/VpnClient.svelte"
   },
   "src/routes/+layout.css": {
-    "file": "_app/immutable/assets/_layout.1fc2aa5c.css",
+    "file": "_app/immutable/assets/_layout.fac0bde0.css",
     "src": "src/routes/+layout.css"
   },
   "src/routes/+layout.svelte": {
@@ -801,7 +801,7 @@
       "_app/immutable/assets/FiraMonoNerdFont-Medium.4f99b210.otf"
     ],
     "css": [
-      "_app/immutable/assets/_layout.1fc2aa5c.css"
+      "_app/immutable/assets/_layout.fac0bde0.css"
     ],
     "file": "entries/pages/_layout.svelte.js",
     "imports": [

@@ -331,10 +331,10 @@ async fn collect_metrics(session: TestSession) {
         last_latency = current_latency;
         
         // Simulate throughput (in reality, this would measure actual data transfer)
-        let throughput = 50.0 + (rand::random::<f64>() * 100.0);
+        let throughput = 50.0 + (simple_rand::random::<f64>() * 100.0);
         
         // Measure response time (similar to latency but for HTTP requests)
-        let response_time = current_latency * 0.8 + (rand::random::<f64>() * 10.0);
+        let response_time = current_latency * 0.8 + (simple_rand::random::<f64>() * 10.0);
         
         // Measure packet loss
         let packet_loss = measure_packet_loss(&session.endpoint).await.unwrap_or(0.0);
@@ -380,7 +380,7 @@ fn parse_duration(duration_str: &str) -> Result<Duration, String> {
 }
 
 // Simple random number generator for demonstration
-mod rand {
+mod simple_rand {
     use std::cell::Cell;
     
     thread_local! {

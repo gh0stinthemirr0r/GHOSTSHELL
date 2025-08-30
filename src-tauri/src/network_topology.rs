@@ -7,6 +7,7 @@ use tauri::{State, Window};
 use tokio::sync::{RwLock, Mutex};
 use tracing::info;
 use uuid::Uuid;
+use rand;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct NetworkNode {

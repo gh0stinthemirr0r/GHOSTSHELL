@@ -4,7 +4,7 @@ use nu_protocol::debugger::WithoutDebug;
 use nu_parser::parse;
 use nu_protocol::{
     engine::{EngineState, Stack, StateWorkingSet},
-    PipelineData, Value,
+    PipelineData, Value, Span,
 };
 use nu_command::add_shell_command_context;
 use serde::{Deserialize, Serialize};
@@ -49,20 +49,20 @@ impl NushellSession {
             .to_string();
             
         // Set PWD environment variable
-        stack.add_env_var("PWD".to_string(), Value::string(working_directory.clone(), nu_protocol::Span::unknown()));
+        stack.add_env_var("PWD".to_string(), Value::string(working_directory.clone(), Span::unknown()));
         
         // Set other essential environment variables
         if let Ok(home) = std::env::var("USERPROFILE").or_else(|_| std::env::var("HOME")) {
-            stack.add_env_var("HOME".to_string(), Value::string(home, nu_protocol::Span::unknown()));
+            stack.add_env_var("HOME".to_string(), Value::string(home, Span::unknown()));
         }
         
         if let Ok(user) = std::env::var("USERNAME").or_else(|_| std::env::var("USER")) {
-            stack.add_env_var("USER".to_string(), Value::string(user, nu_protocol::Span::unknown()));
+            stack.add_env_var("USER".to_string(), Value::string(user, Span::unknown()));
         }
         
         // Set PATH from system environment
         if let Ok(path) = std::env::var("PATH") {
-            stack.add_env_var("PATH".to_string(), Value::string(path, nu_protocol::Span::unknown()));
+            stack.add_env_var("PATH".to_string(), Value::string(path, Span::unknown()));
         }
 
         Ok(Self {
@@ -361,7 +361,7 @@ impl NushellSession {
                         .to_string();
                     
                     // Update PWD environment variable in Nushell stack
-                    self.stack.add_env_var("PWD".to_string(), Value::string(self.working_directory.clone(), nu_protocol::Span::unknown()));
+                    self.stack.add_env_var("PWD".to_string(), Value::string(self.working_directory.clone(), Span::unknown()));
                     
                     return Ok(Some(NushellResult {
                         output: format!("Changed directory to: {}\n", self.working_directory),
