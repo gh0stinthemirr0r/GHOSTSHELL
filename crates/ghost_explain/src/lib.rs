@@ -2,11 +2,9 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use thiserror::Error;
 
-pub mod compliance_explainer;
 pub mod control_explainer;
 pub mod signal_explainer;
 
-pub use compliance_explainer::ComplianceExplainer;
 pub use control_explainer::ControlExplainer;
 pub use signal_explainer::SignalExplainer;
 
@@ -75,7 +73,6 @@ pub struct ExplanationTemplate {
 
 /// Main explanation engine
 pub struct ExplanationEngine {
-    compliance_explainer: ComplianceExplainer,
     control_explainer: ControlExplainer,
     signal_explainer: SignalExplainer,
     templates: HashMap<String, ExplanationTemplate>,
@@ -84,7 +81,6 @@ pub struct ExplanationEngine {
 impl ExplanationEngine {
     pub fn new() -> Self {
         let mut engine = Self {
-            compliance_explainer: ComplianceExplainer::new(),
             control_explainer: ControlExplainer::new(),
             signal_explainer: SignalExplainer::new(),
             templates: HashMap::new(),
@@ -109,21 +105,7 @@ impl ExplanationEngine {
         self.signal_explainer.explain_signal(signal_id, context)
     }
 
-    pub fn explain_compliance_gap(
-        &self,
-        framework: &str,
-        context: &ExplanationContext,
-    ) -> ExplainResult<Explanation> {
-        self.compliance_explainer.explain_gap(framework, context)
-    }
 
-    pub fn generate_executive_summary(
-        &self,
-        controls: &[String],
-        context: &ExplanationContext,
-    ) -> ExplainResult<Explanation> {
-        self.compliance_explainer.generate_executive_summary(controls, context)
-    }
 
     fn load_templates(&mut self) {
         // Load predefined explanation templates

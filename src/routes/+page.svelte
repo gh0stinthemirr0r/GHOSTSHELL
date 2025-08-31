@@ -32,31 +32,19 @@
     'ghostvpn': () => import('$lib/components/VpnClient.svelte'),
     'ghostai': () => import('$lib/components/AiAssistant.svelte'),
     
+    // INFRA
+    'pan-engine': () => import('$lib/components/PanEngine.svelte'),
+    'pan-evaluator': () => import('$lib/components/PanEvaluator.svelte'),
+    'meraki-engine': () => import('$lib/components/MerakiEngine.svelte'),
+    'arista-engine': () => import('$lib/components/AristaEngine.svelte'),
+    'forti-engine': () => import('$lib/components/FortiEngine.svelte'),
+    
     // Tools
     'layers': () => import('$lib/components/LayersTool.svelte'),
     'surveyor': () => import('$lib/components/SurveyorTool.svelte'),
     'pcap-advanced': () => import('$lib/components/PcapStudioAdvanced.svelte'),
-    'exploit': () => import('$lib/components/ExploitEngine.svelte'),
-    'forensics': () => import('$lib/components/ForensicsKit.svelte'),
     
-    // Intelligence & Analytics
-    'threat-intel': () => import('$lib/components/ThreatIntelligence.svelte'),
-    'behavioral-analytics': () => import('$lib/components/BehavioralAnalytics.svelte'),
-    'predictive-security': () => import('$lib/components/PredictiveSecurity.svelte'),
-    
-    // Enterprise Integration & Orchestration
-    'orchestration': () => import('$lib/components/OrchestrationDashboard.svelte'),
-    'compliance': () => import('$lib/components/ComplianceManager.svelte'),
-    'compliance-dashboard': () => import('$lib/components/ComplianceDashboard.svelte'),
-    'reporting': () => import('$lib/components/ReportingStudio.svelte'),
-    'multi-tenant': () => import('$lib/components/MultiTenantManager.svelte'),
-    'integration-hub': () => import('$lib/components/IntegrationHub.svelte'),
-    
-    // Advanced Security Operations & Automation
-    'autonomous-soc': () => import('$lib/components/AutonomousSOC.svelte'),
-    'security-automation': () => import('$lib/components/SecurityAutomationPlatform.svelte'),
-    'quantum-safe-ops': () => import('$lib/components/QuantumSafeOperations.svelte'),
-    'global-threat-intel': () => import('$lib/components/GlobalThreatIntelligence.svelte'),
+
     
     // Analytics
     'ghostdash': () => import('$lib/components/GhostDash.svelte'),

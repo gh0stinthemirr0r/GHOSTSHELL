@@ -21,3 +21,7 @@ pub mod ghostscript;
 pub mod layers;
 pub mod surveyor;
 pub mod pcap;
+pub mod file_operations;
+pub mod pan_analysis;
+pub mod pan_api;
+pub mod error_handling;

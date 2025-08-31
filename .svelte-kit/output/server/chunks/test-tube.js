@@ -1,0 +1,1 @@
+import{c as o,v as c}from"./ssr.js";import{I as r}from"./_page.js";const s=o((e,n,d,t)=>{const a=[["path",{d:"M14.5 2v17.5c0 1.4-1.1 2.5-2.5 2.5c-1.4 0-2.5-1.1-2.5-2.5V2"}],["path",{d:"M8.5 2h7"}],["path",{d:"M14.5 16h-5"}]];return`${c(r,"Icon").$$render(e,Object.assign({},{name:"test-tube"},n,{iconNode:a}),{},{default:()=>`${t.default?t.default({}):""}`})}`}),i=s;export{i as T};

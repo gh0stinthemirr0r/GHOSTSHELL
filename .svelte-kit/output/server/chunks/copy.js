@@ -1,1 +1,0 @@
-import{c,v as r}from"./ssr.js";import{I as a}from"./_page.js";const s=c((e,o,d,t)=>{const n=[["rect",{width:"14",height:"14",x:"8",y:"8",rx:"2",ry:"2"}],["path",{d:"M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"}]];return`${r(a,"Icon").$$render(e,Object.assign({},{name:"copy"},o,{iconNode:n}),{},{default:()=>`${t.default?t.default({}):""}`})}`}),m=s;export{m as C};

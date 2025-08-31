@@ -19,24 +19,14 @@
       "src/lib/components/NetworkTopology.svelte",
       "src/lib/components/VpnClient.svelte",
       "src/lib/components/AiAssistant.svelte",
+      "src/lib/components/PanEngine.svelte",
+      "src/lib/components/PanEvaluator.svelte",
+      "src/lib/components/MerakiEngine.svelte",
+      "src/lib/components/AristaEngine.svelte",
+      "src/lib/components/FortiEngine.svelte",
       "src/lib/components/LayersTool.svelte",
       "src/lib/components/SurveyorTool.svelte",
       "src/lib/components/PcapStudioAdvanced.svelte",
-      "src/lib/components/ExploitEngine.svelte",
-      "src/lib/components/ForensicsKit.svelte",
-      "src/lib/components/ThreatIntelligence.svelte",
-      "src/lib/components/BehavioralAnalytics.svelte",
-      "src/lib/components/PredictiveSecurity.svelte",
-      "src/lib/components/OrchestrationDashboard.svelte",
-      "src/lib/components/ComplianceManager.svelte",
-      "src/lib/components/ComplianceDashboard.svelte",
-      "src/lib/components/ReportingStudio.svelte",
-      "src/lib/components/MultiTenantManager.svelte",
-      "src/lib/components/IntegrationHub.svelte",
-      "src/lib/components/AutonomousSOC.svelte",
-      "src/lib/components/SecurityAutomationPlatform.svelte",
-      "src/lib/components/QuantumSafeOperations.svelte",
-      "src/lib/components/GlobalThreatIntelligence.svelte",
       "src/lib/components/GhostDash.svelte",
       "src/lib/components/GhostLog.svelte",
       "src/lib/components/GhostReport.svelte",
@@ -50,29 +40,15 @@
       "_index.js"
     ]
   },
-  "_circle-x.js": {
-    "file": "chunks/circle-x.js",
-    "imports": [
-      "_ssr.js",
-      "__page.js"
-    ]
-  },
-  "_clock.js": {
-    "file": "chunks/clock.js",
-    "imports": [
-      "_ssr.js",
-      "__page.js"
-    ]
-  },
-  "_copy.js": {
-    "file": "chunks/copy.js",
-    "imports": [
-      "_ssr.js",
-      "__page.js"
-    ]
-  },
   "_download.js": {
     "file": "chunks/download.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js"
+    ]
+  },
+  "_eye.js": {
+    "file": "chunks/eye.js",
     "imports": [
       "_ssr.js",
       "__page.js"
@@ -90,22 +66,8 @@
       "_ssr.js"
     ]
   },
-  "_key.js": {
-    "file": "chunks/key.js",
-    "imports": [
-      "_ssr.js",
-      "__page.js"
-    ]
-  },
   "_lock.js": {
     "file": "chunks/lock.js",
-    "imports": [
-      "_ssr.js",
-      "__page.js"
-    ]
-  },
-  "_network.js": {
-    "file": "chunks/network.js",
     "imports": [
       "_ssr.js",
       "__page.js"
@@ -150,6 +112,13 @@
       "__page.js"
     ]
   },
+  "_square-pen.js": {
+    "file": "chunks/square-pen.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js"
+    ]
+  },
   "_ssr.js": {
     "file": "chunks/ssr.js"
   },
@@ -167,6 +136,13 @@
       "__page.js"
     ]
   },
+  "_test-tube.js": {
+    "file": "chunks/test-tube.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js"
+    ]
+  },
   "_trash-2.js": {
     "file": "chunks/trash-2.js",
     "imports": [
@@ -174,8 +150,8 @@
       "__page.js"
     ]
   },
-  "_users.js": {
-    "file": "chunks/users.js",
+  "_trending-up.js": {
+    "file": "chunks/trending-up.js",
     "imports": [
       "_ssr.js",
       "__page.js"
@@ -309,39 +285,33 @@
       "__page.js",
       "_plus.js",
       "_star.js",
-      "_network.js"
+      "_trending-up.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/AiAssistant.svelte"
   },
-  "src/lib/components/AutonomousSOC.svelte": {
-    "css": [
-      "_app/immutable/assets/cyberpunk-theme.96d6ac04.css"
-    ],
-    "file": "chunks/AutonomousSOC.js",
-    "imports": [
-      "_ssr.js",
-      "__page.js",
-      "_refresh-cw.js"
-    ],
-    "isDynamicEntry": true,
-    "src": "src/lib/components/AutonomousSOC.svelte"
+  "src/lib/components/AristaEngine.css": {
+    "file": "_app/immutable/assets/AristaEngine.d7cc5448.css",
+    "src": "src/lib/components/AristaEngine.css"
   },
-  "src/lib/components/BehavioralAnalytics.svelte": {
+  "src/lib/components/AristaEngine.svelte": {
     "css": [
+      "_app/immutable/assets/AristaEngine.d7cc5448.css",
       "_app/immutable/assets/cyberpunk-theme.96d6ac04.css"
     ],
-    "file": "chunks/BehavioralAnalytics.js",
+    "file": "chunks/AristaEngine.js",
     "imports": [
       "_ssr.js",
       "__page.js",
+      "_plus.js",
       "_refresh-cw.js",
-      "_users.js",
-      "_target.js",
-      "_clock.js"
+      "_eye.js",
+      "_test-tube.js",
+      "_square-pen.js",
+      "_trash-2.js"
     ],
     "isDynamicEntry": true,
-    "src": "src/lib/components/BehavioralAnalytics.svelte"
+    "src": "src/lib/components/AristaEngine.svelte"
   },
   "src/lib/components/BrowserWindow.css": {
     "file": "_app/immutable/assets/BrowserWindow.11626ede.css",
@@ -356,65 +326,12 @@
     "imports": [
       "_ssr.js",
       "__page.js",
+      "_eye.js",
       "_star.js",
       "_download.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/BrowserWindow.svelte"
-  },
-  "src/lib/components/ComplianceDashboard.css": {
-    "file": "_app/immutable/assets/ExploitEngine.796b4dcd.css",
-    "src": "src/lib/components/ComplianceDashboard.css"
-  },
-  "src/lib/components/ComplianceDashboard.svelte": {
-    "css": [
-      "_app/immutable/assets/ExploitEngine.796b4dcd.css",
-      "_app/immutable/assets/cyberpunk-theme.96d6ac04.css"
-    ],
-    "file": "chunks/ComplianceDashboard.js",
-    "imports": [
-      "_ssr.js",
-      "__page.js",
-      "_refresh-cw.js",
-      "_download.js"
-    ],
-    "isDynamicEntry": true,
-    "src": "src/lib/components/ComplianceDashboard.svelte"
-  },
-  "src/lib/components/ComplianceManager.svelte": {
-    "css": [
-      "_app/immutable/assets/cyberpunk-theme.96d6ac04.css"
-    ],
-    "file": "chunks/ComplianceManager.js",
-    "imports": [
-      "_ssr.js",
-      "__page.js",
-      "_refresh-cw.js",
-      "_target.js",
-      "_download.js",
-      "_clock.js"
-    ],
-    "isDynamicEntry": true,
-    "src": "src/lib/components/ComplianceManager.svelte"
-  },
-  "src/lib/components/ExploitEngine.css": {
-    "file": "_app/immutable/assets/ExploitEngine.796b4dcd.css",
-    "src": "src/lib/components/ComplianceDashboard.css"
-  },
-  "src/lib/components/ExploitEngine.svelte": {
-    "css": [
-      "_app/immutable/assets/ExploitEngine.796b4dcd.css"
-    ],
-    "file": "chunks/ExploitEngine.js",
-    "imports": [
-      "_ssr.js",
-      "_target.js",
-      "__page.js",
-      "_clock.js",
-      "_circle-x.js"
-    ],
-    "isDynamicEntry": true,
-    "src": "src/lib/components/ExploitEngine.svelte"
   },
   "src/lib/components/FileManager.svelte": {
     "file": "chunks/FileManager.js",
@@ -423,25 +340,35 @@
       "__page.js",
       "_star.js",
       "_plus.js",
-      "_copy.js",
       "_lock.js",
-      "_trash-2.js",
-      "_clock.js"
+      "_trash-2.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/FileManager.svelte"
   },
-  "src/lib/components/ForensicsKit.svelte": {
-    "file": "chunks/ForensicsKit.js",
+  "src/lib/components/FortiEngine.css": {
+    "file": "_app/immutable/assets/FortiEngine.b2f1684f.css",
+    "src": "src/lib/components/FortiEngine.css"
+  },
+  "src/lib/components/FortiEngine.svelte": {
+    "css": [
+      "_app/immutable/assets/FortiEngine.b2f1684f.css",
+      "_app/immutable/assets/cyberpunk-theme.96d6ac04.css"
+    ],
+    "file": "chunks/FortiEngine.js",
     "imports": [
       "_ssr.js",
       "__page.js",
       "_plus.js",
-      "_clock.js",
-      "_circle-x.js"
+      "_refresh-cw.js",
+      "_eye.js",
+      "_test-tube.js",
+      "_square-pen.js",
+      "_trash-2.js",
+      "_server.js"
     ],
     "isDynamicEntry": true,
-    "src": "src/lib/components/ForensicsKit.svelte"
+    "src": "src/lib/components/FortiEngine.svelte"
   },
   "src/lib/components/GhostDash.svelte": {
     "css": [
@@ -452,7 +379,7 @@
       "_ssr.js",
       "__page.js",
       "_refresh-cw.js",
-      "_network.js"
+      "_trending-up.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/GhostDash.svelte"
@@ -466,7 +393,7 @@
       "_ssr.js",
       "__page.js",
       "_refresh-cw.js",
-      "_circle-x.js",
+      "_eye.js",
       "_download.js"
     ],
     "isDynamicEntry": true,
@@ -481,7 +408,8 @@
       "_ssr.js",
       "__page.js",
       "_refresh-cw.js",
-      "_download.js"
+      "_download.js",
+      "_trending-up.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/GhostReport.svelte"
@@ -494,7 +422,8 @@
     "imports": [
       "_ssr.js",
       "__page.js",
-      "_refresh-cw.js"
+      "_refresh-cw.js",
+      "_trending-up.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/GhostScript.svelte"
@@ -511,34 +440,6 @@
     "isDynamicEntry": true,
     "src": "src/lib/components/GhostVault.svelte"
   },
-  "src/lib/components/GlobalThreatIntelligence.svelte": {
-    "css": [
-      "_app/immutable/assets/cyberpunk-theme.96d6ac04.css"
-    ],
-    "file": "chunks/GlobalThreatIntelligence.js",
-    "imports": [
-      "_ssr.js",
-      "__page.js",
-      "_refresh-cw.js",
-      "_target.js"
-    ],
-    "isDynamicEntry": true,
-    "src": "src/lib/components/GlobalThreatIntelligence.svelte"
-  },
-  "src/lib/components/IntegrationHub.svelte": {
-    "css": [
-      "_app/immutable/assets/cyberpunk-theme.96d6ac04.css"
-    ],
-    "file": "chunks/IntegrationHub.js",
-    "imports": [
-      "_ssr.js",
-      "__page.js",
-      "_refresh-cw.js",
-      "_key.js"
-    ],
-    "isDynamicEntry": true,
-    "src": "src/lib/components/IntegrationHub.svelte"
-  },
   "src/lib/components/LayersTool.css": {
     "file": "_app/immutable/assets/LayersTool.09aec0a5.css",
     "src": "src/lib/components/PcapStudioAdvanced.css"
@@ -550,32 +451,38 @@
     "file": "chunks/LayersTool.js",
     "imports": [
       "_ssr.js",
-      "__page.js",
-      "_network.js"
+      "__page.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/LayersTool.svelte"
   },
-  "src/lib/components/MultiTenantManager.svelte": {
+  "src/lib/components/MerakiEngine.css": {
+    "file": "_app/immutable/assets/MerakiEngine.7525922a.css",
+    "src": "src/lib/components/MerakiEngine.css"
+  },
+  "src/lib/components/MerakiEngine.svelte": {
     "css": [
+      "_app/immutable/assets/MerakiEngine.7525922a.css",
       "_app/immutable/assets/cyberpunk-theme.96d6ac04.css"
     ],
-    "file": "chunks/MultiTenantManager.js",
+    "file": "chunks/MerakiEngine.js",
     "imports": [
       "_ssr.js",
+      "_square-pen.js",
       "__page.js",
+      "_plus.js",
       "_refresh-cw.js",
-      "_users.js",
-      "_clock.js"
+      "_eye.js",
+      "_test-tube.js",
+      "_trash-2.js"
     ],
     "isDynamicEntry": true,
-    "src": "src/lib/components/MultiTenantManager.svelte"
+    "src": "src/lib/components/MerakiEngine.svelte"
   },
   "src/lib/components/NetworkTopology.svelte": {
     "file": "chunks/NetworkTopology.js",
     "imports": [
       "_ssr.js",
-      "_network.js",
       "__page.js",
       "_shield-x.js",
       "_play.js",
@@ -584,11 +491,16 @@
     "isDynamicEntry": true,
     "src": "src/lib/components/NetworkTopology.svelte"
   },
-  "src/lib/components/OrchestrationDashboard.svelte": {
+  "src/lib/components/PanEngine.css": {
+    "file": "_app/immutable/assets/PanEngine.463cb7b0.css",
+    "src": "src/lib/components/PanEngine.css"
+  },
+  "src/lib/components/PanEngine.svelte": {
     "css": [
+      "_app/immutable/assets/PanEngine.463cb7b0.css",
       "_app/immutable/assets/cyberpunk-theme.96d6ac04.css"
     ],
-    "file": "chunks/OrchestrationDashboard.js",
+    "file": "chunks/PanEngine.js",
     "imports": [
       "_ssr.js",
       "__page.js",
@@ -596,7 +508,29 @@
       "_play.js"
     ],
     "isDynamicEntry": true,
-    "src": "src/lib/components/OrchestrationDashboard.svelte"
+    "src": "src/lib/components/PanEngine.svelte"
+  },
+  "src/lib/components/PanEvaluator.css": {
+    "file": "_app/immutable/assets/PanEvaluator.33d3a882.css",
+    "src": "src/lib/components/PanEvaluator.css"
+  },
+  "src/lib/components/PanEvaluator.svelte": {
+    "css": [
+      "_app/immutable/assets/PanEvaluator.33d3a882.css",
+      "_app/immutable/assets/cyberpunk-theme.96d6ac04.css"
+    ],
+    "file": "chunks/PanEvaluator.js",
+    "imports": [
+      "_ssr.js",
+      "_test-tube.js",
+      "__page.js",
+      "_refresh-cw.js",
+      "_eye.js",
+      "_trending-up.js",
+      "_download.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/lib/components/PanEvaluator.svelte"
   },
   "src/lib/components/PcapStudioAdvanced.css": {
     "file": "_app/immutable/assets/LayersTool.09aec0a5.css",
@@ -617,65 +551,6 @@
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/PcapStudioAdvanced.svelte"
-  },
-  "src/lib/components/PredictiveSecurity.svelte": {
-    "css": [
-      "_app/immutable/assets/cyberpunk-theme.96d6ac04.css"
-    ],
-    "file": "chunks/PredictiveSecurity.js",
-    "imports": [
-      "_ssr.js",
-      "__page.js",
-      "_refresh-cw.js",
-      "_network.js"
-    ],
-    "isDynamicEntry": true,
-    "src": "src/lib/components/PredictiveSecurity.svelte"
-  },
-  "src/lib/components/QuantumSafeOperations.svelte": {
-    "css": [
-      "_app/immutable/assets/cyberpunk-theme.96d6ac04.css"
-    ],
-    "file": "chunks/QuantumSafeOperations.js",
-    "imports": [
-      "_ssr.js",
-      "__page.js",
-      "_refresh-cw.js",
-      "_lock.js",
-      "_key.js",
-      "_network.js"
-    ],
-    "isDynamicEntry": true,
-    "src": "src/lib/components/QuantumSafeOperations.svelte"
-  },
-  "src/lib/components/ReportingStudio.svelte": {
-    "css": [
-      "_app/immutable/assets/cyberpunk-theme.96d6ac04.css"
-    ],
-    "file": "chunks/ReportingStudio.js",
-    "imports": [
-      "_ssr.js",
-      "__page.js",
-      "_refresh-cw.js",
-      "_download.js"
-    ],
-    "isDynamicEntry": true,
-    "src": "src/lib/components/ReportingStudio.svelte"
-  },
-  "src/lib/components/SecurityAutomationPlatform.svelte": {
-    "css": [
-      "_app/immutable/assets/cyberpunk-theme.96d6ac04.css"
-    ],
-    "file": "chunks/SecurityAutomationPlatform.js",
-    "imports": [
-      "_ssr.js",
-      "__page.js",
-      "_refresh-cw.js",
-      "_play.js",
-      "_copy.js"
-    ],
-    "isDynamicEntry": true,
-    "src": "src/lib/components/SecurityAutomationPlatform.svelte"
   },
   "src/lib/components/Settings.svelte": {
     "file": "chunks/Settings.js",
@@ -698,7 +573,6 @@
     "imports": [
       "_ssr.js",
       "_server.js",
-      "_key.js",
       "__page.js",
       "_plus.js"
     ],
@@ -740,21 +614,6 @@
     "isDynamicEntry": true,
     "src": "src/lib/components/TerminalSimple.svelte"
   },
-  "src/lib/components/ThreatIntelligence.svelte": {
-    "css": [
-      "_app/immutable/assets/cyberpunk-theme.96d6ac04.css"
-    ],
-    "file": "chunks/ThreatIntelligence.js",
-    "imports": [
-      "_ssr.js",
-      "_users.js",
-      "__page.js",
-      "_refresh-cw.js",
-      "_target.js"
-    ],
-    "isDynamicEntry": true,
-    "src": "src/lib/components/ThreatIntelligence.svelte"
-  },
   "src/lib/components/VpnClient.svelte": {
     "file": "chunks/VpnClient.js",
     "imports": [
@@ -769,7 +628,7 @@
     "src": "src/lib/components/VpnClient.svelte"
   },
   "src/routes/+layout.css": {
-    "file": "_app/immutable/assets/_layout.fac0bde0.css",
+    "file": "_app/immutable/assets/_layout.c901f35a.css",
     "src": "src/routes/+layout.css"
   },
   "src/routes/+layout.svelte": {
@@ -801,7 +660,7 @@
       "_app/immutable/assets/FiraMonoNerdFont-Medium.4f99b210.otf"
     ],
     "css": [
-      "_app/immutable/assets/_layout.fac0bde0.css"
+      "_app/immutable/assets/_layout.c901f35a.css"
     ],
     "file": "entries/pages/_layout.svelte.js",
     "imports": [

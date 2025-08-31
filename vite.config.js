@@ -5,10 +5,13 @@ export default defineConfig({
   plugins: [sveltekit()],
   clearScreen: false,
   server: {
-    port: 5173,
+    port: 5174,
     strictPort: true,
     watch: {
       ignored: ["**/src-tauri/**"],
+    },
+    fs: {
+      allow: ['..']
     },
   },
   envPrefix: ['VITE_', 'TAURI_'],

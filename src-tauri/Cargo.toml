@@ -48,6 +48,7 @@ ghost_prefs = { path = "../crates/ghost_prefs" }
 
 # Tauri and Serialization
 serde_json = "1.0"
+csv = "1.3"
 serde = { version = "1.0", features = ["derive"] }
 tauri = { version = "1.0", features = [
   "fs-copy-file", 
@@ -69,7 +70,8 @@ tauri = { version = "1.0", features = [
   "window-unminimize",
   "window-create",
   "window-set-title",
-  "http-all"
+  "http-all",
+  "dialog"
 ] }
 
 # Core Dependencies
@@ -93,9 +95,26 @@ etherparse = "0.15"
 lazy_static = "1.4"
 base64 = "0.21"    # For HTTP Basic Auth decoding
 hex = "0.4"        # For file signature parsing and existing usage
-md5 = "0.7"        # For file hash calculation
+md5 = "0.7"        # For file hash calculation and analysis fingerprints
 socket2 = "0.5"    # Advanced socket operations
+html-escape = "0.2" # For HTML export functionality
 libc = "0.2"       # System calls
+
+# Enhanced CSV processing dependencies
+encoding_rs = "0.8"      # Character encoding detection and conversion
+encoding_rs_io = "0.1"   # Encoding-aware I/O
+thiserror = "1.0"        # Better error handling
+chardet = "0.2"          # Character encoding detection
+# csv-sniffer = "0.2"      # CSV format detection (removed due to API issues)
+strsim = "0.10"          # String similarity for header matching
+indicatif = "0.17"       # Progress bars and indicators
+walkdir = "2"            # Directory traversal
+tempfile = "3"           # Temporary file handling
+
+# Export functionality dependencies
+rust_xlsxwriter = "0.64" # Excel XLSX export
+printpdf = "0.6"         # PDF generation
+reqwest = { version = "0.11", features = ["json", "rustls-tls"] } # HTTP client for PAN-OS API
 
 # Real packet capture - optional dependencies (only if Npcap available)
 pcap = { version = "1.3", optional = true }       # Main pcap library

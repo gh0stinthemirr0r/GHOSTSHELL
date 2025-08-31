@@ -8,13 +8,11 @@ pub mod ssh_errors;
 pub mod terminal_errors;
 pub mod vault_errors;
 pub mod vpn_errors;
-pub mod compliance_errors;
 
 pub use ssh_errors::SSHErrorMapper;
 pub use terminal_errors::TerminalErrorMapper;
 pub use vault_errors::VaultErrorMapper;
 pub use vpn_errors::VPNErrorMapper;
-pub use compliance_errors::ComplianceErrorMapper;
 
 /// Error mapping result
 pub type ErrorMapResult<T> = Result<T, ErrorMapError>;
@@ -92,7 +90,6 @@ pub struct UniversalErrorMapper {
     terminal_mapper: TerminalErrorMapper,
     vault_mapper: VaultErrorMapper,
     vpn_mapper: VPNErrorMapper,
-    compliance_mapper: ComplianceErrorMapper,
 }
 
 impl UniversalErrorMapper {
@@ -102,7 +99,6 @@ impl UniversalErrorMapper {
             terminal_mapper: TerminalErrorMapper::new(),
             vault_mapper: VaultErrorMapper::new(),
             vpn_mapper: VPNErrorMapper::new(),
-            compliance_mapper: ComplianceErrorMapper::new(),
         }
     }
 
@@ -130,11 +126,7 @@ impl UniversalErrorMapper {
                         return Ok(result);
                     }
                 }
-                "compliance" => {
-                    if let Ok(result) = self.compliance_mapper.classify_error(error_text) {
-                        return Ok(result);
-                    }
-                }
+
                 _ => {}
             }
         }
@@ -145,7 +137,6 @@ impl UniversalErrorMapper {
             &self.terminal_mapper,
             &self.vault_mapper,
             &self.vpn_mapper,
-            &self.compliance_mapper,
         ];
 
         for mapper in mappers {

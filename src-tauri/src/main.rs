@@ -46,22 +46,14 @@ mod file_manager;
 mod network_topology;
 mod tools;
 mod pcap_studio;
-mod exploit_engine;
-mod forensics_kit;
-mod threat_intelligence;
 mod behavioral_analytics;
 mod predictive_security;
-mod orchestration;
-mod compliance;
 mod reporting;
-mod multi_tenant;
-mod api_gateway;
-mod autonomous_soc;
-mod security_automation;
-mod quantum_safe_operations;
-mod global_threat_intelligence;
-mod compliance_dashboard;
 mod remediation_playbooks;
+mod analysis;
+
+// Import error handling module
+use commands::error_handling;
 
 // Deprecated modules (will be removed)
 // mod console_manager;        // Replaced by ghost_shell
@@ -96,20 +88,9 @@ use file_manager::FileManager;
 use network_topology::NetworkTopologyManager;
 use tools::ToolsManager;
 use pcap_studio::PcapStudioManager;
-use exploit_engine::ExploitEngineManager;
-use forensics_kit::ForensicsKitManager;
-use threat_intelligence::ThreatIntelligenceManager;
 use behavioral_analytics::BehavioralAnalyticsManager;
 use predictive_security::PredictiveSecurityManager;
-use orchestration::OrchestrationManager;
-use compliance::ComplianceManager;
 use reporting::ReportingManager;
-// use multi_tenant::MultiTenantManager; // Unused
-use api_gateway::ApiGatewayManager;
-use autonomous_soc::AutonomousSOCManager;
-use security_automation::SecurityAutomationManager;
-use quantum_safe_operations::QuantumSafeOperationsManager;
-use global_threat_intelligence::GlobalThreatIntelligenceManager;
 
 
 
@@ -378,32 +359,7 @@ fn main() -> Result<()> {
             app.manage(pcap_manager);
             info!("PCAP studio manager initialized");
 
-            // Initialize Exploit Engine Manager (Phase 6)
-            let exploit_manager = Arc::new(tokio::sync::Mutex::new(ExploitEngineManager::new()
-                .map_err(|e| anyhow::anyhow!("Failed to initialize exploit engine manager: {}", e))?));
-            
-            // Exploit engine initialization will happen on first use
-            
-            app.manage(exploit_manager);
-            info!("Exploit engine manager initialized");
 
-            // Initialize Forensics Kit Manager (Phase 6)
-            let forensics_manager = Arc::new(tokio::sync::Mutex::new(ForensicsKitManager::new()
-                .map_err(|e| anyhow::anyhow!("Failed to initialize forensics kit manager: {}", e))?));
-            
-            // Forensics manager initialization will happen on first use
-            
-            app.manage(forensics_manager);
-            info!("Forensics kit manager initialized");
-
-            // Initialize Threat Intelligence Manager (Phase 7)
-            let threat_intel_manager = Arc::new(tokio::sync::Mutex::new(ThreatIntelligenceManager::new()
-                .map_err(|e| anyhow::anyhow!("Failed to initialize threat intelligence manager: {}", e))?));
-            
-            // Threat intelligence manager initialization will happen on first use
-            
-            app.manage(threat_intel_manager);
-            info!("Threat intelligence manager initialized");
 
             // Initialize Behavioral Analytics Manager (Phase 7)
             let behavioral_analytics_manager = Arc::new(tokio::sync::Mutex::new(BehavioralAnalyticsManager::new()
@@ -423,19 +379,7 @@ fn main() -> Result<()> {
             app.manage(predictive_security_manager);
             info!("Predictive security manager initialized");
 
-            // Initialize Orchestration Manager (Phase 8)
-            let orchestration_manager = Arc::new(tokio::sync::Mutex::new(OrchestrationManager::new()
-                .map_err(|e| anyhow::anyhow!("Failed to initialize orchestration manager: {}", e))?));
-            // Orchestration manager initialization will happen on first use
-            app.manage(orchestration_manager);
-            info!("Orchestration manager initialized");
 
-            // Initialize Compliance Manager (Phase 8)
-            let compliance_manager = Arc::new(tokio::sync::Mutex::new(ComplianceManager::new()
-                .map_err(|e| anyhow::anyhow!("Failed to initialize compliance manager: {}", e))?));
-            // Compliance manager initialization will happen on first use
-            app.manage(compliance_manager);
-            info!("Compliance manager initialized");
 
             // Initialize Reporting Manager (Phase 8)
             let reporting_manager = Arc::new(tokio::sync::Mutex::new(ReportingManager::new()
@@ -444,51 +388,19 @@ fn main() -> Result<()> {
             app.manage(reporting_manager);
             info!("Reporting manager initialized");
 
-            // Initialize API Gateway Manager (Phase 8)
-            let api_gateway_manager = Arc::new(tokio::sync::Mutex::new(ApiGatewayManager::new()
-                .map_err(|e| anyhow::anyhow!("Failed to initialize API gateway manager: {}", e))?));
-            // API gateway manager initialization will happen on first use
-            app.manage(api_gateway_manager);
-            info!("API gateway manager initialized");
-
-            // Initialize Autonomous SOC Manager (Phase 9)
-            let autonomous_soc_manager = Arc::new(tokio::sync::Mutex::new(AutonomousSOCManager::new()
-                .map_err(|e| anyhow::anyhow!("Failed to initialize autonomous SOC manager: {}", e))?));
-            // Autonomous SOC manager initialization will happen on first use
-            app.manage(autonomous_soc_manager);
-            info!("Autonomous SOC manager initialized");
-
-
-
-            // Initialize Security Automation Manager (Phase 9)
-            let security_automation_manager = Arc::new(tokio::sync::Mutex::new(SecurityAutomationManager::new()
-                .map_err(|e| anyhow::anyhow!("Failed to initialize security automation manager: {}", e))?));
-            // Security Automation manager initialization will happen on first use
-            app.manage(security_automation_manager);
-            info!("Security Automation manager initialized");
-
-            // Initialize Quantum-Safe Operations Manager (Phase 9)
-            let quantum_safe_manager = Arc::new(tokio::sync::Mutex::new(QuantumSafeOperationsManager::new()
-                .map_err(|e| anyhow::anyhow!("Failed to initialize quantum-safe operations manager: {}", e))?));
-            // Quantum-Safe Operations manager initialization will happen on first use
-            app.manage(quantum_safe_manager);
-            info!("Quantum-Safe Operations manager initialized");
-
-            // Initialize Global Threat Intelligence Manager (Phase 9)
-            let global_threat_intel_manager = Arc::new(tokio::sync::Mutex::new(GlobalThreatIntelligenceManager::new()
-                .map_err(|e| anyhow::anyhow!("Failed to initialize global threat intelligence manager: {}", e))?));
-            // Global Threat Intelligence manager initialization will happen on first use
-            app.manage(global_threat_intel_manager);
-            info!("Global Threat Intelligence manager initialized");
 
 
 
 
 
-            // Initialize Compliance Dashboard Manager (Phase 12)
-            let compliance_dashboard_manager = Arc::new(tokio::sync::Mutex::new(compliance_dashboard::ComplianceDashboardManager::new()));
-            app.manage(compliance_dashboard_manager);
-            info!("Compliance Dashboard manager initialized");
+
+
+
+
+
+
+
+
 
             // Initialize Remediation Playbooks Manager (Phase 12)
             let remediation_playbooks_manager = Arc::new(tokio::sync::Mutex::new(remediation_playbooks::RemediationPlaybookManager::new()));
@@ -835,7 +747,7 @@ fn main() -> Result<()> {
             commands::ghostreport::ghostreport_create_security_audit,
             commands::ghostreport::ghostreport_create_network_activity,
             commands::ghostreport::ghostreport_create_system_health,
-            commands::ghostreport::ghostreport_create_compliance_report,
+
             commands::ghostreport::ghostreport_create_incident_response,
             commands::ghostreport::ghostreport_create_daily_operations,
             commands::ghostreport::ghostreport_build_custom_report,
@@ -955,34 +867,9 @@ fn main() -> Result<()> {
             tools::tools_export_results,
             tools::tools_generate_signing_keypair,
             // PCAP Studio commands (Phase 5) - moved to commands::pcap
-            // Exploit Engine commands (Phase 6)
-            exploit_engine::exploit_scan_target,
-            exploit_engine::exploit_get_targets,
-            exploit_engine::exploit_get_exploits,
-            exploit_engine::exploit_generate_payload,
-            exploit_engine::exploit_execute,
-            exploit_engine::exploit_get_sessions,
-            exploit_engine::exploit_get_session_status,
-            exploit_engine::exploit_get_stats,
-            // Forensics Kit commands (Phase 6)
-            forensics_kit::forensics_get_cases,
-            forensics_kit::forensics_get_case,
-            forensics_kit::forensics_create_case,
-            forensics_kit::forensics_start_analysis,
-            forensics_kit::forensics_get_analysis_status,
-            forensics_kit::forensics_generate_report,
-            forensics_kit::forensics_get_stats,
-            // Threat Intelligence commands (Phase 7)
-            threat_intelligence::threat_intel_get_iocs,
-            threat_intelligence::threat_intel_get_ioc,
-            threat_intelligence::threat_intel_get_feeds,
-            threat_intelligence::threat_intel_get_campaigns,
-            threat_intelligence::threat_intel_get_campaign,
-            threat_intelligence::threat_intel_get_actors,
-            threat_intelligence::threat_intel_get_actor,
-            threat_intelligence::threat_intel_get_hunting_rules,
-            threat_intelligence::threat_intel_execute_hunt,
-            threat_intelligence::threat_intel_get_stats,
+
+
+
             // Behavioral Analytics commands (Phase 7)
             behavioral_analytics::behavioral_analytics_get_profiles,
             behavioral_analytics::behavioral_analytics_get_profile,
@@ -1007,30 +894,8 @@ fn main() -> Result<()> {
             predictive_security::predictive_security_generate_prediction,
             predictive_security::predictive_security_analyze_attack_path,
             predictive_security::predictive_security_get_stats,
-            // Orchestration commands (Phase 8)
-            orchestration::orchestration_get_playbooks,
-            orchestration::orchestration_get_playbook,
-            orchestration::orchestration_create_playbook,
-            orchestration::orchestration_execute_playbook,
-            orchestration::orchestration_get_cases,
-            orchestration::orchestration_get_case,
-            orchestration::orchestration_create_case,
-            orchestration::orchestration_update_case_status,
-            orchestration::orchestration_get_executions,
-            orchestration::orchestration_get_execution,
-            orchestration::orchestration_get_integrations,
-            orchestration::orchestration_get_stats,
-            // Compliance commands (Phase 8) - compliance_get_frameworks removed due to conflict with Phase 12
-            compliance::compliance_get_framework,
-            compliance::compliance_create_framework,
-            compliance::compliance_get_requirements,
-            compliance::compliance_get_controls,
-            compliance::compliance_get_findings,
-            compliance::compliance_get_assessments,
-            compliance::compliance_create_assessment,
-            compliance::compliance_generate_report,
-            compliance::compliance_get_audit_trail,
-            compliance::compliance_get_stats,
+
+
             // Reporting commands (Phase 8)
             reporting::reporting_get_templates,
             reporting::reporting_get_template,
@@ -1044,77 +909,14 @@ fn main() -> Result<()> {
             reporting::reporting_get_data_sources,
             reporting::reporting_create_data_source,
             reporting::reporting_get_stats,
-            // API Gateway commands (Phase 8)
-            api_gateway::api_gateway_get_endpoints,
-            api_gateway::api_gateway_get_endpoint,
-            api_gateway::api_gateway_create_endpoint,
-            api_gateway::api_gateway_get_routes,
-            api_gateway::api_gateway_get_route,
-            api_gateway::api_gateway_create_route,
-            api_gateway::api_gateway_get_webhooks,
-            api_gateway::api_gateway_get_webhook,
-            api_gateway::api_gateway_create_webhook,
-            api_gateway::api_gateway_trigger_webhook,
-            api_gateway::api_gateway_get_api_keys,
-            api_gateway::api_gateway_get_api_key,
-            api_gateway::api_gateway_create_api_key,
-            api_gateway::api_gateway_revoke_api_key,
-            api_gateway::api_gateway_get_integrations,
-            api_gateway::api_gateway_get_integration,
-            api_gateway::api_gateway_create_integration,
-            api_gateway::api_gateway_sync_integration,
-            api_gateway::api_gateway_get_stats,
-            // Autonomous SOC commands (Phase 9)
-            autonomous_soc::autonomous_soc_get_stats,
-            autonomous_soc::autonomous_soc_get_incidents,
-            autonomous_soc::autonomous_soc_get_incident,
-            autonomous_soc::autonomous_soc_get_agents,
-            autonomous_soc::autonomous_soc_get_playbooks,
-            autonomous_soc::autonomous_soc_get_hunting_sessions,
-            autonomous_soc::autonomous_soc_execute_playbook,
-            autonomous_soc::autonomous_soc_start_threat_hunt,
-
-            // Security Automation commands (Phase 9)
-            security_automation::security_automation_get_stats,
-            security_automation::security_automation_get_workflows,
-            security_automation::security_automation_get_workflow,
-            security_automation::security_automation_create_workflow,
-            security_automation::security_automation_get_executions,
-            security_automation::security_automation_get_execution,
-            security_automation::security_automation_execute_workflow,
-            security_automation::security_automation_get_templates,
-            security_automation::security_automation_create_from_template,
-            // Quantum-Safe Operations commands (Phase 9)
-            quantum_safe_operations::quantum_safe_get_stats,
-            quantum_safe_operations::quantum_safe_get_pq_keys,
-            quantum_safe_operations::quantum_safe_get_incidents,
-            quantum_safe_operations::quantum_safe_get_protocols,
-            quantum_safe_operations::quantum_safe_get_assessments,
-            quantum_safe_operations::quantum_safe_generate_keypair,
-            quantum_safe_operations::quantum_safe_rotate_key,
-            quantum_safe_operations::quantum_safe_create_incident,
-            // Global Threat Intelligence commands (Phase 9)
-            global_threat_intelligence::global_threat_intel_get_stats,
-            global_threat_intelligence::global_threat_intel_get_feeds,
-            global_threat_intelligence::global_threat_intel_get_indicators,
-            global_threat_intelligence::global_threat_intel_get_campaigns,
-            global_threat_intelligence::global_threat_intel_get_nodes,
-            global_threat_intelligence::global_threat_intel_get_hunting_queries,
-            global_threat_intelligence::global_threat_intel_execute_hunt,
-            global_threat_intelligence::global_threat_intel_share_indicator,
 
 
 
-            // Compliance Dashboard commands (Phase 12)
-            compliance_dashboard::compliance_dashboard_get_frameworks,
-            compliance_dashboard::compliance_get_framework_controls,
-            compliance_dashboard::compliance_create_snapshot,
-            compliance_dashboard::compliance_get_current_snapshot,
-            compliance_dashboard::compliance_get_control_details,
-            compliance_dashboard::compliance_get_dashboard_stats,
-            compliance_dashboard::compliance_create_evidence_bundle,
-            compliance_dashboard::compliance_list_evidence_bundles,
-            compliance_dashboard::compliance_get_posture_trends,
+
+
+
+
+
             // Remediation Playbooks commands (Phase 12)
             remediation_playbooks::playbooks_list_all,
             remediation_playbooks::playbooks_get_for_control,
@@ -1268,21 +1070,33 @@ fn main() -> Result<()> {
             commands::surveyor::surveyor_get_metrics,
             
                     // PCAP Studio commands - network traffic analysis (BruteShark-inspired)
-        commands::pcap::pcap_check_dependencies, // NEW - Check for WinPcap/Npcap
-        commands::pcap::pcap_install_npcap,      // NEW - Install via winget
+        commands::pcap::pcap_check_dependencies,
         commands::pcap::pcap_get_interfaces,
         commands::pcap::pcap_list_captures,
         commands::pcap::pcap_start_capture,
         commands::pcap::pcap_stop_capture,
         commands::pcap::pcap_get_live_stats,
-        commands::pcap::pcap_get_captured_packets,
-        commands::pcap::pcap_analyze_capture,
-        commands::pcap::pcap_delete_capture,
-        commands::pcap::pcap_export_results,
-        commands::pcap::pcap_get_sessions,
-        commands::pcap::pcap_get_credentials,    // NEW - BruteShark-inspired credential extraction
-        commands::pcap::pcap_get_hashes,         // NEW - BruteShark-inspired hash extraction
-        commands::pcap::pcap_get_files,          // NEW - BruteShark-inspired file carving
+        
+        // File Operations commands - CSV parsing and file dialogs
+        commands::file_operations::open_file_dialog,
+        commands::file_operations::open_directory_dialog,
+        commands::file_operations::parse_csv_headers,
+        commands::file_operations::parse_csv_file,
+        
+        // Enhanced CSV Operations - robust parsing with validation
+        commands::file_operations::validate_csv_structure,
+        commands::file_operations::parse_csv_file_robust,
+        commands::file_operations::get_file_info,
+        commands::file_operations::export_analysis_results,
+        
+        // PAN-OS Policy Analysis commands - based on original evaluator.py logic
+        commands::pan_analysis::analyze_policy_rules,
+        
+        // PAN-OS API Integration commands - real firewall data access
+        commands::pan_api::test_pan_api_connection,
+        commands::pan_api::fetch_pan_security_rules,
+        commands::pan_api::fetch_pan_rule_usage,
+        commands::pan_api::pan_api_call,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

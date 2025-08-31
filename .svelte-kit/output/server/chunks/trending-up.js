@@ -1,0 +1,1 @@
+import{c as r,v as i}from"./ssr.js";import{I as a}from"./_page.js";const p=r((e,o,s,n)=>{const t=[["polyline",{points:"22 7 13.5 15.5 8.5 10.5 2 17"}],["polyline",{points:"16 7 22 7 22 13"}]];return`${i(a,"Icon").$$render(e,Object.assign({},{name:"trending-up"},o,{iconNode:t}),{},{default:()=>`${n.default?n.default({}):""}`})}`}),l=p;export{l as T};

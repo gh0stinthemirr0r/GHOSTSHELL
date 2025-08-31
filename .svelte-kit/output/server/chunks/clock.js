@@ -1,1 +1,0 @@
-import{c as t,v as r}from"./ssr.js";import{I as a}from"./_page.js";const s=t((c,n,i,o)=>{const e=[["circle",{cx:"12",cy:"12",r:"10"}],["polyline",{points:"12 6 12 12 16 14"}]];return`${r(a,"Icon").$$render(c,Object.assign({},{name:"clock"},n,{iconNode:e}),{},{default:()=>`${o.default?o.default({}):""}`})}`}),m=s;export{m as C};

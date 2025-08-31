@@ -4,6 +4,7 @@
   import { themeStore } from '$lib/stores/theme';
   import { settingsStore } from '$lib/stores/settings';
   import { invoke } from '@tauri-apps/api/tauri';
+
   
   // Load initial theme and settings
   onMount(async () => {
@@ -24,8 +25,11 @@
       }
     } catch (error) {
       console.error('Failed to load initial data:', error);
+      // Continue anyway - don't let theme loading block the app
     }
   });
+
+
 </script>
 
 <main class="h-screen w-screen bg-transparent">
