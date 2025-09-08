@@ -30,7 +30,7 @@
 
     'topology': () => import('$lib/components/NetworkTopology.svelte'),
     'ghostvpn': () => import('$lib/components/VpnClient.svelte'),
-    'ghostai': () => import('$lib/components/AiAssistant.svelte'),
+
     
     // INFRA
     'pan-engine': () => import('$lib/components/PanEngine.svelte'),

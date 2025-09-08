@@ -386,7 +386,7 @@ dependencies = [
  "bitflags 2.9.3",
  "cexpr",
  "clang-sys",
- "itertools 0.11.0",
+ "itertools 0.12.1",
  "lazy_static 1.5.0",
  "lazycell",
  "log",
@@ -2357,26 +2357,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "ghost_ai"
-version = "0.1.0"
-dependencies = [
- "chrono",
- "ghost_errmap",
- "ghost_explain",
- "ghost_link",
- "ghost_log",
- "ghost_pq",
- "hex",
- "regex",
- "serde",
- "serde_json",
- "thiserror 1.0.69",
- "tokio",
- "tracing",
- "uuid",
-]
-
-[[package]]
 name = "ghost_alert"
 version = "0.1.0"
 dependencies = [
@@ -2431,6 +2411,7 @@ dependencies = [
  "ghost_pq",
  "ghost_tls",
  "ghost_vault",
+ "num_cpus",
  "serde",
  "serde_json",
  "tao",
@@ -2783,7 +2764,6 @@ dependencies = [
  "encoding_rs_io",
  "etherparse",
  "futures",
- "ghost_ai",
  "ghost_alert",
  "ghost_align",
  "ghost_autofill",
@@ -2840,6 +2820,7 @@ dependencies = [
  "tempfile",
  "thiserror 1.0.69",
  "tokio",
+ "tokio-util",
  "tracing",
  "tracing-appender",
  "tracing-subscriber",
@@ -3127,6 +3108,12 @@ name = "heck"
 version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2304e00983f87ffb38b55b444b5e3b60a884b5d30c0fca7d82fe33449bbe55ea"
+
+[[package]]
+name = "hermit-abi"
+version = "0.5.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "fc0fef456e4baa96da950455cd02c081ca953b141298e41db3fc7e36b1da849c"
 
 [[package]]
 name = "hex"
@@ -3765,6 +3752,15 @@ name = "itertools"
 version = "0.11.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b1c173a5686ce8bfa551b3563d0c2170bf24ca44da99c7ca4bfdab5418c3fe57"
+dependencies = [
+ "either",
+]
+
+[[package]]
+name = "itertools"
+version = "0.12.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ba291022dbbd398a455acf126c1e341954079855bc60dfdda641363bd6922569"
 dependencies = [
  "either",
 ]
@@ -4904,6 +4900,16 @@ checksum = "071dfc062690e90b734c0b2273ce72ad0ffa95f0c74596bc250dcfd960262841"
 dependencies = [
  "autocfg",
  "libm",
+]
+
+[[package]]
+name = "num_cpus"
+version = "1.17.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "91df4bbde75afed763b708b7eee1e8e7651e02d97f6d5dd763e89367e957b23b"
+dependencies = [
+ "hermit-abi",
+ "libc",
 ]
 
 [[package]]

@@ -4,7 +4,7 @@ pub mod theme_vault;
 pub mod vault;
 // Policy module removed for single-user mode
 pub mod notify;
-pub mod ai;
+
 pub mod browse;
 // pub mod vpn_status; // Removed - was unused placeholder
 // pub mod navigation; // Removed - was unused dead code

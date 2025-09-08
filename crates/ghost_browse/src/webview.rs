@@ -97,8 +97,8 @@ impl WebviewWindow {
         // Update title based on URL
         self.title = format!("GhostBrowse - {}", parsed_url.host_str().unwrap_or("Unknown"));
         
-        // In a real implementation, this would navigate the webview
-        info!("Successfully navigated to: {}", url);
+        // Store URL for later webview creation
+        info!("Successfully set navigation target: {}", url);
         Ok(())
     }
 

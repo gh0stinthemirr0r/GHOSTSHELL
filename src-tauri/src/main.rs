@@ -19,7 +19,7 @@ use ghost_pq::signatures::DilithiumSigner;
 
 // Theme system imports
 use ghost_theme::ThemeEngine;
-use ghost_ai::{AIEngine, AIConfig};
+
 
 // Browser system imports
 use ghost_browse::{BrowserEngine, BrowserConfig};
@@ -41,7 +41,7 @@ mod quarantine;
 mod terminal;
 mod embedded_nushell;
 mod vpn;
-mod ai_assistant;
+
 mod file_manager;
 mod network_topology;
 mod tools;
@@ -83,7 +83,7 @@ use clipboard::ClipboardManager;
 use quarantine::QuarantineManager;
 use terminal::TerminalManager;
 use vpn::VpnManager;
-use ai_assistant::AiAssistantManager;
+
 use file_manager::FileManager;
 use network_topology::NetworkTopologyManager;
 use tools::ToolsManager;
@@ -326,11 +326,7 @@ fn main() -> Result<()> {
             app.manage(vpn_manager);
             info!("VPN manager initialized");
 
-            // Initialize AI Assistant Manager (Phase 3)
-            let ai_manager = Arc::new(Mutex::new(AiAssistantManager::new()
-                .map_err(|e| anyhow::anyhow!("Failed to initialize AI assistant manager: {}", e))?));
-            app.manage(ai_manager);
-            info!("AI assistant manager initialized");
+
 
             // Initialize File Manager (Phase 3)
             let file_manager = Arc::new(Mutex::new(FileManager::new()
@@ -471,41 +467,7 @@ fn main() -> Result<()> {
             app.manage(theme_engine);
             info!("Theme engine v2 initialized");
 
-            // Initialize AI Engine (Phase 13)  
-            debug!("About to initialize AI Engine");
-            let ai_config = AIConfig::default();
-            let ai_engine = rt.block_on(async {
-                debug!("Creating AIEngine instance");
-                
-                // Use the same logger and signer from notification engine
-                use ghost_log::LoggerConfig;
-                use ghost_pq::signatures::DilithiumVariant;
 
-                let _config = LoggerConfig::default();
-                let logger = Arc::new(AuditLogger::in_memory("ai".to_string()).await
-                    .map_err(|e| anyhow::anyhow!("Failed to create AI logger: {}", e))?);
-                let signer = Arc::new(DilithiumSigner::new(DilithiumVariant::Dilithium3)
-                    .map_err(|e| anyhow::anyhow!("Failed to create AI signer: {}", e))?);
-                
-                let engine = AIEngine::new(ai_config, logger, signer)
-                    .map_err(|e| anyhow::anyhow!("Failed to create AI engine: {}", e))?;
-                
-                debug!("About to initialize AI engine");
-                let engine_arc = Arc::new(tokio::sync::Mutex::new(engine));
-                
-                // Initialize the AI engine
-                {
-                    let engine_guard = engine_arc.lock().await;
-                    engine_guard.initialize().await
-                        .map_err(|e| anyhow::anyhow!("Failed to initialize AI engine: {}", e))?;
-                }
-                
-                Ok::<_, anyhow::Error>(engine_arc)
-            })?;
-
-            app.manage(ai_engine);
-            debug!("AI engine initialized successfully");
-            info!("AI Engine initialized");
 
             // Initialize Browser Engine (Phase 14)
             // Setup data directory path (shared by browser and navigation)
@@ -828,13 +790,7 @@ fn main() -> Result<()> {
             vpn::vpn_list_connections,
             vpn::vpn_list_configs,
             vpn::vpn_test_connection,
-            // AI Assistant commands (Phase 3)
-            ai_assistant::ai_create_assistant,
-            ai_assistant::ai_query,
-            ai_assistant::ai_learn_from_interaction,
 
-            ai_assistant::ai_list_assistants,
-            ai_assistant::ai_assistant_get_stats,
             // File Manager commands (Phase 3)
             file_manager::fm_list_directory,
             file_manager::fm_create_directory,
@@ -963,13 +919,7 @@ fn main() -> Result<()> {
             commands::theme_v2::theme_v2_clear_cache,
             commands::theme_v2::theme_v2_preview,
             
-            // AI commands (Phase 13)
-            commands::ai::ai_explain_error,
-            commands::ai::ai_explain_control,
-            commands::ai::ai_generate_report,
-            commands::ai::ai_get_stats,
-            commands::ai::ai_get_config,
-            commands::ai::ai_update_config,
+
             
             // Browser commands (Phase 14)
             commands::browse::browse_open,
@@ -994,6 +944,12 @@ fn main() -> Result<()> {
             commands::browse::browse_hide_window,
             commands::browse::browse_navigate_window,
             commands::browse::browse_open_external,
+            commands::browse::browse_get_servo_stats,
+            commands::browse::browse_get_all_servo_stats,
+            commands::browse::browse_test_webview,
+            commands::browse::browse_create_tab_webview,
+            commands::browse::browse_close_tab_webview,
+            commands::browse::browse_update_tab_webview,
             
             // VPN Status Commands - removed unused placeholder functionality
             

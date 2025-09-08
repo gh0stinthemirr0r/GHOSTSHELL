@@ -17,6 +17,7 @@ tracing = { workspace = true }
 uuid = { workspace = true }
 chrono = { workspace = true }
 url = "2.4"
+num_cpus = "1.16"
 
 # Web view dependencies
 wry = { version = "0.24", optional = true }

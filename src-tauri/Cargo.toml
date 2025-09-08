@@ -25,7 +25,7 @@ ghost_alert = { path = "../crates/ghost_alert" }
 
 # Phase 11 Theme Crates
 ghost_theme = { path = "../crates/ghost_theme" }
-ghost_ai = { path = "../crates/ghost_ai" }
+
 ghost_errmap = { path = "../crates/ghost_errmap" }
 ghost_explain = { path = "../crates/ghost_explain" }
 ghost_link = { path = "../crates/ghost_link" }
@@ -89,6 +89,10 @@ dirs = "5.0"
 url = "2.4"
 if-addrs = "0.10"
 
+
+tokio-util = "0.7"
+rand = "0.8"
+
 # PCAP capture and analysis dependencies (BruteShark-inspired) - Pure Rust + Windows Raw Sockets
 pcap-file = "2.0"  # Pure Rust PCAP file reading/writing
 etherparse = "0.15"
@@ -134,7 +138,6 @@ russh = "0.40"
 russh-keys = "0.40"
 
 # Network Topology (Phase 3)
-rand = "0.8"
 
 # Phase 12 Additional Dependencies
 zip = "0.6"

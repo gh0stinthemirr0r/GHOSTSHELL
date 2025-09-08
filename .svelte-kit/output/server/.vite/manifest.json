@@ -18,7 +18,6 @@
       "src/lib/components/GhostVault.svelte",
       "src/lib/components/NetworkTopology.svelte",
       "src/lib/components/VpnClient.svelte",
-      "src/lib/components/AiAssistant.svelte",
       "src/lib/components/PanEngine.svelte",
       "src/lib/components/PanEvaluator.svelte",
       "src/lib/components/MerakiEngine.svelte",
@@ -157,6 +156,13 @@
       "__page.js"
     ]
   },
+  "_zap.js": {
+    "file": "chunks/zap.js",
+    "imports": [
+      "_ssr.js",
+      "__page.js"
+    ]
+  },
   "cyberpunk-theme.css": {
     "file": "_app/immutable/assets/cyberpunk-theme.96d6ac04.css",
     "src": "cyberpunk-theme.css"
@@ -278,18 +284,6 @@
     "file": "_app/immutable/assets/MesloLGLNerdFont-Regular.5343e2b5.ttf",
     "src": "src-tauri/fonts/MesloLGLNerdFont-Regular.ttf"
   },
-  "src/lib/components/AiAssistant.svelte": {
-    "file": "chunks/AiAssistant.js",
-    "imports": [
-      "_ssr.js",
-      "__page.js",
-      "_plus.js",
-      "_star.js",
-      "_trending-up.js"
-    ],
-    "isDynamicEntry": true,
-    "src": "src/lib/components/AiAssistant.svelte"
-  },
   "src/lib/components/AristaEngine.css": {
     "file": "_app/immutable/assets/AristaEngine.d7cc5448.css",
     "src": "src/lib/components/AristaEngine.css"
@@ -314,12 +308,12 @@
     "src": "src/lib/components/AristaEngine.svelte"
   },
   "src/lib/components/BrowserWindow.css": {
-    "file": "_app/immutable/assets/BrowserWindow.11626ede.css",
+    "file": "_app/immutable/assets/BrowserWindow.378d0e7c.css",
     "src": "src/lib/components/BrowserWindow.css"
   },
   "src/lib/components/BrowserWindow.svelte": {
     "css": [
-      "_app/immutable/assets/BrowserWindow.11626ede.css",
+      "_app/immutable/assets/BrowserWindow.378d0e7c.css",
       "_app/immutable/assets/cyberpunk-theme.96d6ac04.css"
     ],
     "file": "chunks/BrowserWindow.js",
@@ -328,7 +322,8 @@
       "__page.js",
       "_eye.js",
       "_star.js",
-      "_download.js"
+      "_download.js",
+      "_zap.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/BrowserWindow.svelte"
@@ -486,7 +481,8 @@
       "__page.js",
       "_shield-x.js",
       "_play.js",
-      "_server.js"
+      "_server.js",
+      "_zap.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/components/NetworkTopology.svelte"
@@ -628,7 +624,7 @@
     "src": "src/lib/components/VpnClient.svelte"
   },
   "src/routes/+layout.css": {
-    "file": "_app/immutable/assets/_layout.c901f35a.css",
+    "file": "_app/immutable/assets/_layout.17c17fe7.css",
     "src": "src/routes/+layout.css"
   },
   "src/routes/+layout.svelte": {
@@ -660,7 +656,7 @@
       "_app/immutable/assets/FiraMonoNerdFont-Medium.4f99b210.otf"
     ],
     "css": [
-      "_app/immutable/assets/_layout.c901f35a.css"
+      "_app/immutable/assets/_layout.17c17fe7.css"
     ],
     "file": "entries/pages/_layout.svelte.js",
     "imports": [

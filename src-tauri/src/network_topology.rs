@@ -7,7 +7,44 @@ use tauri::{State, Window};
 use tokio::sync::{RwLock, Mutex};
 use tracing::info;
 use uuid::Uuid;
-use rand;
+use std::collections::hash_map::DefaultHasher;
+use std::hash::{Hash, Hasher};
+
+// Simple deterministic pseudo-random function
+fn pseudo_random_f32(seed: &str) -> f32 {
+    let mut hasher = DefaultHasher::new();
+    seed.hash(&mut hasher);
+    let hash = hasher.finish();
+    (hash % 1000) as f32 / 1000.0
+}
+
+fn pseudo_random_u32(seed: &str, max: u32) -> u32 {
+    let mut hasher = DefaultHasher::new();
+    seed.hash(&mut hasher);
+    let hash = hasher.finish();
+    (hash % max as u64) as u32
+}
+
+fn pseudo_random_u64(seed: &str, max: u64) -> u64 {
+    let mut hasher = DefaultHasher::new();
+    seed.hash(&mut hasher);
+    let hash = hasher.finish();
+    hash % max
+}
+
+fn pseudo_random_u8(seed: &str) -> u8 {
+    let mut hasher = DefaultHasher::new();
+    seed.hash(&mut hasher);
+    let hash = hasher.finish();
+    (hash % 256) as u8
+}
+
+fn pseudo_random_f64(seed: &str, max: f64) -> f64 {
+    let mut hasher = DefaultHasher::new();
+    seed.hash(&mut hasher);
+    let hash = hasher.finish();
+    ((hash % 1000) as f64 / 1000.0) * max
+}
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct NetworkNode {
@@ -337,7 +374,7 @@ impl NetworkTopologyManager {
                 let node_ids: Vec<String> = nodes_guard.keys().cloned().collect();
                 for i in 0..node_ids.len() {
                     for j in (i + 1)..node_ids.len() {
-                        if rand::random::<f32>() < 0.3 { // 30% chance of connection
+                        if pseudo_random_f32(&format!("{}-{}", node_ids[i], node_ids[j])) < 0.3 { // 30% chance of connection
                             let connection = NetworkConnection {
                                 id: Uuid::new_v4().to_string(),
                                 source_node_id: node_ids[i].clone(),
@@ -346,13 +383,13 @@ impl NetworkTopologyManager {
                                 protocol: "TCP".to_string(),
                                 port: Some(80),
                                 bandwidth: Some(1000000000), // 1 Gbps
-                                latency: Some(rand::random::<u32>() % 50 + 1),
-                                packet_loss: Some(rand::random::<f32>() * 0.01),
+                                latency: Some(pseudo_random_u32(&format!("{}-{}-latency", node_ids[i], node_ids[j]), 50) + 1),
+                                packet_loss: Some(pseudo_random_f32(&format!("{}-{}-loss", node_ids[i], node_ids[j])) * 0.01),
                                 status: ConnectionStatus::Active,
                                 established_at: chrono::Utc::now(),
                                 last_activity: chrono::Utc::now(),
-                                bytes_sent: rand::random::<u64>() % 1000000,
-                                bytes_received: rand::random::<u64>() % 1000000,
+                                bytes_sent: pseudo_random_u64(&format!("{}-{}-sent", node_ids[i], node_ids[j]), 1000000),
+                                bytes_received: pseudo_random_u64(&format!("{}-{}-recv", node_ids[i], node_ids[j]), 1000000),
                             };
                             connections_guard.insert(connection.id.clone(), connection);
                         }
@@ -403,13 +440,13 @@ impl NetworkTopologyManager {
                 name: name.to_string(),
                 ip_address: IpAddr::V4(ip.parse::<Ipv4Addr>().unwrap()),
                 mac_address: Some(format!("00:{}:{}:{}:{}:{}", 
-                    rand::random::<u8>(), rand::random::<u8>(), 
-                    rand::random::<u8>(), rand::random::<u8>(), rand::random::<u8>())),
+                    pseudo_random_u8(&format!("{}-mac1", ip)), pseudo_random_u8(&format!("{}-mac2", ip)), 
+                    pseudo_random_u8(&format!("{}-mac3", ip)), pseudo_random_u8(&format!("{}-mac4", ip)), pseudo_random_u8(&format!("{}-mac5", ip)))),
                 node_type: node_type.clone(),
                 status: NodeStatus::Online,
                 location: Some(NodeLocation {
-                    x: rand::random::<f64>() * 800.0,
-                    y: rand::random::<f64>() * 600.0,
+                    x: pseudo_random_f64(&format!("{}-x", ip), 800.0),
+                    y: pseudo_random_f64(&format!("{}-y", ip), 600.0),
                     z: None,
                     floor: Some("1".to_string()),
                     building: Some("Main".to_string()),

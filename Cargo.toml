@@ -15,7 +15,7 @@ members = [
     "crates/ghost_notify",
     "crates/ghost_alert",
     "crates/ghost_theme",
-    "crates/ghost_ai",
+
     "crates/ghost_errmap",
     "crates/ghost_explain",
     "crates/ghost_link",
