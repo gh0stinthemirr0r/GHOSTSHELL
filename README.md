@@ -344,6 +344,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
+## 👨‍💻 Credits
+
+**Lead Developer & Engineer**: Aaron Stovall
+
 ## 🌟 Acknowledgments
 
 - **BruteShark** - Inspiration for network analysis capabilities
